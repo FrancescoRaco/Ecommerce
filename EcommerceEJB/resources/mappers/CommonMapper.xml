@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapperInterfaces.CommonMapper">	
+  
+   <select id="test" parameterType="int" resultType="string">
+      SELECT studente
+	  FROM ecommerce.prova
+	  WHERE matricola = #{num, jdbcType=DECIMAL}
+   </select>
+   
+   <select id="getCategorie" resultType="dto.CategoriaDTO">
+      SELECT codice as "codice", descrizione as "descrizione"
+	  FROM ecommerce.categorie
+   </select>
+   
+   <select id="getProdottiAttivi" parameterType="dto.ProdottoDTO" resultType="dto.ProdottoDTO">
+      SELECT
+      id as "id", codiceCategoria as "codiceCategoria",
+      (SELECT descrizione FROM ecommerce.categorie WHERE ecommerce.categorie.codice = ecommerce.prodotti.codiceCategoria) as "descCategoria",
+      titolo as "titolo", descrizione as "descrizione", cfVenditore as "cfVenditore", disponibilita as "disponibilita",
+      prezzoBase as "prezzoBase", infoAcquirenti as "infoAcquirenti", dataInserimento as "dataInserimento"
+	  FROM ecommerce.prodotti 
+	  <trim prefix="WHERE" prefixOverrides="AND|OR">
+		  flagAttivazione = 1
+		  <if test="id != null and id != 0">
+		  	 AND id = #{id, jdbcType=INTEGER}
+		  </if>
+		  <if test="codiceCategoria != null and codiceCategoria != 0">
+		  	 AND codiceCategoria = #{codiceCategoria, jdbcType=INTEGER}
+		  </if>
+		  <if test="titolo != null and !titolo.isEmpty()">
+		  	 AND titolo = #{titolo, jdbcType=VARCHAR}
+		  </if>
+		  <if test="cfVenditore != null and !cfVenditore.isEmpty()">
+		  	 AND cfVenditore = #{cfVenditore, jdbcType=VARCHAR}
+		  </if>
+		  <if test="prezzoBase != null and prezzoBase != 0">
+		  	 AND prezzoBase = #{prezzoBase, jdbcType=INTEGER}
+		  </if>
+	  </trim>
+   </select>
+   
+   
+    	
+</mapper>

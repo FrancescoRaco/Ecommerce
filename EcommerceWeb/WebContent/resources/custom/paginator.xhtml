@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui" lang="it" xml:lang="it">
+	
+	<composite:interface>
+    	<composite:attribute name = "paginator" />
+    </composite:interface>
+   
+   <composite:implementation>
+    	<!-- Paginatore BEGIN -->
+		<h:panelGroup layout="block" styleClass="row justify-content-center" rendered="#{cc.attrs.paginator.page != null and !empty cc.attrs.paginator.page and cc.attrs.paginator.totalPages > 1}">
+			<nav role="navigation" aria-label="Paginazione">
+				<ul class="pagination">
+					<!-- Prima Pagina, doppie frecce-->
+					<li class="#{cc.attrs.paginator.firstPage?'page-item disabled':'page-item'}">
+						<h:commandLink rendered="#{not cc.attrs.paginator.firstPage}" styleClass="page-link" action="#{cc.attrs.paginator.goFirstPage}">
+							<span class="sr-only">Prima pagina</span>
+							<i class="fas fa-angle-double-left"></i>
+						</h:commandLink>
+						<h:outputLink rendered="#{cc.attrs.paginator.firstPage}" styleClass="page-link">
+							<span class="sr-only">Prima pagina</span>
+							<i class="fas fa-angle-double-left"></i>
+						</h:outputLink>
+					</li>
+					<!-- Prima Pagina, fine doppie frecce -->
+	                				<!-- Prima Pagina, singola freccia-->
+					<li class="#{cc.attrs.paginator.firstPage?'page-item disabled':'page-item'}">
+						<h:commandLink styleClass="page-link" rendered="#{not cc.attrs.paginator.firstPage}" action="#{cc.attrs.paginator.prevPage()}">
+							<span class="sr-only"> Pagina precedente </span>
+							<i class="fas fa-angle-left"></i>
+						</h:commandLink> <h:outputLink rendered="#{cc.attrs.paginator.firstPage}" styleClass="page-link">
+							<span class="sr-only">Pagina precedente</span>
+							<i class="fas fa-angle-left"></i>
+						</h:outputLink>
+					</li>
+					<!-- Prima Pagina, fine singola freccia-->
+	                				<!-- Pagine interne -->
+					<ui:repeat value="#{cc.attrs.paginator.pageWindow}" var="num">
+						<li class="#{num eq  cc.attrs.paginator.currentPageNumber?'page-item active':'page-item'}">
+							<h:commandLink styleClass="page-link" value="#{num}" action="#{cc.attrs.paginator.goToPage(num)}">
+								<span class="sr-only">Pagina #{num}</span>
+							</h:commandLink>
+						</li>
+					</ui:repeat>
+					<!-- Fine Pagine interne -->
+	                				<!-- Ultima Pagina, singola freccia-->
+					<li class="#{cc.attrs.paginator.lastPage?'page-item disabled':'page-item'}">
+						<h:commandLink rendered="#{not cc.attrs.paginator.lastPage}" styleClass="page-link" action="#{cc.attrs.paginator.nextPage()}">
+						<span class="sr-only">Pagina successiva</span>
+						<i class="fas fa-angle-right"></i>
+						</h:commandLink>
+						<h:outputLink rendered="#{cc.attrs.paginator.lastPage}" styleClass="page-link">
+						<span class="sr-only">Prima successiva</span>
+						<i class="fas fa-angle-right"></i>
+						</h:outputLink>
+					</li>
+					<!-- Ultima Pagina, fine singola freccia-->
+					<!-- Ultima Pagina -->
+					<li class="#{cc.attrs.paginator.lastPage?'page-item disabled':'page-item'}">
+						<h:commandLink styleClass="page-link" rendered="#{not cc.attrs.paginator.lastPage}" action="#{cc.attrs.paginator.goLastPage}">
+							<span class="sr-only">Ultima pagina</span>
+							<i class="fas fa-angle-double-right"></i>
+						</h:commandLink>
+						<h:outputLink rendered="#{cc.attrs.paginator.lastPage}" styleClass="page-link">
+							<span class="sr-only">Ultima pagina</span>
+							<i class="fas fa-angle-double-right"></i>
+						</h:outputLink>
+					</li>
+					<!-- Fine Ultima Pagina -->
+				</ul>
+			</nav>
+		</h:panelGroup>
+   </composite:implementation>
+   
+</html>

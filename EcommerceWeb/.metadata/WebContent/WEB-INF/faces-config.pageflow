@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16246157363000" configfile="/EcommerceWeb/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" id="pf16246270732360" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf16246270732361 pf16248830684750" path="login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="faces/pages/home.xhtml" id="pf16246270732362" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf16246270732361 pf16248830684750" path="/faces/pages/home.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/ricercaProdotti.xhtml" id="pf16249880503753" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf16249880503754" inlinks="pf16250489252710" path="pages/ricercaProdotti.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/dettaglioProdotto.xhtml" id="pf16249880503755" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" outlinks="pf16250489252710 pf16250489252711" inlinks="pf16249880503754 pf16249884597996 pf16250624914940" path="pages/dettaglioProdotto.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/vendite.xhtml" id="pf16249884597997" referenceLink="//@navigationRule.3/@navigationCase.1/@toViewId|" outlinks="pf16249884597996" inlinks="pf16250489252711" path="pages/vendite.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/o.xhtml" id="pf16250624914941" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf16250624914940 pf16250624914942" inlinks="pf16250628227434" path="pages/ordine.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/ordiniEffettuati.xhtml" id="pf16250624914943" referenceLink="//@navigationRule.5/@navigationCase.1/@toViewId|" outlinks="pf16250628227434" inlinks="pf16250624914942" path="pages/ordiniEffettuati.xhtml"/>
+  <links id="pf16246270732361" target="pf16246270732362" source="pf16246270732360" outcome="success" fromaction="#{authenticationController.login()}"/>
+  <links id="pf16248830684750" target="pf16246270732362" source="pf16246270732360" outcome="success" fromaction="#{authenticationController.fakeLogin()}"/>
+  <links id="pf16249880503754" target="pf16249880503755" source="pf16249880503753" outcome="dettaglio" fromaction="#{ricercaProdottiController.visualizzaDettaglio()}"/>
+  <links id="pf16249884597996" target="pf16249880503755" source="pf16249884597997" outcome="dettaglio" fromaction="#{venditeController.visualizzaDettaglio()}"/>
+  <links id="pf16250489252710" target="pf16249880503753" source="pf16249880503755" outcome="ricercaProdotti" fromaction="#{dettaglioController.backToRicercaProdotti()}"/>
+  <links id="pf16250489252711" target="pf16249884597997" source="pf16249880503755" outcome="vendite" fromaction="#{dettaglioController.backToVendite()}"/>
+  <links id="pf16250624914940" target="pf16249880503755" source="pf16250624914941" outcome="dettaglioProdotto" fromaction="#{ordineController.backToDettaglioProdotto()}"/>
+  <links id="pf16250624914942" target="pf16250624914943" source="pf16250624914941" outcome="ordiniEffettuati" fromaction="#{ordineController.backToOrdiniEffettuati()}"/>
+  <links id="pf16250628227434" target="pf16250624914941" source="pf16250624914943" outcome="ordine" fromaction="#{ordiniEffettuatiController.visualizzaOrdine()}"/>
+</pageflow:Pageflow>

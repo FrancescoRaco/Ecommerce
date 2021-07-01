@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:custom="http://java.sun.com/jsf/composite/custom"
+	template="/pages/templates/pageTemplate.xhtml">
+	
+	<ui:define name="title">
+		<title>Dettaglio prodotto</title>
+	</ui:define>
+	
+	<ui:define name="effettuaOperazioniIniziali">
+		<f:event listener="#{ordineController.effettuaOperazioniIniziali}" type="preRenderView"></f:event>
+	</ui:define>
+	
+	<ui:define name="content">
+		<br/><br/>
+		<p class="text-center h1">Dettaglio ordine</p>
+		<br/><br/>
+		<h:form>
+			<div class="row">
+				<div class="col-12 col-sm-4">
+					<h:outputLabel for="prodottoId" value="Identificativo prodotto:" styleClass="control-label"/>
+					<h:inputText id="prodottoId" value="#{ordineBean.ordineDTO.idProdotto}" styleClass="form-control" disabled="true"/>
+				</div>
+				<div class="col-12 col-sm-4">
+					<h:outputLabel for="cfAcquirenteId" value="Acquirente:" styleClass="control-label"/>
+					<h:inputText id="cfAcquirenteId" value="#{ordineBean.ordineDTO.cfAcquirente}" styleClass="form-control" disabled="true"/>
+				</div>
+				<div class="col-12 col-sm-4">
+					<h:outputLabel for="offertaId" value="Offerta:" styleClass="control-label"/>
+					<h:inputText id="offertaId" value="#{ordineBean.ordineDTO.offerta}" styleClass="form-control" disabled="true"/>
+				</div>
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-12 col-sm-4">
+					<h:outputLabel for="quantitaId" value="Quantità:" styleClass="control-label"/>
+					<h:inputText id="quantitaId" value="#{ordineBean.ordineDTO.quantita}" styleClass="form-control" disabled="true"/>
+				</div>
+				<div class="col-12 col-sm-4">
+					<h:outputLabel for="progressivoId" value="Progressivo:" styleClass="control-label"/>
+					<h:inputText id="progressivoId" value="#{ordineBean.ordineDTO.progressivo}" styleClass="form-control" disabled="true"/>
+				</div>
+				<div class="col-12 col-sm-4">
+					<h:outputLabel for="flagAccettazioneId" value="Stato:" styleClass="control-label"/>
+					<h:inputText id="flagAccettazioneId" value="#{ordineBean.ordineDTO.flagAccettazione eq 0 ? 'In lavorazione' : (ordineBean.ordineDTO.flagAccettazione eq 1 ? 'Accettata' : 'Rifiutata')}" styleClass="form-control" disabled="true"/>
+				</div>
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-12 col-sm-6">
+					<h:outputLabel for="noteAcquirenteId" value="Note acquirente:" styleClass="control-label"/>
+					<h:inputText id="noteAcquirenteId" value="#{ordineBean.ordineDTO.noteAcquirente}" styleClass="form-control" disabled="true"/>
+				</div>
+				<div class="col-12 col-sm-6">
+					<h:outputLabel for="dataOrdineId" value="Data ordine:" styleClass="control-label"/>
+					<h:inputText id="dataOrdineId" value="#{ordineBean.ordineDTO.dataOrdine}" styleClass="form-control" disabled="true">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:inputText>
+				</div>
+			</div>
+			<br/>
+			<h:panelGroup layout="block" styleClass="card" rendered="#{not empty ordineBean.ordineDTO and ordineBean.ordineDTO.cfVenditore eq utenteBean.codiceFiscale and ordineBean.ordineDTO.flagAccettazione eq 0}">
+			  <div class="card-body">
+			    <h4 class="card-title text-center">Azioni del venditore</h4>
+			    <br/>
+			   	<div class="text-center">
+					<div class="row btn-group">
+						<div class="col-sm-6">
+							<h:commandButton value="Rifiuta" action="#{ordineController.rifiutaOrdine()}" styleClass="btn btn-primary"/>
+						</div>
+						<div class="col-sm-6">
+							<h:commandButton value="Accetta" action="#{ordineController.accettaOrdine()}" styleClass="btn btn-primary"/>
+						</div>
+					</div>
+				</div>
+			  </div>
+			</h:panelGroup>
+			<br/>
+			<div class="row btn-group">
+				<h:panelGroup layout="block" styleClass="col-12" rendered="#{not empty ordineBean.provenienza and ordineBean.provenienza eq 'dettaglioProdotto.xhtml'}">
+					<br/>
+					<h:commandLink action="#{ordineController.backToDettaglioProdotto()}" styleClass="btn btn-primary">
+						<i class="fas fa-arrow-left pr-1"/>
+						Indietro
+					</h:commandLink>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="col-12" rendered="#{not empty ordineBean.provenienza and ordineBean.provenienza eq 'ordiniEffettuati.xhtml'}">
+					<br/>
+					<h:commandLink action="#{ordineController.backToOrdiniEffettuati()}" styleClass="btn btn-primary">
+						<i class="fas fa-arrow-left pr-1"/>
+						Indietro
+					</h:commandLink>
+				</h:panelGroup>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

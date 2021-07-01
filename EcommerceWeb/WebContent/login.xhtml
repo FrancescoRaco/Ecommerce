@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+	    <meta charset="utf-8"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	    <meta name="description" content=""/>
+	    <meta name="author" content=""/>
+	    
+	    <title>Login</title>
+	
+		<!-- Bootstrap import -->
+		<h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+	    <h:outputScript name="bootstrap/js/jquery-3.2.1.slim.min.js"/>
+	    <h:outputScript name="bootstrap/js/bootstrap.bundle.min.js"/>
+	    
+		<!-- Theme -->
+		<h:outputStylesheet name="theme/app.css"/>
+		
+		<!-- FontAwesome -->
+		<h:outputStylesheet name="fontawesome/css/all.min.css"/>
+	</h:head>
+	
+	<h:body style="background-color:#3459e6;">
+		<p class="text-center h1 mt-5" style="color:white;">eCommerce - Genetic Consulting</p>
+		<br/><br/>
+		<h:form>
+			<div class="row">
+				<div class="col-4 offset-4">
+					<div class="card border-secondary mb-3">
+					<div class="card-header text-center">Effettua login</div>
+						<div class="card-body">
+				    		<h:panelGroup layout="block" styleClass="form-group ml-3 mr-3">
+				    			<div class="row">
+			    					<div class="col-12">
+			    						<h:panelGroup layout="block" id="panelErrors" styleClass="form-group mt-2" rendered="#{not empty messagesBean.errors}">
+			    							<ui:repeat var="errore" value="#{messagesBean.errors}">
+			    								<p class="alert alert-danger">#{errore}</p>
+			    							</ui:repeat>
+			    						</h:panelGroup>
+			    						<h:panelGroup layout="block" id="panelWarnings" styleClass="form-group mt-2" rendered="#{not empty messagesBean.warnings}">
+			    							<ui:repeat var="avviso" value="#{messagesBean.warnings}">
+			    								<p class="alert alert-warning">#{avviso}</p>
+			    							</ui:repeat>
+			    						</h:panelGroup>
+			    						<h:panelGroup layout="block" id="panelSuccesses" styleClass="form-group mt-2" rendered="#{not empty messagesBean.successes}">
+			    							<ui:repeat var="successo" value="#{messagesBean.successes}">
+			    								<p class="alert alert-success">#{successo}</p>
+			    							</ui:repeat>
+			    						</h:panelGroup>
+										<h:outputScript rendered="#{not empty messagesBean.successes or not empty messagesBean.warnings or not empty messagesBean.successes}">                                      
+									        $(document).ready(function () {
+									           $('html, body').animate({scrollTop:0}, 'slow');                                                
+									        });
+									    </h:outputScript>
+			    					</div>
+			    				</div>
+								<div class="row">
+									<div class="col-12">
+										<h:outputLabel for="codFiscId" value="Codice fiscale:*" styleClass="control-label"/>
+										<h:inputText value="#{loginBean.codiceFiscale}" id="codFiscId" styleClass="form-control #{messagesBean.invalidFields.contains('codFiscId') ? 'is-invalid' : ''}"/>
+									</div>
+								</div>
+								<br/>
+								<div class="row">
+									<div class="col-12">
+										<h:outputLabel for="passwordId" value="Password:*" styleClass="control-label"/>
+										<h:inputSecret value="#{loginBean.password}" id="passwordId" styleClass="form-control #{messagesBean.invalidFields.contains('passwordId') ? 'is-invalid' : ''}"/>
+									</div>
+								</div>
+								<br/>
+								<div class="row">
+									<div class="col-12">
+										<p class="alert alert-warning">La password deve contenere almeno 8 caratteri di cui almeno 1 maiuscolo, 1 minuscolo, 1 numero e 1 speciale</p>
+									</div>
+								</div>
+								<div class="text-center">
+									<div class="row">
+										<div class="col-12">
+											<h:commandLink value="Non hai un account? Registrati qui" action="#{authenticationController.signup()}" styleClass="btn btn-link"/>
+										</div>
+									</div>
+									<br/>
+									<div class="row">
+										<div class="col-12">
+											<h:commandButton value="LOGIN" action="#{authenticationController.fakeLogin()}" styleClass="btn btn-primary"/>
+										</div>
+									</div>
+								</div>
+								
+							</h:panelGroup>
+				  		</div>
+					</div>
+				</div>
+			</div>
+			
+			<h:panelGroup layout="block" rendered="#{utenteBean.signupAbilitato}" >
+				<div class="modal fade show" id="modal_panel" aria-modal="true" style="padding-right: 17px; display: block;">
+					<div class="modal-dialog modal-lg">
+						<h:panelGroup layout="block" id="signup">
+							<div class="modal-content">
+								<div class="modal-header text-center">
+								<p class="h3 modal-title w-100" id="modal-form-label">Signup</p>
+									<h:commandLink styleClass="btn btn-default btn-sm" action="#{authenticationController.chiudiModalSignup()}" >
+										<i class="fas fa-window-close pr-2" />
+									</h:commandLink>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+				    					<div class="col-12">
+				    						<h:panelGroup layout="block" id="modalErrors" styleClass="form-group mt-2" rendered="#{not empty messagesBean.errors}">
+				    							<ui:repeat var="errore" value="#{messagesBean.errors}">
+				    								<p class="alert alert-danger">#{errore}</p>
+				    							</ui:repeat>
+				    						</h:panelGroup>
+				    						<h:panelGroup layout="block" id="modalWarnings" styleClass="form-group mt-2" rendered="#{not empty messagesBean.warnings}">
+				    							<ui:repeat var="avviso" value="#{messagesBean.warnings}">
+				    								<p class="alert alert-warning">#{avviso}</p>
+				    							</ui:repeat>
+				    						</h:panelGroup>
+				    						<h:panelGroup layout="block" id="modalSuccesses" styleClass="form-group mt-2" rendered="#{not empty messagesBean.successes}">
+				    							<ui:repeat var="successo" value="#{messagesBean.successes}">
+				    								<p class="alert alert-success">#{successo}</p>
+				    							</ui:repeat>
+				    						</h:panelGroup>
+											<h:outputScript rendered="#{not empty messagesBean.successes or not empty messagesBean.warnings or not empty messagesBean.successes}">                                      
+										        $(document).ready(function () {
+										           $('html, body').animate({scrollTop:0}, 'slow');                                                
+										        });
+										    </h:outputScript>
+				    					</div>
+				    				</div>
+									<div class="row">
+										<div class="col-12 col-sm-6">
+											<h:outputLabel for="codFiscSignupId" value="Codice fiscale:*" styleClass="control-label"/>
+											<h:inputText value="#{utenteBean.codiceFiscale}" id="codFiscSignupId" styleClass="form-control #{messagesBean.invalidFields.contains('codFiscSignupId') ? 'is-invalid' : ''}"/>
+										</div>
+										<div class="col-12 col-sm-6">
+											<h:outputLabel for="passwordSignupId" value="Password:*" styleClass="control-label"/>
+											<h:inputSecret value="#{utenteBean.password}" id="passwordSignupId" styleClass="form-control #{messagesBean.invalidFields.contains('passwordSignupId') ? 'is-invalid' : ''}"/>
+										</div>
+									</div>
+									<br/>
+									<div class="row">
+										<div class="col-12 col-sm-6">
+											<h:outputLabel for="nomeId" value="Nome:*" styleClass="control-label"/>
+											<h:inputText value="#{utenteBean.nome}" id="nomeId" styleClass="form-control #{messagesBean.invalidFields.contains('nomeId') ? 'is-invalid' : ''}"/>
+										</div>
+										<div class="col-12 col-sm-6">
+											<h:outputLabel for="cognomeId" value="Cognome:*" styleClass="control-label"/>
+											<h:inputText value="#{utenteBean.cognome}" id="cognomeId" styleClass="form-control #{messagesBean.invalidFields.contains('cognomeId') ? 'is-invalid' : ''}"/>
+										</div>
+									</div>
+									<br/>
+									<div class="row">
+										<div class="col-12 col-sm-6">
+											<h:outputLabel for="domicilioId" value="Domicilio:*" styleClass="control-label"/>
+											<h:inputText value="#{utenteBean.domicilio}" id="domicilioId" styleClass="form-control #{messagesBean.invalidFields.contains('domicilioId') ? 'is-invalid' : ''}"/>
+										</div>
+										<div class="col-12 col-sm-6">
+											<h:outputLabel for="emailId" value="Email:*" styleClass="control-label"/>
+											<h:inputText value="#{utenteBean.email}" id="emailId" styleClass="form-control #{messagesBean.invalidFields.contains('emailId') ? 'is-invalid' : ''}"/>
+										</div>
+									</div>
+									<br/>
+									<div class="row">
+										<div class="col-12 col-sm-6">
+											<h:outputLabel for="telefonoId" value="Telefono:*" styleClass="control-label"/>
+											<h:inputText value="#{utenteBean.telefono}" id="telefonoId" styleClass="form-control #{messagesBean.invalidFields.contains('telefonoId') ? 'is-invalid' : ''}"/>
+										</div>
+										<div class="col-12 col-sm-6">
+											<h:outputLabel for="dataNascitaId" value="Data di nascita:*" styleClass="control-label"/>
+											<h:inputText value="#{utenteBean.dataNascitaWrap}" id="dataNascita" styleClass="form-control #{messagesBean.invalidFields.contains('dataNascitaId') ? 'is-invalid' : ''}"/>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer text-center">
+									<div class="row btn-group w-100">
+										<div class="col-12 col-sm-4 offset-sm-4">
+											<h:commandLink styleClass="btn btn-primary px-4 mr-3" >
+												Conferma registrazione
+												<f:ajax execute="signup" listener="#{authenticationController.confermaSignup()}" render="signup"/>
+											</h:commandLink>
+										</div>
+									</div>
+								</div>
+							</div>
+						</h:panelGroup>
+					</div>
+				</div>
+			</h:panelGroup>
+		</h:form>
+	</h:body>
+
+</html>

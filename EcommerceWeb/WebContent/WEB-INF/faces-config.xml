@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+    
+    <navigation-rule> 
+	   <from-view-id>login.xhtml</from-view-id> 
+	   <navigation-case> 
+	      <from-action>#{authenticationController.login()}</from-action> 
+	      <from-outcome>success</from-outcome> 
+	      <to-view-id>/faces/pages/home.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case> 
+	      <from-action>#{authenticationController.fakeLogin()}</from-action> 
+	      <from-outcome>success</from-outcome> 
+	      <to-view-id>/faces/pages/home.xhtml</to-view-id> 
+	   </navigation-case>  
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>pages/ricercaProdotti.xhtml</from-view-id>
+		<navigation-case> 
+	      <from-action>#{ricercaProdottiController.visualizzaDettaglio()}</from-action> 
+	      <from-outcome>dettaglio</from-outcome> 
+	      <to-view-id>pages/dettaglioProdotto.xhtml</to-view-id> 
+	   </navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>pages/vendite.xhtml</from-view-id>
+		<navigation-case> 
+	      <from-action>#{venditeController.visualizzaDettaglio()}</from-action> 
+	      <from-outcome>dettaglio</from-outcome> 
+	      <to-view-id>pages/dettaglioProdotto.xhtml</to-view-id> 
+	   </navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>pages/dettaglioProdotto.xhtml</from-view-id>
+		<navigation-case> 
+	      <from-action>#{dettaglioController.backToRicercaProdotti()}</from-action> 
+	      <from-outcome>ricercaProdotti</from-outcome> 
+	      <to-view-id>pages/ricercaProdotti.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case> 
+	      <from-action>#{dettaglioController.backToVendite()}</from-action> 
+	      <from-outcome>vendite</from-outcome> 
+	      <to-view-id>pages/vendite.xhtml</to-view-id> 
+	   </navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>pages/ordiniEffettuati.xhtml</from-view-id>
+		<navigation-case> 
+	      <from-action>#{ordiniEffettuatiController.visualizzaOrdine()}</from-action> 
+	      <from-outcome>ordine</from-outcome> 
+	      <to-view-id>pages/ordine.xhtml</to-view-id> 
+	   </navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>pages/ordine.xhtml</from-view-id>
+		<navigation-case> 
+	      <from-action>#{ordineController.backToDettaglioProdotto()}</from-action> 
+	      <from-outcome>dettaglioProdotto</from-outcome> 
+	      <to-view-id>pages/dettaglioProdotto.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case> 
+	      <from-action>#{ordineController.backToOrdiniEffettuati()}</from-action> 
+	      <from-outcome>ordiniEffettuati</from-outcome> 
+	      <to-view-id>pages/ordiniEffettuati.xhtml</to-view-id> 
+	   </navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>pages/dettaglioProdotto.xhtml</from-view-id>
+		<navigation-case> 
+	      <from-action>#{dettaglioController.visualizzaOrdine()}</from-action> 
+	      <from-outcome>ordine</from-outcome> 
+	      <to-view-id>pages/ordine.xhtml</to-view-id> 
+	   </navigation-case>
+	</navigation-rule>
+
+</faces-config>
