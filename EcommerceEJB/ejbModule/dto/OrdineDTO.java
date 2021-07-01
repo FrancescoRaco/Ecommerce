@@ -14,6 +14,7 @@ public class OrdineDTO {
 	private String noteAcquirente;
 	private Date dataOrdine;
 	
+	private boolean suggerito;
 	
 	public Integer getIdProdotto() {
 		return idProdotto;
@@ -68,6 +69,12 @@ public class OrdineDTO {
 	}
 	public void setDataOrdine(Date dataOrdine) {
 		this.dataOrdine = dataOrdine;
+	}
+	public boolean isSuggerito() {
+		return suggerito;
+	}
+	public void setSuggerito(boolean suggerito) {
+		this.suggerito = suggerito;
 	}
 
 }

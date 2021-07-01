@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -14,6 +17,7 @@ import beans.UtenteBean;
 import dto.OrdineDTO;
 import ejbInterfaces.BuyerDataAccess;
 import ejbInterfaces.CommonDataAccess;
+import geneticAi.KnapSackGA;
 import utils.CommonUtils;
 import utils.Paginator;
 
@@ -46,6 +50,7 @@ public class DettaglioController {
 		try {
 			if (dettaglioBean.getOrdini() == null && utenteBean.getCodiceFiscale().equals(dettaglioBean.getProdottoDTO().getCfVenditore())) {
 				caricaOrdiniRicevuti();
+				aiutaVenditore();
 			}
 		} catch(Exception e) {
 			
@@ -63,6 +68,48 @@ public class DettaglioController {
 			dettaglioBean.setPaginatorOrdini(null);
 			dettaglioBean.setTabellaOrdiniAbilitata(false);
 		}
+	}
+	
+	private void aiutaVenditore() throws Exception {
+		List<OrdineDTO> ordiniAttivi = getOrdiniInLavorazione();
+		if (ordiniAttivi != null && !ordiniAttivi.isEmpty()) {
+			int numeroOrdini = ordiniAttivi.size();
+			double[] values = new double[numeroOrdini];
+			double[] weights = new double[numeroOrdini];
+			for (int i = 0; i < ordiniAttivi.size(); i++) {
+				values[i] = ordiniAttivi.get(i).getOfferta();
+				weights[i] = ordiniAttivi.get(i).getQuantita();
+			}
+			double knapsackSize = dettaglioBean.getProdottoDTO().getDisponibilita();
+			int populationSize = 50;
+			int maxGenerations = 100;
+			double crossProb = 0.6;
+			double mutatProb = 0.015;
+			KnapSackGA geneticAi = new KnapSackGA(numeroOrdini, values, weights, knapsackSize, populationSize, maxGenerations, crossProb, mutatProb);
+			String bestSolution = geneticAi.execute();
+			if (bestSolution != null && !bestSolution.isEmpty()) {
+				for (int i = 0; i < bestSolution.length(); i++) {
+					char flagOrdine = bestSolution.charAt(i);
+					if (flagOrdine == '1') {
+						ordiniAttivi.get(i).setSuggerito(true);
+					} else {
+						ordiniAttivi.get(i).setSuggerito(false);
+					}
+				}
+			}
+		}
+	}
+	
+	private List<OrdineDTO> getOrdiniInLavorazione() {
+		List<OrdineDTO> ordiniAttivi = new ArrayList<OrdineDTO>();
+		if (dettaglioBean.getOrdini() != null && !dettaglioBean.getOrdini().isEmpty()) {
+			for (OrdineDTO ordineDTO : dettaglioBean.getOrdini()) {
+				if (ordineDTO != null && ordineDTO.getFlagAccettazione() == 0) {
+					ordiniAttivi.add(ordineDTO);
+				}
+			}
+		}
+		return ordiniAttivi;
 	}
 	
 	public void inviaOrdine() {
@@ -90,6 +137,8 @@ public class DettaglioController {
 				ripulisciOrdine();
 			} else if (FacesContext.getCurrentInstance().isPostback() && dettaglioBean.getProdottoDTO() != null) {
 				dettaglioBean.setProdottoDTO(commonDataAccess.getProdotto(dettaglioBean.getProdottoDTO()));
+				caricaOrdiniRicevuti();
+				aiutaVenditore();
 			}
 		} catch(Exception e) {
 			

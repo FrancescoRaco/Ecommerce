@@ -1,5 +1,12 @@
+/bootstrap/
+/custom/
+/fontawesome/
 /beans/
 /controllers/
 /filters/
+/geneticAi/
+/images/
+/init.txt
 /provider/
+/theme/
 /utils/

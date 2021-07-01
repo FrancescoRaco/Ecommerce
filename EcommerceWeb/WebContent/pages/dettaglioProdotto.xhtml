@@ -122,14 +122,15 @@
 							</caption>
 							<thead class="text-center">
 								<tr class="table-main">
-									<th colspan="5">Tabella degli ordini ricevuti</th>
+									<th colspan="6">Tabella degli ordini ricevuti</th>
 								</tr>
 								<tr class="table-main">
 									<th>Identificativo prodotto</th>
 									<th>Progressivo ordine</th>
 									<th>Offerta</th>
 									<th>Quantita</th>
-									<th>Stato</th>																
+									<th>Stato</th>	
+									<th>Suggerito</th>															
 								</tr>
 							</thead>
 							<tbody class="text-center">
@@ -144,6 +145,7 @@
 										<td><h:outputText value="#{ordine.offerta}" /></td>																						
 										<td><h:outputText value="#{ordine.quantita}" /></td>
 										<td><h:outputText value="#{ordine.flagAccettazione eq 0 ? 'In lavorazione' : (ordine.flagAccettazione eq 1 ? 'Accettato' : 'Rifiutato')}" /></td>																					
+										<td><h:outputText value="#{ordine.suggerito ? 'SI' : 'NO'}" /></td>
 									</tr>
 								</ui:repeat>
 							</tbody>

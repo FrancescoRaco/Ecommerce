@@ -14,9 +14,9 @@
    
    <composite:implementation>
     	<!-- Paginatore BEGIN -->
-		<h:panelGroup layout="block" styleClass="row justify-content-center" rendered="#{cc.attrs.paginator.page != null and !empty cc.attrs.paginator.page and cc.attrs.paginator.totalPages > 1}">
+		<h:panelGroup layout="block" styleClass="row mt-1" rendered="#{cc.attrs.paginator.page != null and !empty cc.attrs.paginator.page and cc.attrs.paginator.totalPages > 1}">
 			<nav role="navigation" aria-label="Paginazione">
-				<ul class="pagination">
+				<ul class="pagination justify-content-center">
 					<!-- Prima Pagina, doppie frecce-->
 					<li class="#{cc.attrs.paginator.firstPage?'page-item disabled':'page-item'}">
 						<h:commandLink rendered="#{not cc.attrs.paginator.firstPage}" styleClass="page-link" action="#{cc.attrs.paginator.goFirstPage}">
