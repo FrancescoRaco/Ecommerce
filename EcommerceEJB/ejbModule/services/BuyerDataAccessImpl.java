@@ -54,5 +54,21 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 		}
 		return ordiniRicevuti;
 	}
+	
+	@Override
+	public OrdineDTO getOrdine(OrdineDTO ordineDTO) throws EcommerceException {
+		OrdineDTO ordineNuovo = null;
+		try {
+			BuyerMapper buyerMapper = (BuyerMapper) getSession().getMapper(BuyerMapper.class);
+			List<OrdineDTO> ordini = buyerMapper.getOrdiniBy(ordineDTO);
+			if (ordini != null && !ordini.isEmpty()) {
+				ordineNuovo = ordini.get(0);
+			}
+		} catch(Exception e) {
+//			logger.error(e.getMessage(), e);
+			throw new EcommerceException(e.getMessage(), e);
+		}
+		return ordineNuovo;
+	}
 
 }

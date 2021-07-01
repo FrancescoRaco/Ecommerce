@@ -13,6 +13,7 @@ import beans.OrdineBean;
 import beans.UtenteBean;
 import dto.OrdineDTO;
 import ejbInterfaces.BuyerDataAccess;
+import ejbInterfaces.CommonDataAccess;
 import utils.CommonUtils;
 import utils.Paginator;
 
@@ -34,6 +35,9 @@ public class DettaglioController {
 	
 	@EJB
 	private static BuyerDataAccess buyerDataAccess;
+	
+	@EJB
+	private static CommonDataAccess commonDataAccess;
 	
 	private boolean fromInit;
 	
@@ -80,9 +84,15 @@ public class DettaglioController {
 	}
 	
 	public void effettuaOperazioniIniziali(ComponentSystemEvent event) {
-		dettaglioBean.setIndietro(false);
-		if (!FacesContext.getCurrentInstance().isPostback() && !fromInit) {
-			ripulisciOrdine();
+		try {
+			dettaglioBean.setIndietro(false);
+			if (!FacesContext.getCurrentInstance().isPostback() && !fromInit) {
+				ripulisciOrdine();
+			} else if (FacesContext.getCurrentInstance().isPostback() && dettaglioBean.getProdottoDTO() != null) {
+				dettaglioBean.setProdottoDTO(commonDataAccess.getProdotto(dettaglioBean.getProdottoDTO()));
+			}
+		} catch(Exception e) {
+			
 		}
 	}
 	

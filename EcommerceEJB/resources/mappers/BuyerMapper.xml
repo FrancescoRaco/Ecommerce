@@ -29,6 +29,9 @@
 		  <if test="idProdotto != null and idProdotto != 0">
 		  	 AND idProdotto = #{idProdotto, jdbcType=INTEGER}
 		  </if>
+		  <if test="progressivo != null and progressivo != 0">
+		  	 AND progressivo = #{progressivo, jdbcType=INTEGER}
+		  </if>
 	  </trim>
    </select>
     	

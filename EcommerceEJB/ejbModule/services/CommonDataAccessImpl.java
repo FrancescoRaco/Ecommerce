@@ -50,5 +50,21 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 		}
 		return prodotti;
 	}
+	
+	@Override
+	public ProdottoDTO getProdotto(ProdottoDTO prodottoDTO) throws EcommerceException {
+		ProdottoDTO prodottoNuovo = null;
+		try {
+			CommonMapper commonMapper = (CommonMapper) getSession().getMapper(CommonMapper.class);
+			List<ProdottoDTO> prodotti = commonMapper.getProdottiAttivi(prodottoDTO);
+			if (prodotti != null && !prodotti.isEmpty()) {
+				prodottoNuovo = prodotti.get(0);
+			}
+		} catch(Exception e) {
+//			logger.error(e.getMessage(), e);
+			throw new EcommerceException(e.getMessage(), e);
+		}
+		return prodottoNuovo;
+	}
 
 }

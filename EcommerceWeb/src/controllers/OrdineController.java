@@ -8,6 +8,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.event.ComponentSystemEvent;
 import beans.MessagesBean;
 import beans.OrdineBean;
+import ejbInterfaces.BuyerDataAccess;
 import ejbInterfaces.SellerDataAccess;
 
 @ManagedBean
@@ -22,6 +23,9 @@ public class OrdineController extends BaseController {
 	
 	@EJB
 	private static SellerDataAccess sellerDataAccess;
+	
+	@EJB
+	private static BuyerDataAccess buyerDataAccess;
 	
 	private boolean fromInit;
 	
@@ -38,6 +42,7 @@ public class OrdineController extends BaseController {
 		try {
 			if (ordineBean.getOrdineDTO().getQuantita() <= sellerDataAccess.getDisponibilitaProdotto(ordineBean.getOrdineDTO().getIdProdotto())) {
 				sellerDataAccess.accettaOrdine(ordineBean.getOrdineDTO());
+				ordineBean.setOrdineDTO(buyerDataAccess.getOrdine(ordineBean.getOrdineDTO()));
 				messagesBean.getSuccesses().add("Ordine accettato con successo");
 			} else {
 				messagesBean.getErrors().add("Non richiedere più unità di quelle disponibili");
@@ -51,6 +56,7 @@ public class OrdineController extends BaseController {
 	public void rifiutaOrdine() {
 		try {
 			sellerDataAccess.rifiutaOrdine(ordineBean.getOrdineDTO());
+			ordineBean.setOrdineDTO(buyerDataAccess.getOrdine(ordineBean.getOrdineDTO()));
 			messagesBean.getSuccesses().add("Ordine rifiutato con successo");
 		} catch(Exception e) {
 			messagesBean.getErrors().add("Operazione fallita: contattare l'amministratore di sistema");

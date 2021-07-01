@@ -12,4 +12,5 @@ public interface CommonDataAccess {
 	public String test(int num) throws Exception;
 	public List<CategoriaDTO> getCategorie() throws EcommerceException;
 	public List<ProdottoDTO> getProdottiAttivi(ProdottoDTO prodottoDTO) throws EcommerceException;
+	public ProdottoDTO getProdotto(ProdottoDTO prodottoDTO) throws EcommerceException;
 }
