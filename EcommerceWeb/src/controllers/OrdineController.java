@@ -10,6 +10,7 @@ import beans.MessagesBean;
 import beans.OrdineBean;
 import ejbInterfaces.BuyerDataAccess;
 import ejbInterfaces.SellerDataAccess;
+import export.DocumentExporter;
 
 @ManagedBean
 @RequestScoped
@@ -61,6 +62,10 @@ public class OrdineController extends BaseController {
 		} catch(Exception e) {
 			messagesBean.getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
 		}
+	}
+	
+	public void stampaRicevuta() {
+		DocumentExporter.exportPdfOrdine(ordineBean.getOrdineDTO());
 	}
 	
 	public String backToDettaglioProdotto() {

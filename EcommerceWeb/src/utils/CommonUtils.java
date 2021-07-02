@@ -1,5 +1,6 @@
 package utils;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -86,6 +87,18 @@ public class CommonUtils {
 		
 		try {
 			converted = new SimpleDateFormat("dd/MM/yyyy").parse(data);
+		} catch(Exception e) {
+			
+		}
+		return converted;
+	}
+	
+	static public String dateToString(Date data) {
+		String converted = null;
+		
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			converted = dateFormat.format(data);
 		} catch(Exception e) {
 			
 		}

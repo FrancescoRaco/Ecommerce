@@ -63,7 +63,7 @@
 						<f:convertDateTime pattern="dd/MM/yyyy"/>
 					</h:inputText>
 				</div>
-				<h:panelGroup layout="block" styleClass="col-12 col-sm-4">
+				<h:panelGroup layout="block" styleClass="col-12 col-sm-4" rendered="#{not empty ordineBean.ordineDTO and ordineBean.ordineDTO.cfVenditore eq utenteBean.codiceFiscale}">
 					<h:outputLabel for="suggeritoId" value="Ordine suggerito:" styleClass="control-label"/>
 					<h:inputText id="suggeritoId" value="#{ordine.suggerito ? 'SI' : 'NO'}" styleClass="form-control" disabled="true"/>
 				</h:panelGroup>
@@ -86,21 +86,29 @@
 			  </div>
 			</h:panelGroup>
 			<br/>
-			<div class="row btn-group">
-				<h:panelGroup layout="block" styleClass="col-12" rendered="#{not empty ordineBean.provenienza and ordineBean.provenienza eq 'dettaglioProdotto.xhtml'}">
-					<br/>
-					<h:commandLink action="#{ordineController.backToDettaglioProdotto()}" styleClass="btn btn-primary">
-						<i class="fas fa-arrow-left pr-1"/>
-						Indietro
-					</h:commandLink>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="col-12" rendered="#{not empty ordineBean.provenienza and ordineBean.provenienza eq 'ordiniEffettuati.xhtml'}">
-					<br/>
-					<h:commandLink action="#{ordineController.backToOrdiniEffettuati()}" styleClass="btn btn-primary">
-						<i class="fas fa-arrow-left pr-1"/>
-						Indietro
-					</h:commandLink>
-				</h:panelGroup>
+			<div>
+				<div class="d-flex justify-content-between">
+			    	<div>
+			        	<h:panelGroup layout="block" rendered="#{not empty ordineBean.provenienza and ordineBean.provenienza eq 'dettaglioProdotto.xhtml'}">
+							<h:commandLink action="#{ordineController.backToDettaglioProdotto()}" styleClass="btn btn-primary">
+								<i class="fas fa-arrow-left pr-1"/>
+								Indietro
+							</h:commandLink>
+						</h:panelGroup>
+						<h:panelGroup layout="block" rendered="#{not empty ordineBean.provenienza and ordineBean.provenienza eq 'ordiniEffettuati.xhtml'}">
+							<h:commandLink action="#{ordineController.backToOrdiniEffettuati()}" styleClass="btn btn-primary">
+								<i class="fas fa-arrow-left pr-1"/>
+								Indietro
+							</h:commandLink>
+						</h:panelGroup>
+			      	</div>
+			      	<div>
+						<h:commandLink action="#{ordineController.stampaRicevuta()}" styleClass="btn btn-primary">
+							<i class="fas fa-print pr-1"/>
+							Stampa
+						</h:commandLink>
+					</div>
+			 	</div>
 			</div>
 		</h:form>
 	</ui:define>
