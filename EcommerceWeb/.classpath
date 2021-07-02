@@ -26,5 +26,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PrimeFaces"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EcommerceEJB"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Log4j"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

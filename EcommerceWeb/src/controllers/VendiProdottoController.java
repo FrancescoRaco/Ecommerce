@@ -8,6 +8,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import beans.MessagesBean;
 import beans.SessionBean;
 import beans.UtenteBean;
@@ -21,6 +25,8 @@ import utils.CommonUtils;
 @ManagedBean
 @RequestScoped
 public class VendiProdottoController extends BaseController {
+	
+	private final static Logger logger = LogManager.getLogger(VendiProdottoController.class);
 	
 	@ManagedProperty(value="#{vendiProdottoBean}")
 	private VendiProdottoBean vendiProdottoBean;
@@ -47,7 +53,7 @@ public class VendiProdottoController extends BaseController {
 				setCategorie(commonDataAccess.getCategorie());
 			}
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	
@@ -84,6 +90,7 @@ public class VendiProdottoController extends BaseController {
 				messagesBean.getSuccesses().add("Prodotto " + prodottoId + " inserito con successo");
 			}
 		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
 			messagesBean.getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
 		}
 	}

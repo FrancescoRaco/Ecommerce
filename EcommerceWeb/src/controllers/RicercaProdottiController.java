@@ -7,6 +7,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import beans.DettaglioBean;
 import beans.MessagesBean;
 import beans.RicercaProdottiBean;
@@ -19,6 +23,8 @@ import utils.Paginator;
 @ManagedBean
 @RequestScoped
 public class RicercaProdottiController extends BaseController {
+	
+	private final static Logger logger = LogManager.getLogger(RicercaProdottiController.class);
 	
 	@ManagedProperty(value="#{sessionBean}")
 	private SessionBean sessionBean;
@@ -47,7 +53,7 @@ public class RicercaProdottiController extends BaseController {
 				ricercaProdottiBean.setCategorie(commonDataAccess.getCategorie());
 			}
 		} catch(Exception e) {
-			System.out.print("Prova");
+			logger.error(e.getMessage(), e);
 		}		
 	}
 	
@@ -73,7 +79,7 @@ public class RicercaProdottiController extends BaseController {
 			ricercaProdottiBean.setIdWrap(null);
 			caricaProdottiAttivi();
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	
@@ -137,7 +143,7 @@ public class RicercaProdottiController extends BaseController {
 		try {
 			caricaProdottiAttivi();
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	

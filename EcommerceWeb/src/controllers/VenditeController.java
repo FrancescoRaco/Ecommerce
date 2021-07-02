@@ -7,6 +7,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import beans.DettaglioBean;
 import beans.MessagesBean;
 import beans.SessionBean;
@@ -19,6 +23,8 @@ import utils.Paginator;
 @ManagedBean
 @RequestScoped
 public class VenditeController extends BaseController {
+	
+	private final static Logger logger = LogManager.getLogger(AuthenticationController.class);
 	
 	@ManagedProperty(value="#{sessionBean}")
 	private SessionBean sessionBean;
@@ -47,7 +53,7 @@ public class VenditeController extends BaseController {
 				caricaProdottiAttivi();
 			}
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	
@@ -67,7 +73,7 @@ public class VenditeController extends BaseController {
 			venditeBean.setPaginatorProdotti(null);
 			caricaProdottiAttivi();
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	

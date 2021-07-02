@@ -6,7 +6,14 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import export.StampaOrdine;
+
 public class CommonUtils {
+	
+	private final static Logger logger = LogManager.getLogger(CommonUtils.class);
 	
 	static public boolean validaCodiceFiscale(String cf) {
 		try {
@@ -15,7 +22,7 @@ public class CommonUtils {
 			Matcher matcher = pattern.matcher(cf);
 			return matcher.matches();
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}
@@ -27,7 +34,7 @@ public class CommonUtils {
 			Matcher matcher = pattern.matcher(password);
 			return matcher.matches();
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}
@@ -40,7 +47,7 @@ public class CommonUtils {
 			boolean result = matcher.matches();
 			return result;
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}
@@ -53,7 +60,7 @@ public class CommonUtils {
 			boolean result = matcher.matches();
 			return result;
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}
@@ -65,7 +72,7 @@ public class CommonUtils {
 			Matcher matcher = pattern.matcher(numero);
 			return matcher.matches();
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}
@@ -77,7 +84,7 @@ public class CommonUtils {
 			Matcher matcher = pattern.matcher(email);
 			return matcher.matches();
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}
@@ -88,7 +95,7 @@ public class CommonUtils {
 		try {
 			converted = new SimpleDateFormat("dd/MM/yyyy").parse(data);
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 		return converted;
 	}
@@ -100,7 +107,7 @@ public class CommonUtils {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 			converted = dateFormat.format(data);
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 		return converted;
 	}
@@ -111,7 +118,7 @@ public class CommonUtils {
 		try {
 			converted = Integer.parseInt(number);
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 		return converted;
 	}

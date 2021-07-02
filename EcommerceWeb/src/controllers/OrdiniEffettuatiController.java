@@ -7,6 +7,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import beans.OrdineBean;
 import beans.OrdiniEffettuatiBean;
 import beans.SessionBean;
@@ -18,6 +22,8 @@ import utils.Paginator;
 @ManagedBean
 @RequestScoped
 public class OrdiniEffettuatiController extends BaseController {
+	
+	private final static Logger logger = LogManager.getLogger(OrdiniEffettuatiController.class);
 	
 	@ManagedProperty(value="#{ordiniEffettuatiBean}")
 	private OrdiniEffettuatiBean ordiniEffettuatiBean;
@@ -43,7 +49,7 @@ public class OrdiniEffettuatiController extends BaseController {
 				caricaOrdiniEffettuati();
 			}
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	
@@ -76,7 +82,7 @@ public class OrdiniEffettuatiController extends BaseController {
 			ordiniEffettuatiBean.setPaginatorOrdini(null);
 			caricaOrdiniEffettuati();
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	

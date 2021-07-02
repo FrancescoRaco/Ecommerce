@@ -6,6 +6,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.event.ComponentSystemEvent;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import beans.MessagesBean;
 import beans.OrdineBean;
 import ejbInterfaces.BuyerDataAccess;
@@ -15,6 +19,8 @@ import export.DocumentExporter;
 @ManagedBean
 @RequestScoped
 public class OrdineController extends BaseController {
+	
+	private final static Logger logger = LogManager.getLogger(OrdineController.class);
 	
 	@ManagedProperty(value="#{ordineBean}")
 	private OrdineBean ordineBean;
@@ -50,6 +56,7 @@ public class OrdineController extends BaseController {
 			}
 			
 		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
 			messagesBean.getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
 		}
 	}
@@ -60,6 +67,7 @@ public class OrdineController extends BaseController {
 			ordineBean.setOrdineDTO(buyerDataAccess.getOrdine(ordineBean.getOrdineDTO()));
 			messagesBean.getSuccesses().add("Ordine rifiutato con successo");
 		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
 			messagesBean.getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
 		}
 	}

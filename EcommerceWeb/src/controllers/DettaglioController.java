@@ -10,6 +10,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import beans.DettaglioBean;
 import beans.MessagesBean;
 import beans.OrdineBean;
@@ -24,6 +28,8 @@ import utils.Paginator;
 @ManagedBean
 @RequestScoped
 public class DettaglioController {
+	
+	private final static Logger logger = LogManager.getLogger(DettaglioController.class);
 	
 	@ManagedProperty(value="#{dettaglioBean}")
 	private DettaglioBean dettaglioBean;
@@ -53,7 +59,7 @@ public class DettaglioController {
 				aiutaVenditore();
 			}
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	
@@ -128,6 +134,7 @@ public class DettaglioController {
 				messagesBean.getSuccesses().add("Ordine " + progressivo + " inserito con successo");
 			}
 		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
 			messagesBean.getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
 		}
 	}
@@ -143,7 +150,7 @@ public class DettaglioController {
 				aiutaVenditore();
 			}
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	
@@ -156,7 +163,7 @@ public class DettaglioController {
 			dettaglioBean.setTabellaOrdiniAbilitata(false);
 			dettaglioBean.setPaginatorOrdini(null);
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	

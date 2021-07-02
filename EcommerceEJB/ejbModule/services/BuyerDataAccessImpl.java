@@ -2,6 +2,8 @@ package services;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import dto.OrdineDTO;
 import ejbInterfaces.BuyerDataAccess;
 import exceptions.EcommerceException;
@@ -9,6 +11,8 @@ import mapperInterfaces.BuyerMapper;
 
 @Stateless
 public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess {
+	
+	private final static Logger logger = LogManager.getLogger(BuyerDataAccessImpl.class);
 	
 	@Override
 	public int insertOrdine(OrdineDTO ordineDTO) throws EcommerceException {
@@ -19,7 +23,7 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 			ordineDTO.setProgressivo(progressivo);
 			buyerMapper.insertOrdine(ordineDTO);
 		} catch(Exception e) {
-//			logger.error(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
 		return progressivo;
@@ -34,7 +38,7 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 			ordineDTO.setCfAcquirente(cfAcquirente);
 			ordiniEffettuati = buyerMapper.getOrdiniBy(ordineDTO);
 		} catch(Exception e) {
-//			logger.error(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
 		return ordiniEffettuati;
@@ -49,7 +53,7 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 			ordineDTO.setIdProdotto(idProdotto);
 			ordiniRicevuti = buyerMapper.getOrdiniBy(ordineDTO);
 		} catch(Exception e) {
-//			logger.error(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
 		return ordiniRicevuti;
@@ -65,7 +69,7 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 				ordineNuovo = ordini.get(0);
 			}
 		} catch(Exception e) {
-//			logger.error(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
 		return ordineNuovo;

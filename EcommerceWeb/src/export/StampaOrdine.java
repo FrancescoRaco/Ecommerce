@@ -1,15 +1,13 @@
 package export;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -22,7 +20,6 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-
 import dto.OrdineDTO;
 import utils.CommonUtils;
 
@@ -31,76 +28,18 @@ public class StampaOrdine {
 	/**
 	 * Logger
 	 */
-//	private static Logger logger = Logger.getLogger(PdfNota97.class);
+	private final static Logger logger = LogManager.getLogger(StampaOrdine.class);
 	protected PdfContentByte cbr;
 	
 	/**
 	 * Font
 	 */
-	private static Font fontIntestazione = new Font(FontFamily.HELVETICA, 11.5f, Font.BOLD);
 	private static Font fontTitoli = new Font(FontFamily.HELVETICA, 14, Font.BOLD);
-	private static Font fontAssNormal = new Font(FontFamily.HELVETICA, 10.5f, Font.NORMAL);
 	private static Font fontDatiNormal = new Font(FontFamily.HELVETICA, 10, Font.NORMAL);
-	private static Font fontDatiBold = new Font(FontFamily.HELVETICA, 10, Font.BOLD);
-	private static Font fontSmallNormal = new Font(FontFamily.HELVETICA, 8, Font.NORMAL);
-	private static Font fontSymbol = new Font(FontFamily.ZAPFDINGBATS, 10, Font.NORMAL);
-	
-
-	/**
-	 * Inserisci testo prima e dopo alla spunta
-	 * @param start Testo da inserire prima della spunta
-	 * @param value Stringa che specifica se selezionare la spunta
-	 * @param label Testo da inserire dopo la spunta
-	 * @return Paragrafo con carattere che rappresenta la spunta
-	 */
-  	private static Paragraph createCheckedParagraph(String start, String value, String label)
-	{
-		Paragraph p = new Paragraph();
-        
-        char checked='\u0034';
-        char unchecked='\u0072';
-        
-        if (start != null && !start.equals(""))
-        {
-        	p.add(new Phrase(start, fontDatiNormal));
-        }
-        if (value != null && !value.equals(""))
-        {
-    	    p.add(new Phrase(String.valueOf(checked), fontSymbol));
-        }
-        else
-        {
-    	    p.add(new Phrase(String.valueOf(unchecked), fontSymbol));
-        }
-        p.add(new Phrase(" " + label, fontDatiNormal));
-        return p;
-	}
-	
-  	/**
-	 * Inserisci testo o label dopo la spunta
-	 * @param value Stringa che specifica se selezionare la spunta
-	 * @param label Testo da inserire dopo la spunta
-	 * @return Paragrafo con carattere che rappresenta la spunta
-	 */
-	private Paragraph createCheckedParagraphWithPostLabel(String value, String label)
-	{
-		return createCheckedParagraph("", value, label);
-	}
-	
-	/**
-	 * Inserisci testo o label prima della spunta
-	 * @param label Testo da inserire prima della spunta
-	 * @param value Stringa che specifica se selezionare la spunta
-	 * @return Paragrafo con carattere che rappresenta la spunta
-	 */
-	private Paragraph createCheckedParagraphWithPreLabel(String label, String value)
-	{
-		return createCheckedParagraph(label + " ", value, "");
-	}
   	
-	private Map<String, Paragraph> createMappaContenuti(OrdineDTO ordineDTO)
-  	{
-  		Map<String, Paragraph> mappaParagrafi = new TreeMap<String, Paragraph>();
+	private Map<String, Paragraph> createMappaContenuti(OrdineDTO ordineDTO) {
+  		
+		Map<String, Paragraph> mappaParagrafi = new TreeMap<String, Paragraph>();
   		
   		mappaParagrafi.put("riga1P1", new Paragraph("Identificativo prodotto", fontDatiNormal));
   		mappaParagrafi.put("riga1P2", new Paragraph(ordineDTO.getIdProdotto() == null ? "---" : ""+ordineDTO.getIdProdotto(), fontDatiNormal));
@@ -131,12 +70,11 @@ public class StampaOrdine {
         return mappaParagrafi;
   	}
   	
-	public List<PdfPTable> createListaContenuti(Map<String, Paragraph> paragrafi)
-  	{
+	public List<PdfPTable> createListaContenuti(Map<String, Paragraph> paragrafi) {
+		
 		ArrayList<PdfPTable> tableList = new ArrayList<PdfPTable>();
 		
-		try
-		{
+		try {
 			PdfPTable row1 = new PdfPTable(4);
             row1.setWidths(new float[] {0.65f, 1, 0.5f, 1});
             
@@ -243,18 +181,16 @@ public class StampaOrdine {
             row5.addCell(cell16);
             
             tableList.addAll(Arrays.asList(row1, row2, row3, row4, row5));
-		}
-		catch(Exception e)
-  		{
-			e.printStackTrace();
-//  			logger.error("Errore durante la creazione delle tabelle di anagrafica", e);
+		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
   		}
   		
   		return tableList;
   	}
 	
   	public ByteArrayOutputStream produciPdf(OrdineDTO ordineDTO) {
-		ByteArrayOutputStream baosPDF =null;
+		
+  		ByteArrayOutputStream baosPDF =null;
 		
 		//Document document = new Document(PageSize.A4, 35, 35, 18, 35);
 		Document document = new Document(PageSize.A4, 50, 50, 20, 29);
@@ -262,7 +198,6 @@ public class StampaOrdine {
 		
 		baosPDF = new ByteArrayOutputStream();
 		try {
-			 
 				PdfWriter writer = PdfWriter.getInstance(document, baosPDF);
 				document.open();
 				
@@ -315,27 +250,21 @@ public class StampaOrdine {
 	            
 	           document.close();
 			
-		} catch (Exception e1) {
-			  e1.printStackTrace();
-//			  logger.error("ERROR - Stato: GENERA PDF "+e1.getMessage());
-		
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		} 
 
 		return baosPDF;
 	}
 	
-//	public static void byteArrayToPdf(byte[] b)
-//	{          
+//	public static void byteArrayToPdf(byte[] b) {          
 //		OutputStream out = null;
-//	    try
-//	    {       
+//	    try {       
 //	        out = new FileOutputStream("C:/Users/ACER/OneDrive/Desktop/stampaOrdine.pdf");
 //	        out.write(b);
 //	        out.close();
-//	    }
-//	    catch (Exception e)
-//	    {
-////	        logger.error("Errore nella conversione da baos a pdf");
+//	    } catch (Exception e) {
+//	    	logger.error(e.getMessage(), e);
 //	    }
 //	}
 //	
@@ -353,7 +282,7 @@ public class StampaOrdine {
 //			ordine.setDataOrdine(CommonUtils.stringToDate("30/06/2021"));
 //			ordine.setOfferta(100);
 //		} catch(Exception e) {
-//			
+//			logger.error(e.getMessage(), e);	
 //		}
 //		
 //		return ordine;

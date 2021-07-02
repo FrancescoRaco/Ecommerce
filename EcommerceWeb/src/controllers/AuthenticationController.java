@@ -11,6 +11,9 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import beans.LoginBean;
 import beans.MessagesBean;
 import beans.UtenteBean;
@@ -22,6 +25,8 @@ import utils.CommonUtils;
 @ManagedBean
 @RequestScoped
 public class AuthenticationController extends BaseController {
+	
+	private final static Logger logger = LogManager.getLogger(AuthenticationController.class);
 	
 	@ManagedProperty(value="#{utenteBean}")
 	private UtenteBean utenteBean;
@@ -69,7 +74,7 @@ public class AuthenticationController extends BaseController {
 				}
 			}
 		} catch(Exception e) {
-			System.out.print("Prova");
+			logger.error(e.getMessage(), e);
 		}
 		return "";
 	}
@@ -95,7 +100,7 @@ public class AuthenticationController extends BaseController {
 				messagesBean.getInvalidFields().add("passwordId");
 			}
 		} catch(Exception e) {
-			System.out.print("Prova");
+			logger.error(e.getMessage(), e);
 		}
 		return "";
 	}
@@ -105,7 +110,7 @@ public class AuthenticationController extends BaseController {
 			clearUtenteBean();
 			utenteBean.setSignupAbilitato(true);
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	
@@ -126,6 +131,7 @@ public class AuthenticationController extends BaseController {
 				messagesBean.getSuccesses().add("Utente " + utenteBean.getNome() + " " + utenteBean.getCognome() + " creato con successo");
 			}
 		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
 			messagesBean.getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
 		}
 	}
@@ -223,7 +229,7 @@ public class AuthenticationController extends BaseController {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("/EcommerceWeb/faces/pages/home.xhtml");
 			FacesContext.getCurrentInstance().responseComplete();
 		} catch(Exception e) {
-			
+			logger.error(e.getMessage(), e);
 		}
 	}
 	
