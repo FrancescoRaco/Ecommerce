@@ -60,6 +60,7 @@ public class AuthenticationController extends BaseController {
 				UtenteDTO utenteLoggato = loginDataAccess.login(utenteDTO);
 				if (utenteLoggato != null) {
 					utenteBean.setCodiceFiscale(utenteLoggato.getCodiceFiscale());
+					utenteBean.setPassword(utenteLoggato.getPassword());
 					utenteBean.setNome(utenteLoggato.getNome());
 					utenteBean.setCognome(utenteLoggato.getCognome());
 					utenteBean.setDomicilio(utenteLoggato.getDomicilio());
@@ -87,6 +88,7 @@ public class AuthenticationController extends BaseController {
 			UtenteDTO utenteLoggato = loginDataAccess.login(utenteDTO);
 			if (utenteLoggato != null) {
 				utenteBean.setCodiceFiscale(utenteLoggato.getCodiceFiscale());
+				utenteBean.setPassword(utenteLoggato.getPassword());
 				utenteBean.setNome(utenteLoggato.getNome());
 				utenteBean.setCognome(utenteLoggato.getCognome());
 				utenteBean.setDomicilio(utenteLoggato.getDomicilio());

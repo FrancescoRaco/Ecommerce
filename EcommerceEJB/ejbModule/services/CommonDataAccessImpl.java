@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import dto.CategoriaDTO;
 import dto.ProdottoDTO;
+import dto.UtenteDTO;
 import ejbInterfaces.CommonDataAccess;
 import exceptions.EcommerceException;
 import mapperInterfaces.CommonMapper;
@@ -67,6 +68,19 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 			throw new EcommerceException(e.getMessage(), e);
 		}
 		return prodottoNuovo;
+	}
+	
+	@Override
+	public int modificaPassword(UtenteDTO utenteDTO) throws EcommerceException {
+		int result = 0;
+		try {
+			CommonMapper commonMapper = (CommonMapper) getSession().getMapper(CommonMapper.class);
+			result = commonMapper.modificaPassword(utenteDTO);
+		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new EcommerceException(e.getMessage(), e);
+		}
+		return result;
 	}
 
 }

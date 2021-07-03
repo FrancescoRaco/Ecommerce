@@ -28,7 +28,7 @@
 		<!-- FontAwesome -->
 		<h:outputStylesheet name="fontawesome/css/all.min.css"/>
 		
-		<h:graphicImage name="images/banner.jpg" style="width: 100%;" height="150"/>
+		<h:graphicImage name="images/professionalBanner.jpg" style="width: 100%;" height="150"/>
 		
 		<ui:insert name="effettuaOperazioniIniziali" />
 		
@@ -55,7 +55,8 @@
 			        	<li class="nav-item dropdown">
 				          <a class="nav-link dropdown-toggle" id="dropdownMenuLinkId" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Benvenuto #{utenteBean.nome}!</a>
 				          <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkId">
-				          	<h:outputLink styleClass="dropdown-item" value="/EcommerceWeb/faces/logout.xhtml">LOGOUT</h:outputLink>
+				          	<h:outputLink styleClass="dropdown-item" value="/EcommerceWeb/faces/pages/profilo.xhtml">Profilo</h:outputLink>
+				          	<h:outputLink styleClass="dropdown-item" value="/EcommerceWeb/faces/logout.xhtml">Logout</h:outputLink>
 				           </div>
 				        </li>
 			        </ul>

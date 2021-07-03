@@ -7,6 +7,7 @@
    <select id="getUtente" parameterType="dto.UtenteDTO" resultType="dto.UtenteDTO">
       SELECT
       	codiceFiscale as "codiceFiscale",
+      	password as "password",
       	nome as "nome",
       	cognome as "cognome",
       	domicilio as "domicilio",

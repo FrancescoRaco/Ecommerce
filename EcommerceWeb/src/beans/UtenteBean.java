@@ -23,6 +23,10 @@ public class UtenteBean {
 	private boolean signupAbilitato;
 	private boolean loggedIn;
 	
+	private boolean modificaPassword;
+	private String vecchiaPassword;
+	private String nuovaPassword;
+	
 	
 	public String getCodiceFiscale() {
 		return codiceFiscale;
@@ -89,6 +93,24 @@ public class UtenteBean {
 	}
 	public void setDataNascitaWrap(String dataNascitaWrap) {
 		this.dataNascitaWrap = dataNascitaWrap;
+	}
+	public boolean isModificaPassword() {
+		return modificaPassword;
+	}
+	public void setModificaPassword(boolean modificaPassword) {
+		this.modificaPassword = modificaPassword;
+	}
+	public String getVecchiaPassword() {
+		return vecchiaPassword;
+	}
+	public void setVecchiaPassword(String vecchiaPassword) {
+		this.vecchiaPassword = vecchiaPassword;
+	}
+	public String getNuovaPassword() {
+		return nuovaPassword;
+	}
+	public void setNuovaPassword(String nuovaPassword) {
+		this.nuovaPassword = nuovaPassword;
 	}
 
 }
