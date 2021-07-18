@@ -33,6 +33,7 @@
 		  	 AND progressivo = #{progressivo, jdbcType=INTEGER}
 		  </if>
 	  </trim>
+	   ORDER BY progressivo
    </select>
     	
 </mapper>
