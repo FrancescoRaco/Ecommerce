@@ -34,7 +34,7 @@
 									<th colspan="5">Tabella dei prodotti</th>
 								</tr>
 								<tr class="table-main">
-									<th>Identificativo</th>
+									<th>Visualizza</th>
 									<th>Titolo</th>
 									<th>Categoria</th>
 									<th>Venditore</th>
@@ -45,8 +45,9 @@
 								<ui:repeat var="prodotto" value="#{venditeBean.paginatorProdotti.page}">
 									<tr>
 										<td>
-											<h:commandLink value="#{prodotto.id}" action="#{venditeController.visualizzaDettaglio()}" styleClass="btn btn-link">
+											<h:commandLink action="#{venditeController.visualizzaDettaglio()}" styleClass="btn btn-link">
 												<f:setPropertyActionListener value="#{prodotto}" target="#{dettaglioBean.prodottoDTO}"></f:setPropertyActionListener>
+												<i class="fas fa-eye"/>
 											</h:commandLink>
 										</td>																					
 										<td><h:outputText value="#{prodotto.titolo}" /></td>	

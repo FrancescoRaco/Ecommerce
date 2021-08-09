@@ -35,6 +35,7 @@ public class StampaOrdine {
 	 * Font
 	 */
 	private static Font fontTitoli = new Font(FontFamily.HELVETICA, 14, Font.BOLD);
+	private static Font fontSottoTitoli = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
 	private static Font fontDatiNormal = new Font(FontFamily.HELVETICA, 10, Font.NORMAL);
   	
 	private Map<String, Paragraph> createMappaContenuti(OrdineDTO ordineDTO) {
@@ -210,7 +211,8 @@ public class StampaOrdine {
 	            Paragraph paragraph = new Paragraph();
 	            paragraph.add(new Paragraph(" "));
 	                        
-	            Paragraph intestazione = new Paragraph("Stampa ricevuta dell'ordine: " + ordineDTO.getIdProdotto() + " " + ordineDTO.getProgressivo(), fontTitoli);
+	            Paragraph intestazione = new Paragraph("Dettaglio ordine", fontTitoli);
+	            Paragraph intestazione2 = new Paragraph(ordineDTO.getTitoloProdotto(), fontSottoTitoli);
 				
 				Map<String, Paragraph> paragrafiBody = createMappaContenuti(ordineDTO);
 	            
@@ -220,6 +222,11 @@ public class StampaOrdine {
 	            intestazione.setAlignment(Element.ALIGN_CENTER);
 		        intestazione.setSpacingAfter(8);
 		        document.add(intestazione);
+		        
+		        //Sottotitolo
+		        intestazione2.setAlignment(Element.ALIGN_CENTER);
+		        intestazione2.setSpacingAfter(8);
+		        document.add(intestazione2);
 		          
 		        //row1
 		        PdfPTable row1 = tabellaBody.get(0);

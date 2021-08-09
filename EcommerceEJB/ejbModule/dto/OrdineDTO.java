@@ -5,6 +5,7 @@ import java.util.Date;
 public class OrdineDTO {
 	
 	private Integer idProdotto;
+	private String titoloProdotto;
 	private String cfVenditore;
 	private String cfAcquirente;
 	private Integer offerta;
@@ -21,6 +22,12 @@ public class OrdineDTO {
 	}
 	public void setIdProdotto(Integer idProdotto) {
 		this.idProdotto = idProdotto;
+	}
+	public String getTitoloProdotto() {
+		return titoloProdotto;
+	}
+	public void setTitoloProdotto(String titoloProdotto) {
+		this.titoloProdotto = titoloProdotto;
 	}
 	public String getCfVenditore() {
 		return cfVenditore;

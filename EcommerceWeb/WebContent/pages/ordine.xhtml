@@ -10,7 +10,7 @@
 	template="/pages/templates/pageTemplate.xhtml">
 	
 	<ui:define name="title">
-		<title>Dettaglio prodotto</title>
+		<title>Dettaglio ordine</title>
 	</ui:define>
 	
 	<ui:define name="effettuaOperazioniIniziali">
@@ -20,6 +20,8 @@
 	<ui:define name="content">
 		<br/><br/>
 		<p class="text-center h1">Dettaglio ordine</p>
+		<br/>
+		<p class="text-center h2">#{ordineBean.ordineDTO.titoloProdotto}</p>
 		<br/><br/>
 		<h:form>
 			<div class="row">
@@ -60,7 +62,7 @@
 				<div class="col-12 col-sm-4">
 					<h:outputLabel for="dataOrdineId" value="Data ordine:" styleClass="control-label"/>
 					<h:inputText id="dataOrdineId" value="#{ordineBean.ordineDTO.dataOrdine}" styleClass="form-control" disabled="true">
-						<f:convertDateTime pattern="dd/MM/yyyy"/>
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Berlin"/>
 					</h:inputText>
 				</div>
 				<h:panelGroup layout="block" styleClass="col-12 col-sm-4" rendered="#{not empty ordineBean.ordineDTO and ordineBean.ordineDTO.cfVenditore eq utenteBean.codiceFiscale}">

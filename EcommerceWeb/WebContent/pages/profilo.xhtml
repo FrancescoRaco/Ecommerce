@@ -59,7 +59,7 @@
 				<div class="col-12 col-sm-6">
 					<h:outputLabel for="dataNascitaId" value="Data di nascita:" styleClass="control-label"/>
 					<h:inputText id="dataNascitaId" value="#{utenteBean.dataNascita}" styleClass="form-control" disabled="true">
-						<f:convertDateTime pattern="dd/MM/yyyy"/>
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Berlin"/>
 					</h:inputText>
 				</div>
 			</div>

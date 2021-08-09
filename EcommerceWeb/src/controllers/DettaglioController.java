@@ -213,6 +213,9 @@ public class DettaglioController {
 	public String visualizzaOrdine() {
 		
 		ordineBean.setProvenienza("dettaglioProdotto.xhtml");
+		if (ordineBean.getOrdineDTO() != null) {
+			ordineBean.getOrdineDTO().setTitoloProdotto(dettaglioBean.getProdottoDTO() != null ? dettaglioBean.getProdottoDTO().getTitolo() : null);
+		}
 		
 		return "ordine";
 	}

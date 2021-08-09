@@ -31,10 +31,11 @@
 							</caption>
 							<thead class="text-center">
 								<tr class="table-main">
-									<th colspan="5">Tabella degli ordini effettuati</th>
+									<th colspan="6">Tabella degli ordini effettuati</th>
 								</tr>
 								<tr class="table-main">
-									<th>Identificativo prodotto</th>
+									<th>Visualizza</th>
+									<th>Prodotto</th>
 									<th>Progressivo ordine</th>
 									<th>Offerta</th>
 									<th>Quantita</th>
@@ -45,10 +46,12 @@
 								<ui:repeat var="ordine" value="#{ordiniEffettuatiBean.paginatorOrdini.page}">
 									<tr>
 										<td>
-											<h:commandLink value="#{ordine.idProdotto}" action="#{ordiniEffettuatiController.visualizzaOrdine()}" styleClass="btn btn-link">
+											<h:commandLink action="#{ordiniEffettuatiController.visualizzaOrdine()}" styleClass="btn btn-link">
 												<f:setPropertyActionListener value="#{ordine}" target="#{ordineBean.ordineDTO}"></f:setPropertyActionListener>
+												<i class="fas fa-eye"/>
 											</h:commandLink>
-										</td>																					
+										</td>
+										<td><h:outputText value="#{ordine.titoloProdotto}" /></td>																					
 										<td><h:outputText value="#{ordine.progressivo}" /></td>	
 										<td><h:outputText value="#{ordine.offerta}" /></td>																						
 										<td><h:outputText value="#{ordine.quantita}" /></td>

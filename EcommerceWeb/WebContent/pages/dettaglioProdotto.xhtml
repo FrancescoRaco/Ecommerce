@@ -56,13 +56,13 @@
 				<div class="col-12 col-sm-4">
 					<h:outputLabel for="dataInserimentoId" value="Data inserimento:" styleClass="control-label"/>
 					<h:inputText id="dataInserimentoId" value="#{dettaglioBean.prodottoDTO.dataInserimento}" styleClass="form-control" disabled="true">
-						<f:convertDateTime pattern="dd/MM/yyyy"/>
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Berlin"/>
 					</h:inputText>
 				</div>
 				<div class="col-12 col-sm-4">
 					<h:outputLabel for="dataAggiornamentoId" value="Data aggiornamento:" styleClass="control-label"/>
 					<h:inputText id="dataAggiornamentoId" value="#{dettaglioBean.prodottoDTO.dataAggiornamento}" styleClass="form-control" disabled="true">
-						<f:convertDateTime pattern="dd/MM/yyyy"/>
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Berlin"/>
 					</h:inputText>
 				</div>
 			</div>
@@ -125,8 +125,7 @@
 									<th colspan="6">Tabella degli ordini ricevuti</th>
 								</tr>
 								<tr class="table-main">
-									<th>Identificativo prodotto</th>
-									<th>Progressivo ordine</th>
+									<th>Progressivo</th>
 									<th>Offerta</th>
 									<th>Quantita</th>
 									<th>Stato</th>	
@@ -137,11 +136,10 @@
 								<ui:repeat var="ordine" value="#{dettaglioBean.paginatorOrdini.page}">
 									<tr>
 										<td>
-											<h:commandLink value="#{ordine.idProdotto}" action="#{dettaglioController.visualizzaOrdine()}" styleClass="btn btn-link">
+											<h:commandLink value="#{ordine.progressivo}" action="#{dettaglioController.visualizzaOrdine()}" styleClass="btn btn-link">
 												<f:setPropertyActionListener value="#{ordine}" target="#{ordineBean.ordineDTO}"></f:setPropertyActionListener>
 											</h:commandLink>
 										</td>																					
-										<td><h:outputText value="#{ordine.progressivo}" /></td>	
 										<td><h:outputText value="#{ordine.offerta}" /></td>																						
 										<td><h:outputText value="#{ordine.quantita}" /></td>
 										<td><h:outputText value="#{ordine.flagAccettazione eq 0 ? 'In lavorazione' : (ordine.flagAccettazione eq 1 ? 'Accettato' : 'Rifiutato')}" /></td>																					
