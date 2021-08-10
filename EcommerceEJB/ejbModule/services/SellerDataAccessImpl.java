@@ -3,6 +3,8 @@ package services;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+
+import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import dto.OrdineDTO;
@@ -24,8 +26,8 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 		
 		int id = 0;
 		
-		try {
-			SellerMapper sellerMapper = (SellerMapper) getSession().getMapper(SellerMapper.class);
+		try (SqlSession session = getSession()) {
+			SellerMapper sellerMapper = (SellerMapper) session.getMapper(SellerMapper.class);
 			id = sellerMapper.getMaxIdProdotto() + 1;
 			prodottoDTO.setId(id);
 			sellerMapper.insertProdotto(prodottoDTO);
@@ -42,8 +44,8 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 		
 		int id = 0;
 		
-		try {
-			SellerMapper sellerMapper = (SellerMapper) getSession().getMapper(SellerMapper.class);
+		try (SqlSession session = getSession()) {
+			SellerMapper sellerMapper = (SellerMapper) session.getMapper(SellerMapper.class);
 			id = sellerMapper.getDisponibilita(idProdotto);
 		} catch(Exception e) {
 			context.setRollbackOnly();
@@ -58,8 +60,8 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 		
 		int result = 0;
 		
-		try {
-			SellerMapper sellerMapper = (SellerMapper) getSession().getMapper(SellerMapper.class);
+		try (SqlSession session = getSession()) {
+			SellerMapper sellerMapper = (SellerMapper) session.getMapper(SellerMapper.class);
 			Integer disponibilita = sellerMapper.getDisponibilita(ordineDTO.getIdProdotto());
 			disponibilita -= ordineDTO.getQuantita();
 			result = sellerMapper.accettaOrdine(ordineDTO);
@@ -80,8 +82,8 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 		
 		int result = 0;
 		
-		try {
-			SellerMapper sellerMapper = (SellerMapper) getSession().getMapper(SellerMapper.class);
+		try (SqlSession session = getSession()) {
+			SellerMapper sellerMapper = (SellerMapper) session.getMapper(SellerMapper.class);
 			result = sellerMapper.rifiutaOrdine(ordineDTO);
 		} catch(Exception e) {
 			context.setRollbackOnly();

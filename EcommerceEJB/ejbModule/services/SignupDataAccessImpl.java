@@ -3,6 +3,8 @@ package services;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+
+import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import dto.UtenteDTO;
@@ -23,8 +25,8 @@ public class SignupDataAccessImpl extends BaseService implements SignupDataAcces
 		
 		int result = 0;
 		
-		try {
-			SignupMapper signupMapper = (SignupMapper) getSession().getMapper(SignupMapper.class);
+		try (SqlSession session = getSession()) {
+			SignupMapper signupMapper = (SignupMapper) session.getMapper(SignupMapper.class);
 			result = signupMapper.insertUtente(utenteDTO);
 		} catch(Exception e) {
 			context.setRollbackOnly();

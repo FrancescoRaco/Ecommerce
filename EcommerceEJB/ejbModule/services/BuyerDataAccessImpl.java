@@ -4,6 +4,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+
+import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import dto.OrdineDTO;
@@ -22,8 +24,8 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 	@Override
 	public int insertOrdine(OrdineDTO ordineDTO) throws EcommerceException {
 		int progressivo = 0;
-		try {
-			BuyerMapper buyerMapper = (BuyerMapper) getSession().getMapper(BuyerMapper.class);
+		try (SqlSession session = getSession()) {
+			BuyerMapper buyerMapper = (BuyerMapper) session.getMapper(BuyerMapper.class);
 			progressivo = buyerMapper.getMaxProgrOrdine() + 1;
 			ordineDTO.setProgressivo(progressivo);
 			buyerMapper.insertOrdine(ordineDTO);
@@ -38,8 +40,8 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 	@Override
 	public List<OrdineDTO> getOrdiniEffettuati(String cfAcquirente) throws EcommerceException {
 		List<OrdineDTO> ordiniEffettuati = null;
-		try {
-			BuyerMapper buyerMapper = (BuyerMapper) getSession().getMapper(BuyerMapper.class);
+		try (SqlSession session = getSession()) {
+			BuyerMapper buyerMapper = (BuyerMapper) session.getMapper(BuyerMapper.class);
 			OrdineDTO ordineDTO = new OrdineDTO();
 			ordineDTO.setCfAcquirente(cfAcquirente);
 			ordiniEffettuati = buyerMapper.getOrdiniBy(ordineDTO);
@@ -54,8 +56,8 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 	@Override
 	public List<OrdineDTO> getOrdiniRicevuti(Integer idProdotto) throws EcommerceException {
 		List<OrdineDTO> ordiniRicevuti = null;
-		try {
-			BuyerMapper buyerMapper = (BuyerMapper) getSession().getMapper(BuyerMapper.class);
+		try (SqlSession session = getSession()) {
+			BuyerMapper buyerMapper = (BuyerMapper) session.getMapper(BuyerMapper.class);
 			OrdineDTO ordineDTO = new OrdineDTO();
 			ordineDTO.setIdProdotto(idProdotto);
 			ordiniRicevuti = buyerMapper.getOrdiniBy(ordineDTO);
@@ -70,8 +72,8 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 	@Override
 	public OrdineDTO getOrdine(OrdineDTO ordineDTO) throws EcommerceException {
 		OrdineDTO ordineNuovo = null;
-		try {
-			BuyerMapper buyerMapper = (BuyerMapper) getSession().getMapper(BuyerMapper.class);
+		try (SqlSession session = getSession()) {
+			BuyerMapper buyerMapper = (BuyerMapper) session.getMapper(BuyerMapper.class);
 			List<OrdineDTO> ordini = buyerMapper.getOrdiniBy(ordineDTO);
 			if (ordini != null && !ordini.isEmpty()) {
 				ordineNuovo = ordini.get(0);

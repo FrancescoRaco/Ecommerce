@@ -3,6 +3,8 @@ package services;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+
+import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import dto.UtenteDTO;
@@ -23,8 +25,8 @@ public class LoginDataAccessImpl extends BaseService implements LoginDataAccess 
 		
 		UtenteDTO utenteLoggato = null;
 		
-		try {
-			LoginMapper loginMapper = (LoginMapper) getSession().getMapper(LoginMapper.class);
+		try (SqlSession session = getSession()) {
+			LoginMapper loginMapper = (LoginMapper) session.getMapper(LoginMapper.class);
 			utenteLoggato = loginMapper.getUtente(utenteDTO);
 			logger.info("Loggato l'utente " + utenteLoggato.getNome() + " " + utenteLoggato.getCognome());
 		} catch(Exception e) {
