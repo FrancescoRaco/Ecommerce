@@ -1,6 +1,8 @@
 package services;
 
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +16,9 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 	
 	private final static Logger logger = LogManager.getLogger(BuyerDataAccessImpl.class);
 	
+	@Resource
+	private SessionContext context;
+	
 	@Override
 	public int insertOrdine(OrdineDTO ordineDTO) throws EcommerceException {
 		int progressivo = 0;
@@ -23,6 +28,7 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 			ordineDTO.setProgressivo(progressivo);
 			buyerMapper.insertOrdine(ordineDTO);
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
@@ -38,6 +44,7 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 			ordineDTO.setCfAcquirente(cfAcquirente);
 			ordiniEffettuati = buyerMapper.getOrdiniBy(ordineDTO);
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
@@ -53,6 +60,7 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 			ordineDTO.setIdProdotto(idProdotto);
 			ordiniRicevuti = buyerMapper.getOrdiniBy(ordineDTO);
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
@@ -69,6 +77,7 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 				ordineNuovo = ordini.get(0);
 			}
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}

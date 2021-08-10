@@ -1,5 +1,7 @@
 package services;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +16,9 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 	
 	private final static Logger logger = LogManager.getLogger(SellerDataAccessImpl.class);
 	
+	@Resource
+	private SessionContext context;
+	
 	@Override
 	public int insertProdotto(ProdottoDTO prodottoDTO) throws EcommerceException {
 		
@@ -25,6 +30,7 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 			prodottoDTO.setId(id);
 			sellerMapper.insertProdotto(prodottoDTO);
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
@@ -40,6 +46,7 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 			SellerMapper sellerMapper = (SellerMapper) getSession().getMapper(SellerMapper.class);
 			id = sellerMapper.getDisponibilita(idProdotto);
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
@@ -61,6 +68,7 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 			prodottoDTO.setDisponibilita(disponibilita);
 			result = sellerMapper.aggiornaDisponibilitaProdotto(prodottoDTO);
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
@@ -76,6 +84,7 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 			SellerMapper sellerMapper = (SellerMapper) getSession().getMapper(SellerMapper.class);
 			result = sellerMapper.rifiutaOrdine(ordineDTO);
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}

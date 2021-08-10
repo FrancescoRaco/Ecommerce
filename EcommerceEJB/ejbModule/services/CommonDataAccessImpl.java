@@ -1,6 +1,9 @@
 package services;
 
 import java.util.List;
+
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +19,9 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 	
 	private final static Logger logger = LogManager.getLogger(CommonDataAccessImpl.class);
 	
+	@Resource
+	private SessionContext context;
+	
 	@Override
 	public String test(int num) throws Exception {
 		String result = null;
@@ -23,6 +29,7 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 			CommonMapper commonMapper = (CommonMapper) getSession().getMapper(CommonMapper.class);
 			result = commonMapper.test(num);
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 		}
 		return result;
@@ -35,6 +42,7 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 			CommonMapper commonMapper = (CommonMapper) getSession().getMapper(CommonMapper.class);
 			categorie = commonMapper.getCategorie();
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
@@ -48,6 +56,7 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 			CommonMapper commonMapper = (CommonMapper) getSession().getMapper(CommonMapper.class);
 			prodotti = commonMapper.getProdottiAttivi(prodottoDTO);
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
@@ -64,6 +73,7 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 				prodottoNuovo = prodotti.get(0);
 			}
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
@@ -77,6 +87,7 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 			CommonMapper commonMapper = (CommonMapper) getSession().getMapper(CommonMapper.class);
 			result = commonMapper.modificaPassword(utenteDTO);
 		} catch(Exception e) {
+			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);
 			throw new EcommerceException(e.getMessage(), e);
 		}
