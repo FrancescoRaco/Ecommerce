@@ -126,7 +126,7 @@ public class RicercaProdottiController extends BaseController {
 		if (ricercaProdottiBean != null && ricercaProdottiBean.getPrezzoBaseWrap() != null && !ricercaProdottiBean.getPrezzoBaseWrap().isEmpty()) {
 			Integer converted = CommonUtils.stringToInteger(ricercaProdottiBean.getPrezzoBaseWrap());
 			if (converted == null) {
-				messagesBean.addError("Errore durante la validazione dell'identificativo del prodotto", "prezzoBaseId");
+				messagesBean.addError("Errore durante la validazione del prezzo base", "prezzoBaseId");
 			} else {
 				ricercaProdottiBean.setPrezzoBase(converted);
 			}
