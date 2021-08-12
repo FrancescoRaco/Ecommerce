@@ -8,6 +8,7 @@ public class ProdottoDTO {
 	private Integer codiceCategoria;
 	private String descCategoria;
 	private String cfVenditore;
+	private String venditoreDenom;
 	private String titolo;
 	private String descrizione;
 	private Integer flagAttivazione;
@@ -45,6 +46,12 @@ public class ProdottoDTO {
 	}
 	public void setCfVenditore(String cfVenditore) {
 		this.cfVenditore = cfVenditore;
+	}
+	public String getVenditoreDenom() {
+		return venditoreDenom;
+	}
+	public void setVenditoreDenom(String venditoreDenom) {
+		this.venditoreDenom = venditoreDenom;
 	}
 	public String getTitolo() {
 		return titolo;

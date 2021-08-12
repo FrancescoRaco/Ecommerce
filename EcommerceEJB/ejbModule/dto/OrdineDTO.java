@@ -8,6 +8,7 @@ public class OrdineDTO {
 	private String titoloProdotto;
 	private String cfVenditore;
 	private String cfAcquirente;
+	private String acquirenteDenom;
 	private Integer offerta;
 	private Integer quantita;
 	private Integer progressivo;
@@ -40,6 +41,12 @@ public class OrdineDTO {
 	}
 	public void setCfAcquirente(String cfAcquirente) {
 		this.cfAcquirente = cfAcquirente;
+	}
+	public String getAcquirenteDenom() {
+		return acquirenteDenom;
+	}
+	public void setAcquirenteDenom(String acquirenteDenom) {
+		this.acquirenteDenom = acquirenteDenom;
 	}
 	public Integer getOfferta() {
 		return offerta;

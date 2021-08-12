@@ -19,7 +19,9 @@
    <select id="getOrdiniBy" parameterType="dto.OrdineDTO" resultType="dto.OrdineDTO">
    	  SELECT idProdotto as "idProdotto",
 	   	  (SELECT DISTINCT cfVenditore FROM ecommerce.prodotti WHERE prodotti.id = ordini.idProdotto) as "cfVenditore",
-	   	  cfAcquirente as "cfAcquirente", quantita as "quantita", progressivo as "progressivo", flagAccettazione as "flagAccettazione",
+	   	  cfAcquirente as "cfAcquirente",
+	   	  (SELECT CONCAT(nome, ' ', cognome) FROM ecommerce.utenti WHERE ecommerce.utenti.codiceFiscale = ecommerce.ordini.cfAcquirente) as "acquirenteDenom",
+	   	  quantita as "quantita", progressivo as "progressivo", flagAccettazione as "flagAccettazione",
 	   	  noteAcquirente as "noteAcquirente", dataOrdine as "dataOrdine", offerta as "offerta",
 	   	  (SELECT DISTINCT titolo FROM ecommerce.prodotti WHERE prodotti.id = ordini.idProdotto) as "titoloProdotto"
 	  FROM ecommerce.ordini

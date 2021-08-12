@@ -22,6 +22,11 @@
 		<p class="text-center h1">Ordini effettuati</p>
 		<br/><br/>
 		<h:form>
+			<h:panelGroup layout="block" styleClass="row" rendered="#{!ordiniEffettuatiBean.tabellaOrdiniAbilitata}" >
+				<div class="alert alert-info">
+					<p>Nessun ordine effettuato</p>
+				</div>
+			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="row" rendered="#{ordiniEffettuatiBean.tabellaOrdiniAbilitata and ordiniEffettuatiBean.paginatorOrdini.page != null and !empty ordiniEffettuatiBean.paginatorOrdini.page and ordiniEffettuatiBean.paginatorOrdini.totalPages > 0}" >
 				<div class="col-sm-12">
 					<div class="table-responsive">				

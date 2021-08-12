@@ -39,8 +39,8 @@
 			<br/>
 			<div class="row">
 				<div class="col-12 col-sm-4">
-					<h:outputLabel for="cfvenditoreId" value="Venditore:" styleClass="control-label"/>
-					<h:inputText id="cfVenditoreId" value="#{dettaglioBean.prodottoDTO.cfVenditore}" styleClass="form-control" disabled="true"/>
+					<h:outputLabel for="venditoreId" value="Venditore:" styleClass="control-label"/>
+					<h:inputText id="venditoreId" value="#{dettaglioBean.prodottoDTO.venditoreDenom}" styleClass="form-control" disabled="true"/>
 				</div>
 				<div class="col-12 col-sm-4">
 					<h:outputLabel for="disponibilitaId" value="Disponibilità:" styleClass="control-label"/>
@@ -111,6 +111,11 @@
 					</div>
 				</div>
 			  </div>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="row" rendered="#{utenteBean.codiceFiscale eq dettaglioBean.prodottoDTO.cfVenditore and !dettaglioBean.tabellaOrdiniAbilitata}" >
+				<div class="alert alert-info">
+					<p>Nessun ordine ricevuto</p>
+				</div>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="row" rendered="#{utenteBean.codiceFiscale eq dettaglioBean.prodottoDTO.cfVenditore and dettaglioBean.tabellaOrdiniAbilitata and dettaglioBean.paginatorOrdini.page != null and !empty dettaglioBean.paginatorOrdini.page and dettaglioBean.paginatorOrdini.totalPages > 0}" >
 				<div class="col-sm-12">

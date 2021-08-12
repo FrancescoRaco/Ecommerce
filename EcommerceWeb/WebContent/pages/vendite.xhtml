@@ -22,6 +22,11 @@
 		<p class="text-center h1">Visualizza prodotti in vendita</p>
 		<br/><br/>
 		<h:form>
+			<h:panelGroup layout="block" styleClass="row" rendered="#{!venditeBean.tabellaProdottiAbilitata}" >
+				<div class="alert alert-info">
+					<p>Nessun prodotto in vendita</p>
+				</div>
+			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="row" rendered="#{venditeBean.tabellaProdottiAbilitata and venditeBean.paginatorProdotti.page != null and !empty venditeBean.paginatorProdotti.page and venditeBean.paginatorProdotti.totalPages > 0}" >
 				<div class="col-sm-12">
 					<div class="table-responsive">				
@@ -52,7 +57,7 @@
 										</td>																					
 										<td><h:outputText value="#{prodotto.titolo}" /></td>	
 										<td><h:outputText value="#{prodotto.descCategoria}" /></td>
-										<td><h:outputText value="#{prodotto.cfVenditore}" /></td>																						
+										<td><h:outputText value="#{prodotto.venditoreDenom}" /></td>																						
 										<td><h:outputText value="#{prodotto.prezzoBase}" /></td>																					
 									</tr>
 								</ui:repeat>

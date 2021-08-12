@@ -79,6 +79,10 @@ public class RicercaProdottiController extends BaseController {
 			ricercaProdottiBean.setPrezzoBase(null);
 			ricercaProdottiBean.setPrezzoBaseWrap(null);
 			ricercaProdottiBean.setIdWrap(null);
+			ricercaProdottiBean.setDataDa(null);
+			ricercaProdottiBean.setDataDaWrap(null);
+			ricercaProdottiBean.setDataA(null);
+			ricercaProdottiBean.setDataAWrap(null);
 			caricaProdottiAttivi();
 		} catch(Exception e) {
 			logger.error(e.getMessage(), e);

@@ -45,7 +45,7 @@ public class StampaOrdine {
   		mappaParagrafi.put("riga1P1", new Paragraph("Identificativo prodotto", fontDatiNormal));
   		mappaParagrafi.put("riga1P2", new Paragraph(ordineDTO.getIdProdotto() == null ? "---" : ""+ordineDTO.getIdProdotto(), fontDatiNormal));
   		mappaParagrafi.put("riga1P3", new Paragraph("        Acquirente", fontDatiNormal));
-  		mappaParagrafi.put("riga1P4", new Paragraph(ordineDTO.getCfAcquirente() == null ? "---" : ordineDTO.getCfAcquirente(), fontDatiNormal));
+  		mappaParagrafi.put("riga1P4", new Paragraph(ordineDTO.getAcquirenteDenom() == null ? "---" : ordineDTO.getAcquirenteDenom(), fontDatiNormal));
   		
   		mappaParagrafi.put("riga2P1", new Paragraph("Offerta", fontDatiNormal));
   		mappaParagrafi.put("riga2P2", new Paragraph(ordineDTO.getOfferta() == null ? "---" : ""+ordineDTO.getOfferta(), fontDatiNormal));
