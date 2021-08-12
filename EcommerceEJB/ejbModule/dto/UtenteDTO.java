@@ -13,6 +13,9 @@ public class UtenteDTO {
 	private String telefono;
 	private Date dataNascita;
 	
+	//Proprietà afferente all'omonimo campo nel frontend di modificaProfilo
+	private String dataNascitaWrap;
+	
 	public String getCodiceFiscale() {
 		return codiceFiscale;
 	}
@@ -60,6 +63,12 @@ public class UtenteDTO {
 	}
 	public void setDataNascita(Date dataNascita) {
 		this.dataNascita = dataNascita;
+	}
+	public String getDataNascitaWrap() {
+		return dataNascitaWrap;
+	}
+	public void setDataNascitaWrap(String dataNascitaWrap) {
+		this.dataNascitaWrap = dataNascitaWrap;
 	}
 
 }

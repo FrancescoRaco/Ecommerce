@@ -82,5 +82,23 @@
 	      <to-view-id>pages/ordine.xhtml</to-view-id> 
 	   </navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>pages/profilo.xhtml</from-view-id>
+		<navigation-case> 
+	      <from-action>#{utenteController.goToModificaProfilo()}</from-action> 
+	      <from-outcome>modificaProfilo</from-outcome> 
+	      <to-view-id>pages/modificaProfilo.xhtml</to-view-id> 
+	   </navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>pages/modificaProfilo.xhtml</from-view-id>
+		<navigation-case> 
+	      <from-action>#{utenteController.goBack()}</from-action> 
+	      <from-outcome>profilo</from-outcome> 
+	      <to-view-id>pages/profilo.xhtml</to-view-id> 
+	   </navigation-case>
+	</navigation-rule>
 
 </faces-config>

@@ -15,4 +15,5 @@ public interface CommonDataAccess {
 	public List<ProdottoDTO> getProdottiAttivi(ProdottoDTO prodottoDTO) throws EcommerceException;
 	public ProdottoDTO getProdotto(ProdottoDTO prodottoDTO) throws EcommerceException;
 	public int modificaPassword(UtenteDTO utenteDTO) throws EcommerceException;
+	public int modificaProfilo(UtenteDTO utenteDTO) throws EcommerceException;
 }

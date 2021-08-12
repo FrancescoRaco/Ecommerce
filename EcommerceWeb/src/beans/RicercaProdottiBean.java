@@ -1,9 +1,9 @@
 package beans;
 
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import dto.CategoriaDTO;
 import dto.ProdottoDTO;
 import utils.Paginator;
@@ -22,10 +22,14 @@ public class RicercaProdottiBean {
 	private List<CategoriaDTO> categorie;
 	private String cfVenditore;
 	private Integer prezzoBase;
+	private Date dataDa;
+	private Date dataA;
 	
 	//Campi Wrapper
 	private String idWrap;
 	private String prezzoBaseWrap;
+	private String dataDaWrap;
+	private String dataAWrap;
 
 	public List<ProdottoDTO> getProdottiAttivi() {
 		return prodottiAttivi;
@@ -113,6 +117,38 @@ public class RicercaProdottiBean {
 
 	public void setPrezzoBaseWrap(String prezzoBaseWrap) {
 		this.prezzoBaseWrap = prezzoBaseWrap;
+	}
+
+	public String getDataDaWrap() {
+		return dataDaWrap;
+	}
+
+	public void setDataDaWrap(String dataDaWrap) {
+		this.dataDaWrap = dataDaWrap;
+	}
+
+	public String getDataAWrap() {
+		return dataAWrap;
+	}
+
+	public void setDataAWrap(String dataAWrap) {
+		this.dataAWrap = dataAWrap;
+	}
+
+	public Date getDataDa() {
+		return dataDa;
+	}
+
+	public void setDataDa(Date dataDa) {
+		this.dataDa = dataDa;
+	}
+
+	public Date getDataA() {
+		return dataA;
+	}
+
+	public void setDataA(Date dataA) {
+		this.dataA = dataA;
 	}
 
 }

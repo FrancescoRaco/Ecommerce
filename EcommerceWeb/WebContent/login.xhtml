@@ -178,7 +178,14 @@
 										</div>
 										<div class="col-12 col-sm-6">
 											<h:outputLabel for="dataNascitaId" value="Data di nascita:*" styleClass="control-label"/>
-											<h:inputText value="#{utenteBean.dataNascitaWrap}" id="dataNascita" styleClass="form-control #{messagesBean.invalidFields.contains('dataNascitaId') ? 'is-invalid' : ''}"/>
+											<div class="input-group date">
+												<h:inputText value="#{utenteBean.dataNascitaWrap}" id="dataNascita" styleClass="form-control #{messagesBean.invalidFields.contains('dataNascitaId') ? 'is-invalid' : ''}"/>
+												<div class="input-group-append" aria-hidden="true">
+											        <button type="button" class="btn btn-primary" tabindex="-1">
+											        	<i class="far fa-calendar-alt"/>
+											        </button>
+											    </div>
+											</div>
 										</div>
 									</div>
 								</div>

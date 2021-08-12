@@ -22,6 +22,20 @@
 		<p class="text-center h1">Profilo</p>
 		<br/><br/>
 		<h:form>
+			<div class="text-left">
+				<button id="azioniId" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Azioni</button>
+			    <div class="dropdown-menu" aria-labelledby="azioniId">
+				    <h:commandLink styleClass="dropdown-item" action="#{utenteController.goToModificaProfilo()}">
+						<i class="fas fa-edit mr-1"/>
+						Modifica profilo
+					</h:commandLink>
+					<h:commandLink styleClass="dropdown-item" action="#{utenteController.apriModificaPassword()}">
+						<i class="fas fa-edit mr-1"/>
+						Modifica password
+					</h:commandLink>
+			    </div>
+			</div>
+			<br/>
 			<div class="row">
 				<div class="col-12 col-sm-6">
 					<h:outputLabel for="codiceFiscaleId" value="Codice fiscale:" styleClass="control-label"/>
@@ -64,9 +78,6 @@
 				</div>
 			</div>
 			<br/>
-			<div class="text-center">
-				<h:commandButton value="Modifica password" action="#{utenteController.apriModificaPassword()}" styleClass="btn btn-primary"/>
-			</div>
 			<h:panelGroup layout="block" rendered="#{utenteBean.modificaPassword}" >
 				<div class="modal fade show" id="modal_panel" aria-modal="true" style="padding-right: 17px; display: block;">
 					<div class="modal-dialog modal-lg">

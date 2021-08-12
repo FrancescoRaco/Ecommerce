@@ -33,12 +33,31 @@
 		  <if test="prezzoBase != null and prezzoBase != 0">
 		  	 AND prezzoBase = #{prezzoBase, jdbcType=INTEGER}
 		  </if>
+		  <choose>
+			  <when test="dataDa != null and dataA != null">
+			  	 AND dataInserimento BETWEEN #{dataDa, jdbcType=DATE} AND #{dataA, jdbcType=DATE}
+			  </when>
+			  <when test="dataDa != null and dataA == null">
+			  	 AND dataInserimento BETWEEN #{dataDa, jdbcType=DATE} AND SYSDATE()
+			  </when>
+			  <when test="dataDa == null and dataA != null">
+			  	 AND dataInserimento &lt;= #{dataA, jdbcType=DATE}
+			  </when>
+		  </choose>
 	  </trim>
    </select>
    
    <update id="modificaPassword" parameterType="dto.UtenteDTO">
    		UPDATE ecommerce.utenti
 		SET password = #{password, jdbcType=VARCHAR}
+		WHERE codiceFiscale = #{codiceFiscale, jdbcType=VARCHAR}
+   </update>
+   
+   <update id="modificaProfilo" parameterType="dto.UtenteDTO">
+   		UPDATE ecommerce.utenti
+		SET
+			codiceFiscale = #{codiceFiscale, jdbcType=VARCHAR}, nome = #{nome, jdbcType=VARCHAR}, cognome = #{cognome, jdbcType=VARCHAR},
+			domicilio = #{domicilio, jdbcType=VARCHAR}, email = #{email, jdbcType=VARCHAR}, telefono = #{telefono, jdbcType=VARCHAR}, dataNascita = #{dataNascita, jdbcType=DATE}
 		WHERE codiceFiscale = #{codiceFiscale, jdbcType=VARCHAR}
    </update>
     	

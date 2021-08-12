@@ -51,6 +51,31 @@
 				</div>
 			</div>
 			<br/>
+			<div class="row">
+				<div class="col-12 col-sm-6">
+					<h:outputLabel for="dataDaId" value="Data iniziale:" styleClass="control-label"/>
+					<div class="input-group date">
+						<h:inputText id="dataDaId" value="#{ricercaProdottiBean.dataDaWrap}" styleClass="form-control #{messagesBean.invalidFields.contains('dataDaId') ? 'is-invalid' : ''}"/>
+						<div class="input-group-append" aria-hidden="true">
+					        <button type="button" class="btn btn-primary" tabindex="-1">
+					        	<i class="far fa-calendar-alt"/>
+					        </button>
+					    </div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-6">
+					<h:outputLabel for="dataAId" value="Data finale:" styleClass="control-label"/>
+					<div class="input-group date">
+						<h:inputText id="dataAId" value="#{ricercaProdottiBean.dataAWrap}" styleClass="form-control #{messagesBean.invalidFields.contains('dataAId') ? 'is-invalid' : ''}"/>
+						<div class="input-group-append" aria-hidden="true">
+					        <button type="button" class="btn btn-primary" tabindex="-1">
+					        	<i class="far fa-calendar-alt"/>
+					        </button>
+					    </div>
+					</div>
+				</div>
+			</div>
+			<br/>
 			<div class="text-center">
 				<div class="row btn-group">
 					<div class="col-6">

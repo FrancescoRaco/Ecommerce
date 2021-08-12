@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Date;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -91,6 +93,8 @@ public class RicercaProdottiController extends BaseController {
 			prodottoDTO.setCodiceCategoria(ricercaProdottiBean.getCodiceCategoria() == null ? 0 : ricercaProdottiBean.getCodiceCategoria());
 			prodottoDTO.setCfVenditore(ricercaProdottiBean.getCfVenditore());
 			prodottoDTO.setPrezzoBase(ricercaProdottiBean.getPrezzoBase() == null ? 0 : ricercaProdottiBean.getPrezzoBase());
+			prodottoDTO.setDataDa(ricercaProdottiBean.getDataDa());
+			prodottoDTO.setDataA(ricercaProdottiBean.getDataA());
 			ricercaProdottiBean.setProdottiAttivi(commonDataAccess.getProdottiAttivi(prodottoDTO));
 			if (ricercaProdottiBean.getProdottiAttivi() != null && !ricercaProdottiBean.getProdottiAttivi().isEmpty()) {
 				ricercaProdottiBean.setPaginatorProdotti(new Paginator<ProdottoDTO>());
@@ -129,6 +133,24 @@ public class RicercaProdottiController extends BaseController {
 				messagesBean.addError("Errore durante la validazione del prezzo base", "prezzoBaseId");
 			} else {
 				ricercaProdottiBean.setPrezzoBase(converted);
+			}
+		}
+		
+		if (ricercaProdottiBean != null && ricercaProdottiBean.getDataDaWrap() != null && !ricercaProdottiBean.getDataDaWrap().isEmpty()) {
+			Date converted = CommonUtils.stringToDate(ricercaProdottiBean.getDataDaWrap());
+			if (converted == null) {
+				messagesBean.addError("Errore durante la validazione della data iniziale", "dataDaId");
+			} else {
+				ricercaProdottiBean.setDataDa(converted);
+			}
+		}
+		
+		if (ricercaProdottiBean != null && ricercaProdottiBean.getDataAWrap() != null && !ricercaProdottiBean.getDataAWrap().isEmpty()) {
+			Date converted = CommonUtils.stringToDate(ricercaProdottiBean.getDataAWrap());
+			if (converted == null) {
+				messagesBean.addError("Errore durante la validazione della data finale", "dataAId");
+			} else {
+				ricercaProdottiBean.setDataA(converted);
 			}
 		}
 		

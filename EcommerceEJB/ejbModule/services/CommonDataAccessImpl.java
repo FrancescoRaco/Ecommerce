@@ -95,5 +95,19 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 		}
 		return result;
 	}
+	
+	@Override
+	public int modificaProfilo(UtenteDTO utenteDTO) throws EcommerceException {
+		int result = 0;
+		try (SqlSession session = getSession()) {
+			CommonMapper commonMapper = (CommonMapper) session.getMapper(CommonMapper.class);
+			result = commonMapper.modificaProfilo(utenteDTO);
+		} catch(Exception e) {
+			context.setRollbackOnly();
+			logger.error(e.getMessage(), e);
+			throw new EcommerceException(e.getMessage(), e);
+		}
+		return result;
+	}
 
 }

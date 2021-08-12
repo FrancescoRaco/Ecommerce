@@ -19,8 +19,12 @@
 	
 		<!-- Bootstrap import -->
 		<h:outputStylesheet name="bootstrap/css/bootstrap.min.css"/>
+		<h:outputStylesheet name="bootstrap/css/bootstrap-datepicker.css"/>
 	    <h:outputScript name="bootstrap/js/jquery-3.2.1.slim.min.js"/>
 	    <h:outputScript name="bootstrap/js/bootstrap.bundle.min.js"/>
+	    <h:outputScript name="bootstrap/js/bootstrap-datepicker.min.js"/>
+	    <h:outputScript name="bootstrap/js/bootstrap-datepicker.it.min.js"/>
+	    <h:outputScript name="bootstrap/js/jquery.tablesorter.min.js"/>
 	    
 		<!-- Theme -->
 		<h:outputStylesheet name="theme/app.css"/>
@@ -29,6 +33,25 @@
 		<h:outputStylesheet name="fontawesome/css/all.min.css"/>
 		
 		<h:graphicImage name="images/professionalBanner.jpg" style="width: 100%;" height="150"/>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.input-group.date').datepicker({
+					autoclose : true,
+					enableOnReadonly : false,
+					forceParse : false,
+					format : 'dd/mm/yyyy',
+					keyboardNavigation : false,
+					language : 'it',
+					maxViewMode : 2,
+					orientation : 'auto',
+					showOnFocus : false,
+					todayHighlight : true,
+					inline: true,
+		            showWeek: true
+				});
+			});
+		</script>
 		
 		<ui:insert name="effettuaOperazioniIniziali" />
 		

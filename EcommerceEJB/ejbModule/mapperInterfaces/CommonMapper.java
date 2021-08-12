@@ -11,4 +11,5 @@ public interface CommonMapper {
 	public List<CategoriaDTO> getCategorie() throws Exception;
 	public List<ProdottoDTO> getProdottiAttivi(ProdottoDTO prodottoDTO) throws Exception;
 	public int modificaPassword(UtenteDTO utenteDTO) throws Exception;
+	public int modificaProfilo(UtenteDTO utenteDTO) throws Exception;
 }

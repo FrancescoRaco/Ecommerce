@@ -3,6 +3,7 @@ package beans;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import dto.UtenteDTO;
 
 @ManagedBean
 @SessionScoped
@@ -26,6 +27,9 @@ public class UtenteBean {
 	private boolean modificaPassword;
 	private String vecchiaPassword;
 	private String nuovaPassword;
+	
+	//Wrapper campi input modifica
+	private UtenteDTO utenteInput;
 	
 	
 	public String getCodiceFiscale() {
@@ -111,6 +115,12 @@ public class UtenteBean {
 	}
 	public void setNuovaPassword(String nuovaPassword) {
 		this.nuovaPassword = nuovaPassword;
+	}
+	public UtenteDTO getUtenteInput() {
+		return utenteInput;
+	}
+	public void setUtenteInput(UtenteDTO utenteInput) {
+		this.utenteInput = utenteInput;
 	}
 
 }

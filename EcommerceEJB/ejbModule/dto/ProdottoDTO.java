@@ -17,6 +17,10 @@ public class ProdottoDTO {
 	private Date dataAggiornamento;
 	private String infoAcquirenti;
 	
+	//Parameter type
+	private Date dataDa;
+	private Date dataA;
+	
 	
 	public Integer getId() {
 		return id;
@@ -89,6 +93,18 @@ public class ProdottoDTO {
 	}
 	public void setInfoAcquirenti(String infoAcquirenti) {
 		this.infoAcquirenti = infoAcquirenti;
+	}
+	public Date getDataDa() {
+		return dataDa;
+	}
+	public void setDataDa(Date dataDa) {
+		this.dataDa = dataDa;
+	}
+	public Date getDataA() {
+		return dataA;
+	}
+	public void setDataA(Date dataA) {
+		this.dataA = dataA;
 	}
 
 }

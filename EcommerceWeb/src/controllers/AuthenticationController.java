@@ -146,13 +146,13 @@ public class AuthenticationController extends BaseController {
 		
 		if (utenteBean == null || utenteBean.getCodiceFiscale() == null || utenteBean.getCodiceFiscale().isEmpty()) {
 			messagesBean.addError("Inserire il codice fiscale", "codFiscSignupId");
-		} else if (utenteBean != null && utenteBean.getCodiceFiscale() != null && !CommonUtils.validaCodiceFiscale(utenteBean.getCodiceFiscale())) {
+		} else if (utenteBean != null && utenteBean.getCodiceFiscale() != null && !utenteBean.getCodiceFiscale().isEmpty() && !CommonUtils.validaCodiceFiscale(utenteBean.getCodiceFiscale())) {
 			messagesBean.addError("Errore durante la validazione del codice fiscale", "codFiscSignupId");
 		}
 		
 		if (utenteBean == null || password == null || password.isEmpty()) {
 			messagesBean.addError("Inserire la password", "passwordSignupId");
-		} else if (utenteBean != null && password != null && !CommonUtils.validaPassword(password)) {
+		} else if (utenteBean != null && password != null && !password.isEmpty() && !CommonUtils.validaPassword(password)) {
 			messagesBean.addError("Errore durante la validazione della password", "passwordSignupId");
 		}
 		
@@ -176,7 +176,7 @@ public class AuthenticationController extends BaseController {
 		
 		if (utenteBean == null || utenteBean.getEmail() == null || utenteBean.getEmail().isEmpty()) {
 			messagesBean.addError("Inserire l'email", "emailId");
-		} else if (utenteBean != null && utenteBean.getEmail() != null && !CommonUtils.validaEmail(utenteBean.getEmail())) {
+		} else if (utenteBean != null && utenteBean.getEmail() != null && !utenteBean.getEmail().isEmpty() && !CommonUtils.validaEmail(utenteBean.getEmail())) {
 			messagesBean.addError("Errore durante la validazione dell'email", "emailId");
 		}
 		
@@ -208,13 +208,13 @@ public class AuthenticationController extends BaseController {
 		
 		if (loginBean == null || loginBean.getCodiceFiscale() == null || loginBean.getCodiceFiscale().isEmpty()) {
 			messagesBean.addError("Inserire il codice fiscale", "codFiscId");
-		} else if (loginBean != null && loginBean.getCodiceFiscale() != null && !CommonUtils.validaCodiceFiscale(loginBean.getCodiceFiscale())) {
+		} else if (loginBean != null && loginBean.getCodiceFiscale() != null && !loginBean.getCodiceFiscale().isEmpty() && !CommonUtils.validaCodiceFiscale(loginBean.getCodiceFiscale())) {
 			messagesBean.addError("Errore durante la validazione del codice fiscale", "codFiscId");
 		}
 		
 		if (loginBean == null || loginBean.getPassword() == null || loginBean.getPassword().isEmpty()) {
 			messagesBean.addError("Inserire la password", "passwordId");
-		} else if (loginBean != null && loginBean.getPassword() != null && !CommonUtils.validaPassword(loginBean.getPassword())) {
+		} else if (loginBean != null && loginBean.getPassword() != null && !loginBean.getPassword().isEmpty() && !CommonUtils.validaPassword(loginBean.getPassword())) {
 			messagesBean.addError("Errore durante la validazione della password", "passwordId");
 		}
 		
