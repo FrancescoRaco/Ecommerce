@@ -67,6 +67,7 @@ public class AuthenticationController extends BaseController {
 					utenteBean.setEmail(utenteLoggato.getEmail());
 					utenteBean.setTelefono(utenteLoggato.getTelefono());
 					utenteBean.setDataNascita(utenteLoggato.getDataNascita());
+					utenteBean.setSesso(utenteLoggato.getSesso());
 					utenteBean.setLoggedIn(true);
 					return "success";
 				} else {
@@ -95,6 +96,7 @@ public class AuthenticationController extends BaseController {
 				utenteBean.setEmail(utenteLoggato.getEmail());
 				utenteBean.setTelefono(utenteLoggato.getTelefono());
 				utenteBean.setDataNascita(utenteLoggato.getDataNascita());
+				utenteBean.setSesso(utenteLoggato.getSesso());
 				utenteBean.setLoggedIn(true);
 				return "success";
 			} else {
@@ -119,7 +121,6 @@ public class AuthenticationController extends BaseController {
 	public void confermaSignup() {
 		try {
 			if (validaInputSignup(utenteBean.getPassword())) {
-				//TODO insert
 				UtenteDTO utenteDTO = new UtenteDTO();
 				utenteDTO.setCodiceFiscale(utenteBean.getCodiceFiscale());
 				utenteDTO.setPassword(utenteBean.getPassword());
@@ -130,6 +131,7 @@ public class AuthenticationController extends BaseController {
 				utenteDTO.setTelefono(utenteBean.getTelefono());
 				utenteDTO.setDataNascita(utenteBean.getDataNascita());
 				signupDataAccess.signup(utenteDTO);
+				chiudiModalSignup();
 				messagesBean.getSuccesses().add("Utente " + utenteBean.getNome() + " " + utenteBean.getCognome() + " creato con successo");
 			}
 		} catch(Exception e) {
@@ -145,59 +147,59 @@ public class AuthenticationController extends BaseController {
 	private boolean validaInputSignup(String password) throws Exception {
 		
 		if (utenteBean == null || utenteBean.getCodiceFiscale() == null || utenteBean.getCodiceFiscale().isEmpty()) {
-			messagesBean.addError("Inserire il codice fiscale", "codFiscSignupId");
+			messagesBean.getMessaggiModale().addError("Inserire il codice fiscale", "codFiscSignupId");
 		} else if (utenteBean != null && utenteBean.getCodiceFiscale() != null && !utenteBean.getCodiceFiscale().isEmpty() && !CommonUtils.validaCodiceFiscale(utenteBean.getCodiceFiscale())) {
-			messagesBean.addError("Errore durante la validazione del codice fiscale", "codFiscSignupId");
+			messagesBean.getMessaggiModale().addError("Errore durante la validazione del codice fiscale", "codFiscSignupId");
 		}
 		
 		if (utenteBean == null || password == null || password.isEmpty()) {
-			messagesBean.addError("Inserire la password", "passwordSignupId");
+			messagesBean.getMessaggiModale().addError("Inserire la password", "passwordSignupId");
 		} else if (utenteBean != null && password != null && !password.isEmpty() && !CommonUtils.validaPassword(password)) {
-			messagesBean.addError("Errore durante la validazione della password", "passwordSignupId");
+			messagesBean.getMessaggiModale().addError("Errore durante la validazione della password", "passwordSignupId");
 		}
 		
 		if (utenteBean == null || utenteBean.getNome() == null || utenteBean.getNome().isEmpty()) {
-			messagesBean.addError("Inserire il nome", "nomeId");
+			messagesBean.getMessaggiModale().addError("Inserire il nome", "nomeId");
 		} else if (utenteBean != null && utenteBean.getNome() != null && !utenteBean.getNome().isEmpty() && !CommonUtils.validaNome(utenteBean.getNome())) {
-			messagesBean.addError("Errore durante la validazione del nome", "nomeId");
+			messagesBean.getMessaggiModale().addError("Errore durante la validazione del nome", "nomeId");
 		}
 		
 		if (utenteBean == null || utenteBean.getCognome() == null || utenteBean.getCognome().isEmpty()) {
-			messagesBean.addError("Inserire il cognome", "cognomeId");
+			messagesBean.getMessaggiModale().addError("Inserire il cognome", "cognomeId");
 		} else if (utenteBean != null && utenteBean.getCognome() != null && !utenteBean.getCognome().isEmpty() && !CommonUtils.validaNome(utenteBean.getCognome())) {
-			messagesBean.addError("Errore durante la validazione del cognome", "cognomeId");
+			messagesBean.getMessaggiModale().addError("Errore durante la validazione del cognome", "cognomeId");
 		}
 		
 		if (utenteBean == null || utenteBean.getDomicilio() == null || utenteBean.getDomicilio().isEmpty()) {
-			messagesBean.addError("Inserire il domicilio", "domicilioId");
+			messagesBean.getMessaggiModale().addError("Inserire il domicilio", "domicilioId");
 		} else if (utenteBean != null && utenteBean.getDomicilio() != null && !utenteBean.getDomicilio().isEmpty() && !CommonUtils.validaStringa(utenteBean.getDomicilio())) {
-			messagesBean.addError("Errore durante la validazione del domicilio", "domicilioId");
+			messagesBean.getMessaggiModale().addError("Errore durante la validazione del domicilio", "domicilioId");
 		}
 		
 		if (utenteBean == null || utenteBean.getEmail() == null || utenteBean.getEmail().isEmpty()) {
-			messagesBean.addError("Inserire l'email", "emailId");
+			messagesBean.getMessaggiModale().addError("Inserire l'email", "emailId");
 		} else if (utenteBean != null && utenteBean.getEmail() != null && !utenteBean.getEmail().isEmpty() && !CommonUtils.validaEmail(utenteBean.getEmail())) {
-			messagesBean.addError("Errore durante la validazione dell'email", "emailId");
+			messagesBean.getMessaggiModale().addError("Errore durante la validazione dell'email", "emailId");
 		}
 		
 		if (utenteBean == null || utenteBean.getTelefono() == null || utenteBean.getTelefono().isEmpty()) {
-			messagesBean.addError("Inserire il telefono", "telefonoId");
+			messagesBean.getMessaggiModale().addError("Inserire il telefono", "telefonoId");
 		} else if (utenteBean != null && utenteBean.getTelefono() != null && !utenteBean.getTelefono().isEmpty() && !CommonUtils.validaNumero(utenteBean.getTelefono())) {
-			messagesBean.addError("Errore durante la validazione del telefono", "telefonoId");
+			messagesBean.getMessaggiModale().addError("Errore durante la validazione del telefono", "telefonoId");
 		}
 		
 		if (utenteBean == null || utenteBean.getDataNascitaWrap() == null || utenteBean.getDataNascitaWrap().isEmpty()) {
-			messagesBean.addError("Inserire la data di nascita", "dataNascitaId");
+			messagesBean.getMessaggiModale().addError("Inserire la data di nascita", "dataNascitaId");
 		} else if (utenteBean != null && utenteBean.getDataNascitaWrap() != null) {
 			Date converted = CommonUtils.stringToDate(utenteBean.getDataNascitaWrap());
 			if (converted == null) {
-				messagesBean.addError("Errore durante la validazione della data di nascita", "dataNascitaId");
+				messagesBean.getMessaggiModale().addError("Errore durante la validazione della data di nascita", "dataNascitaId");
 			} else {
 				utenteBean.setDataNascita(converted);
 			}
 		}
 		
-		if (messagesBean.getErrors() != null && messagesBean.getErrors().size() > 0) {
+		if (messagesBean.getMessaggiModale().getErrors() != null && messagesBean.getMessaggiModale().getErrors().size() > 0) {
 			return false;
 		}
 		

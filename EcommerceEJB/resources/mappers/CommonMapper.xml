@@ -59,7 +59,8 @@
    		UPDATE ecommerce.utenti
 		SET
 			codiceFiscale = #{codiceFiscale, jdbcType=VARCHAR}, nome = #{nome, jdbcType=VARCHAR}, cognome = #{cognome, jdbcType=VARCHAR},
-			domicilio = #{domicilio, jdbcType=VARCHAR}, email = #{email, jdbcType=VARCHAR}, telefono = #{telefono, jdbcType=VARCHAR}, dataNascita = #{dataNascita, jdbcType=DATE}
+			domicilio = #{domicilio, jdbcType=VARCHAR}, email = #{email, jdbcType=VARCHAR}, telefono = #{telefono, jdbcType=VARCHAR},
+			dataNascita = #{dataNascita, jdbcType=DATE}, sesso = #{sesso, jdbcType=VARCHAR}
 		WHERE codiceFiscale = #{codiceFiscale, jdbcType=VARCHAR}
    </update>
     	

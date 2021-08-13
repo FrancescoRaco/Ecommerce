@@ -19,11 +19,20 @@ public class MessagesBean {
 	
 	private Set<String> invalidFields;
 	
+	//Errori nella finestra modale
+	private MessagesBean messaggiModale;
+	
 	@PostConstruct
 	public void init() {
-		errors = new ArrayList<String>();
-		invalidFields = new TreeSet<String>();
-		successes = new ArrayList<String>();
+		initializeLists(this);
+		messaggiModale = new MessagesBean();
+		initializeLists(messaggiModale);
+	}
+	
+	private void initializeLists(MessagesBean messagesBean) {
+		messagesBean.errors = new ArrayList<String>();
+		messagesBean.invalidFields = new TreeSet<String>();
+		messagesBean.successes = new ArrayList<String>();
 	}
 	
 	public void addError(String error, String field) {
@@ -61,6 +70,14 @@ public class MessagesBean {
 
 	public void setInvalidFields(Set<String> invalidFields) {
 		this.invalidFields = invalidFields;
+	}
+
+	public MessagesBean getMessaggiModale() {
+		return messaggiModale;
+	}
+
+	public void setMessaggiModale(MessagesBean messaggiModale) {
+		this.messaggiModale = messaggiModale;
 	}
 
 }

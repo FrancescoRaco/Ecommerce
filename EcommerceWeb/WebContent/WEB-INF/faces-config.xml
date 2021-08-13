@@ -100,5 +100,23 @@
 	      <to-view-id>pages/profilo.xhtml</to-view-id> 
 	   </navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>pages/dettaglioProdotto.xhtml</from-view-id>
+		<navigation-case> 
+	      <from-action>#{dettaglioController.goToModificaProdotto()}</from-action> 
+	      <from-outcome>modificaProdotto</from-outcome> 
+	      <to-view-id>pages/modificaProdotto.xhtml</to-view-id> 
+	   </navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>pages/modificaProdotto.xhtml</from-view-id>
+		<navigation-case> 
+	      <from-action>#{dettaglioController.backToDettaglio()}</from-action> 
+	      <from-outcome>dettaglioProdotto</from-outcome> 
+	      <to-view-id>pages/dettaglioProdotto.xhtml</to-view-id> 
+	   </navigation-case>
+	</navigation-rule>
 
 </faces-config>

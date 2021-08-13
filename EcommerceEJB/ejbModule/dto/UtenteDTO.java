@@ -12,6 +12,7 @@ public class UtenteDTO {
 	private String email;
 	private String telefono;
 	private Date dataNascita;
+	private String sesso;
 	
 	//Proprietà afferente all'omonimo campo nel frontend di modificaProfilo
 	private String dataNascitaWrap;
@@ -69,6 +70,12 @@ public class UtenteDTO {
 	}
 	public void setDataNascitaWrap(String dataNascitaWrap) {
 		this.dataNascitaWrap = dataNascitaWrap;
+	}
+	public String getSesso() {
+		return sesso;
+	}
+	public void setSesso(String sesso) {
+		this.sesso = sesso;
 	}
 
 }

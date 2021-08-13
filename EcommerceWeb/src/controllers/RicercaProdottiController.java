@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.Date;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -9,10 +8,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import beans.DettaglioBean;
 import beans.MessagesBean;
 import beans.RicercaProdottiBean;
@@ -20,6 +17,7 @@ import beans.SessionBean;
 import dto.ProdottoDTO;
 import ejbInterfaces.CommonDataAccess;
 import utils.CommonUtils;
+import utils.Constants;
 import utils.Paginator;
 
 @ManagedBean
@@ -175,7 +173,7 @@ public class RicercaProdottiController extends BaseController {
 	
 	public String visualizzaDettaglio() {
 		
-		dettaglioBean.setProvenienza("ricercaProdotti.xhtml");
+		dettaglioBean.setProvenienza(Constants.PAGINA_RICERCA_PRODOTTI);
 		
 		return "dettaglio";
 	}

@@ -7,10 +7,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import beans.DettaglioBean;
 import beans.MessagesBean;
 import beans.SessionBean;
@@ -18,6 +16,7 @@ import beans.UtenteBean;
 import beans.VenditeBean;
 import dto.ProdottoDTO;
 import ejbInterfaces.CommonDataAccess;
+import utils.Constants;
 import utils.Paginator;
 
 @ManagedBean
@@ -94,7 +93,7 @@ public class VenditeController extends BaseController {
 	
 	public String visualizzaDettaglio() {
 		
-		dettaglioBean.setProvenienza("vendite.xhtml");
+		dettaglioBean.setProvenienza(Constants.PAGINA_VENDITE);
 		
 		return "dettaglio";
 	}

@@ -22,144 +22,220 @@
 		<p class="text-center h1">Dettaglio prodotto</p>
 		<br/><br/>
 		<h:form>
-			<div class="row">
-				<div class="col-12 col-sm-4">
-					<h:outputLabel for="prodottoId" value="Identificativo:" styleClass="control-label"/>
-					<h:inputText id="prodottoId" value="#{dettaglioBean.prodottoDTO.id}" styleClass="form-control" disabled="true"/>
-				</div>
-				<div class="col-12 col-sm-4">
-					<h:outputLabel for="titoloId" value="Titolo:" styleClass="control-label"/>
-					<h:inputText id="titoloId" value="#{dettaglioBean.prodottoDTO.titolo}" styleClass="form-control" disabled="true"/>
-				</div>
-				<div class="col-12 col-sm-4">
-					<h:outputLabel for="categoriaId" value="Categoria:" styleClass="control-label"/>
-					<h:inputText id="categoriaId" value="#{dettaglioBean.prodottoDTO.descCategoria}" styleClass="form-control" disabled="true"/>
-				</div>
-			</div>
-			<br/>
-			<div class="row">
-				<div class="col-12 col-sm-4">
-					<h:outputLabel for="venditoreId" value="Venditore:" styleClass="control-label"/>
-					<h:inputText id="venditoreId" value="#{dettaglioBean.prodottoDTO.venditoreDenom}" styleClass="form-control" disabled="true"/>
-				</div>
-				<div class="col-12 col-sm-4">
-					<h:outputLabel for="disponibilitaId" value="Disponibilità:" styleClass="control-label"/>
-					<h:inputText id="disponibilitaId" value="#{dettaglioBean.prodottoDTO.disponibilita}" styleClass="form-control" disabled="true"/>
-				</div>
-				<div class="col-12 col-sm-4">
-					<h:outputLabel for="prezzoBaseId" value="Prezzo base:" styleClass="control-label"/>
-					<h:inputText id="prezzoBaseId" value="#{dettaglioBean.prodottoDTO.prezzoBase}" styleClass="form-control" disabled="true"/>
-				</div>
-			</div>
-			<br/>
-			<div class="row">
-				<div class="col-12 col-sm-4">
-					<h:outputLabel for="dataInserimentoId" value="Data inserimento:" styleClass="control-label"/>
-					<h:inputText id="dataInserimentoId" value="#{dettaglioBean.prodottoDTO.dataInserimento}" styleClass="form-control" disabled="true">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Berlin"/>
-					</h:inputText>
-				</div>
-				<div class="col-12 col-sm-4">
-					<h:outputLabel for="dataAggiornamentoId" value="Data aggiornamento:" styleClass="control-label"/>
-					<h:inputText id="dataAggiornamentoId" value="#{dettaglioBean.prodottoDTO.dataAggiornamento}" styleClass="form-control" disabled="true">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Berlin"/>
-					</h:inputText>
-				</div>
-			</div>
-			<br/>
-			<div class="row">
-				<div class="col-12">
-					<h:outputLabel for="descrizioneId" value="Descrizione:" styleClass="control-label"/>
-					<h:inputTextarea id="descrizioneId" value="#{dettaglioBean.prodottoDTO.descrizione}" styleClass="form-control" disabled="true"/>
-				</div>
-			</div>
-			<br/>
-			<div class="row">
-				<div class="col-12">
-					<h:outputLabel for="infoAcquirentiId" value="Informazioni per gli acquirenti:" styleClass="control-label"/>
-					<h:inputTextarea id="infoAcquirentiId" value="#{dettaglioBean.prodottoDTO.infoAcquirenti}" styleClass="form-control" disabled="true"/>
-				</div>
-			</div>
-			<br/>
-			<h:panelGroup layout="block" styleClass="card" rendered="#{not empty dettaglioBean.prodottoDTO and dettaglioBean.prodottoDTO.cfVenditore ne utenteBean.codiceFiscale}">
-			  <div class="card-body">
-			    <h4 class="card-title text-center">Sezione ordini</h4>
-			    <br/>
-			    <div class="row">
-			    	<div class="col-12 col-sm-4">
-			    		<h:outputLabel for="offertaId" value="Offerta:*" styleClass="control-label"/>
-						<h:inputText id="offertaId" value="#{dettaglioBean.offertaWrap}" styleClass="form-control #{messagesBean.invalidFields.contains('offertaId') ? 'is-invalid' : ''}"/>
-			    	</div>
-			    	<div class="col-12 col-sm-4">
-			    		<h:outputLabel for="quantitaId" value="Quantità:*" styleClass="control-label"/>
-						<h:inputText id="quantitaId" value="#{dettaglioBean.quantitaWrap}" styleClass="form-control #{messagesBean.invalidFields.contains('quantitaId') ? 'is-invalid' : ''}"/>
-			    	</div>
-			    	<div class="col-12 col-sm-4">
-			    		<h:outputLabel for="noteAcquirenteId" value="Note acquirente:" styleClass="control-label"/>
-						<h:inputText id="noteAcquirenteId" value="#{dettaglioBean.noteAcquirente}" styleClass="form-control #{messagesBean.invalidFields.contains('noteAcquirenteId') ? 'is-invalid' : ''}"/>
-			    	</div>
-			    </div>
-			    <br/>
-			   	<div class="text-center">
-					<div class="row btn-group">
-						<div class="col-sm-6">
-							<h:commandButton value="Ripulisci" action="#{dettaglioController.ripulisciOrdine()}" styleClass="btn btn-primary"/>
-						</div>
-						<div class="col-sm-6">
-							<h:commandButton value="Invia ordine" action="#{dettaglioController.inviaOrdine()}" styleClass="btn btn-primary"/>
-						</div>
+			<h:panelGroup layout="block" rendered="#{not empty dettaglioBean.prodottoDTO}">
+				<h:panelGroup layout="block" rendered="#{utenteBean.codiceFiscale eq dettaglioBean.prodottoDTO.cfVenditore}">
+					<div class="text-left">
+						<button id="azioniId" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Azioni</button>
+					    <div class="dropdown-menu" aria-labelledby="azioniId">
+						    <h:commandLink styleClass="dropdown-item" action="#{dettaglioController.goToModificaProdotto()}">
+								<i class="fas fa-edit mr-1"/>
+								Modifica prodotto
+							</h:commandLink>
+							<h:commandLink styleClass="dropdown-item" action="#{dettaglioController.apriAnnullaProdotto()}">
+								<i class="fas fa-undo mr-1"/>
+								Annulla prodotto
+							</h:commandLink>
+					    </div>
 					</div>
-				</div>
-			  </div>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="row" rendered="#{utenteBean.codiceFiscale eq dettaglioBean.prodottoDTO.cfVenditore and !dettaglioBean.tabellaOrdiniAbilitata}" >
-				<div class="alert alert-info">
-					<p>Nessun ordine ricevuto</p>
-				</div>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="row" rendered="#{utenteBean.codiceFiscale eq dettaglioBean.prodottoDTO.cfVenditore and dettaglioBean.tabellaOrdiniAbilitata and dettaglioBean.paginatorOrdini.page != null and !empty dettaglioBean.paginatorOrdini.page and dettaglioBean.paginatorOrdini.totalPages > 0}" >
-				<div class="col-sm-12">
 					<br/>
-					<div class="table-responsive">				
-						<table class="table table-striped table-hover table-header table-bordered" id="tabellaOrdiniId">
-							<caption class="sr-only">
-								Tabella degli ordini ricevuti
-							</caption>
-							<thead class="text-center">
-								<tr class="table-main">
-									<th colspan="6">Tabella degli ordini ricevuti</th>
-								</tr>
-								<tr class="table-main">
-									<th>Visualizza</th>
-									<th>Progressivo</th>
-									<th>Offerta</th>
-									<th>Quantita</th>
-									<th>Stato</th>	
-									<th>Suggerito</th>															
-								</tr>
-							</thead>
-							<tbody class="text-center">
-								<ui:repeat var="ordine" value="#{dettaglioBean.paginatorOrdini.page}">
-									<tr>
-										<td>
-											<h:commandLink action="#{dettaglioController.visualizzaOrdine()}" styleClass="btn btn-link">
-												<f:setPropertyActionListener value="#{ordine}" target="#{ordineBean.ordineDTO}"></f:setPropertyActionListener>
-												<i class="fas fa-eye"/>
-											</h:commandLink>
-										</td>
-										<td><h:outputText value="#{ordine.progressivo}" /></td>																					
-										<td><h:outputText value="#{ordine.offerta}" /></td>																						
-										<td><h:outputText value="#{ordine.quantita}" /></td>
-										<td><h:outputText value="#{ordine.flagAccettazione eq 0 ? 'In lavorazione' : (ordine.flagAccettazione eq 1 ? 'Accettato' : 'Rifiutato')}" /></td>																					
-										<td><h:outputText value="#{ordine.suggerito ? 'SI' : 'NO'}" /></td>
-									</tr>
-								</ui:repeat>
-							</tbody>
-						</table>
-						<custom:paginator paginator="#{dettaglioBean.paginatorOrdini}"/>
+				</h:panelGroup>
+				<div class="row">
+					<div class="col-12 col-sm-4">
+						<h:outputLabel for="prodottoId" value="Identificativo:" styleClass="control-label"/>
+						<h:inputText id="prodottoId" value="#{dettaglioBean.prodottoDTO.id}" styleClass="form-control" disabled="true"/>
+					</div>
+					<div class="col-12 col-sm-4">
+						<h:outputLabel for="titoloId" value="Titolo:" styleClass="control-label"/>
+						<h:inputText id="titoloId" value="#{dettaglioBean.prodottoDTO.titolo}" styleClass="form-control" disabled="true"/>
+					</div>
+					<div class="col-12 col-sm-4">
+						<h:outputLabel for="categoriaId" value="Categoria:" styleClass="control-label"/>
+						<h:inputText id="categoriaId" value="#{dettaglioBean.prodottoDTO.descCategoria}" styleClass="form-control" disabled="true"/>
 					</div>
 				</div>
 				<br/>
+				<div class="row">
+					<div class="col-12 col-sm-4">
+						<h:outputLabel for="venditoreId" value="Venditore:" styleClass="control-label"/>
+						<h:inputText id="venditoreId" value="#{dettaglioBean.prodottoDTO.venditoreDenom}" styleClass="form-control" disabled="true"/>
+					</div>
+					<div class="col-12 col-sm-4">
+						<h:outputLabel for="disponibilitaId" value="Disponibilità:" styleClass="control-label"/>
+						<h:inputText id="disponibilitaId" value="#{dettaglioBean.prodottoDTO.disponibilita}" styleClass="form-control" disabled="true"/>
+					</div>
+					<div class="col-12 col-sm-4">
+						<h:outputLabel for="prezzoBaseId" value="Prezzo base:" styleClass="control-label"/>
+						<h:inputText id="prezzoBaseId" value="#{dettaglioBean.prodottoDTO.prezzoBase}" styleClass="form-control" disabled="true"/>
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-12 col-sm-4">
+						<h:outputLabel for="dataInserimentoId" value="Data inserimento:" styleClass="control-label"/>
+						<h:inputText id="dataInserimentoId" value="#{dettaglioBean.prodottoDTO.dataInserimento}" styleClass="form-control" disabled="true">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Berlin"/>
+						</h:inputText>
+					</div>
+					<div class="col-12 col-sm-4">
+						<h:outputLabel for="dataAggiornamentoId" value="Data aggiornamento:" styleClass="control-label"/>
+						<h:inputText id="dataAggiornamentoId" value="#{dettaglioBean.prodottoDTO.dataAggiornamento}" styleClass="form-control" disabled="true">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Berlin"/>
+						</h:inputText>
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-12">
+						<h:outputLabel for="descrizioneId" value="Descrizione:" styleClass="control-label"/>
+						<h:inputTextarea id="descrizioneId" value="#{dettaglioBean.prodottoDTO.descrizione}" styleClass="form-control" disabled="true"/>
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-12">
+						<h:outputLabel for="infoAcquirentiId" value="Informazioni per gli acquirenti:" styleClass="control-label"/>
+						<h:inputTextarea id="infoAcquirentiId" value="#{dettaglioBean.prodottoDTO.infoAcquirenti}" styleClass="form-control" disabled="true"/>
+					</div>
+				</div>
+				<br/>
+				<h:panelGroup layout="block" styleClass="card" rendered="#{not empty dettaglioBean.prodottoDTO and dettaglioBean.prodottoDTO.cfVenditore ne utenteBean.codiceFiscale}">
+				  <div class="card-body">
+				    <h4 class="card-title text-center">Sezione ordini</h4>
+				    <br/>
+				    <div class="row">
+				    	<div class="col-12 col-sm-4">
+				    		<h:outputLabel for="offertaId" value="Offerta:*" styleClass="control-label"/>
+							<h:inputText id="offertaId" value="#{dettaglioBean.offertaWrap}" styleClass="form-control #{messagesBean.invalidFields.contains('offertaId') ? 'is-invalid' : ''}"/>
+				    	</div>
+				    	<div class="col-12 col-sm-4">
+				    		<h:outputLabel for="quantitaId" value="Quantità:*" styleClass="control-label"/>
+							<h:inputText id="quantitaId" value="#{dettaglioBean.quantitaWrap}" styleClass="form-control #{messagesBean.invalidFields.contains('quantitaId') ? 'is-invalid' : ''}"/>
+				    	</div>
+				    	<div class="col-12 col-sm-4">
+				    		<h:outputLabel for="noteAcquirenteId" value="Note acquirente:" styleClass="control-label"/>
+							<h:inputText id="noteAcquirenteId" value="#{dettaglioBean.noteAcquirente}" styleClass="form-control #{messagesBean.invalidFields.contains('noteAcquirenteId') ? 'is-invalid' : ''}"/>
+				    	</div>
+				    </div>
+				    <br/>
+				   	<div class="text-center">
+						<div class="row btn-group">
+							<div class="col-sm-6">
+								<h:commandButton value="Ripulisci" action="#{dettaglioController.ripulisciOrdine()}" styleClass="btn btn-primary"/>
+							</div>
+							<div class="col-sm-6">
+								<h:commandButton value="Invia ordine" action="#{dettaglioController.inviaOrdine()}" styleClass="btn btn-primary"/>
+							</div>
+						</div>
+					</div>
+				  </div>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="row" rendered="#{utenteBean.codiceFiscale eq dettaglioBean.prodottoDTO.cfVenditore and !dettaglioBean.tabellaOrdiniAbilitata}" >
+					<div class="alert alert-info">
+						<p>Nessun ordine ricevuto</p>
+					</div>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="row" rendered="#{utenteBean.codiceFiscale eq dettaglioBean.prodottoDTO.cfVenditore and dettaglioBean.tabellaOrdiniAbilitata and dettaglioBean.paginatorOrdini.page != null and !empty dettaglioBean.paginatorOrdini.page and dettaglioBean.paginatorOrdini.totalPages > 0}" >
+					<div class="col-sm-12">
+						<br/>
+						<div class="table-responsive">				
+							<table class="table table-striped table-hover table-header table-bordered" id="tabellaOrdiniId">
+								<caption class="sr-only">
+									Tabella degli ordini ricevuti
+								</caption>
+								<thead class="text-center">
+									<tr class="table-main">
+										<th colspan="6">Tabella degli ordini ricevuti</th>
+									</tr>
+									<tr class="table-main">
+										<th>Visualizza</th>
+										<th>Progressivo</th>
+										<th>Offerta</th>
+										<th>Quantita</th>
+										<th>Stato</th>	
+										<th>Suggerito</th>															
+									</tr>
+								</thead>
+								<tbody class="text-center">
+									<ui:repeat var="ordine" value="#{dettaglioBean.paginatorOrdini.page}">
+										<tr>
+											<td>
+												<h:commandLink action="#{dettaglioController.visualizzaOrdine()}" styleClass="btn btn-link">
+													<f:setPropertyActionListener value="#{ordine}" target="#{ordineBean.ordineDTO}"></f:setPropertyActionListener>
+													<i class="fas fa-eye"/>
+												</h:commandLink>
+											</td>
+											<td><h:outputText value="#{ordine.progressivo}" /></td>																					
+											<td><h:outputText value="#{ordine.offerta}" /></td>																						
+											<td><h:outputText value="#{ordine.quantita}" /></td>
+											<td><h:outputText value="#{ordine.flagAccettazione eq 0 ? 'In lavorazione' : (ordine.flagAccettazione eq 1 ? 'Accettato' : 'Rifiutato')}" /></td>																					
+											<td><h:outputText value="#{ordine.suggerito ? 'SI' : 'NO'}" /></td>
+										</tr>
+									</ui:repeat>
+								</tbody>
+							</table>
+							<custom:paginator paginator="#{dettaglioBean.paginatorOrdini}"/>
+						</div>
+					</div>
+					<br/>
+				</h:panelGroup>
+				<!-- Finestra modale annullamento prodotto -->
+				<h:panelGroup layout="block" rendered="#{dettaglioBean.annullaProdotto}" >
+					<div class="modal fade show" id="modal_panel" aria-modal="true" style="padding-right: 17px; display: block;">
+						<div class="modal-dialog modal-lg">
+							<h:panelGroup layout="block" id="annullaProdottoId">
+								<div class="modal-content">
+									<div class="modal-header text-center">
+									<p class="h3 modal-title w-100" id="modal-form-label">Annulla prodotto</p>
+										<h:commandLink styleClass="btn btn-default btn-sm" action="#{dettaglioController.chiudiAnnullaProdotto()}" >
+											<i class="fas fa-window-close pr-2" />
+										</h:commandLink>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+					    					<div class="col-12">
+					    						<h:panelGroup layout="block" id="modalErrors" styleClass="form-group mt-2" rendered="#{not empty messagesBean.messaggiModale.errors}">
+					    							<ui:repeat var="errore" value="#{messagesBean.messaggiModale.errors}">
+					    								<p class="alert alert-danger">#{errore}</p>
+					    							</ui:repeat>
+					    						</h:panelGroup>
+					    						<h:panelGroup layout="block" id="modalWarnings" styleClass="form-group mt-2" rendered="#{not empty messagesBean.messaggiModale.warnings}">
+					    							<ui:repeat var="avviso" value="#{messagesBean.messaggiModale.warnings}">
+					    								<p class="alert alert-warning">#{avviso}</p>
+					    							</ui:repeat>
+					    						</h:panelGroup>
+					    						<h:panelGroup layout="block" id="modalSuccesses" styleClass="form-group mt-2" rendered="#{not empty messagesBean.messaggiModale.successes}">
+					    							<ui:repeat var="successo" value="#{messagesBean.messaggiModale.successes}">
+					    								<p class="alert alert-success">#{successo}</p>
+					    							</ui:repeat>
+					    						</h:panelGroup>
+												<h:outputScript rendered="#{not empty messagesBean.messaggiModale.successes or not empty messagesBean.messaggiModale.warnings or not empty messagesBean.messaggiModale.successes}">                                      
+											        $(document).ready(function () {
+											           $('html, body').animate({scrollTop:0}, 'slow');                                                
+											        });
+											    </h:outputScript>
+					    					</div>
+					    				</div>
+										<div class="row">
+											<div class="col-12">
+												<h:outputText value="Confermare l'annullamento del prodotto?"/>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer text-center">
+										<div class="row btn-group w-100">
+											<div class="col-12 col-sm-3 offset-sm-3">
+												<h:commandLink styleClass="btn btn-primary px-4 mr-3" action="#{dettaglioController.chiudiAnnullaProdotto()}" value="Chiudi"/>
+											</div>
+											<div class="col-12 col-sm-3">
+												<h:commandLink styleClass="btn btn-primary px-4 mr-3" action="#{dettaglioController.confermaAnnullaProdotto()}" value="Conferma"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</h:panelGroup>
+						</div>
+					</div>
+				</h:panelGroup>
 			</h:panelGroup>
 			<div class="row btn-group">
 				<h:panelGroup layout="block" styleClass="col-12" rendered="#{not empty dettaglioBean.provenienza and dettaglioBean.provenienza eq 'ricercaProdotti.xhtml'}">

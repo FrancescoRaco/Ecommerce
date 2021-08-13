@@ -30,6 +30,8 @@ public class DettaglioBean {
 	private String provenienza;
 	private boolean indietro;
 	
+	private boolean annullaProdotto;
+	
 
 	public ProdottoDTO getProdottoDTO() {
 		return prodottoDTO;
@@ -117,6 +119,14 @@ public class DettaglioBean {
 
 	public void setPaginatorOrdini(Paginator<OrdineDTO> paginatorOrdini) {
 		this.paginatorOrdini = paginatorOrdini;
+	}
+
+	public boolean isAnnullaProdotto() {
+		return annullaProdotto;
+	}
+
+	public void setAnnullaProdotto(boolean annullaProdotto) {
+		this.annullaProdotto = annullaProdotto;
 	}
 
 }

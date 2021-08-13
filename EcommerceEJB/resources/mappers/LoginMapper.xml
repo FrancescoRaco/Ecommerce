@@ -13,7 +13,8 @@
       	domicilio as "domicilio",
       	email as "email",
       	telefono as "telefono",
-      	dataNascita as "dataNascita"
+      	dataNascita as "dataNascita",
+      	sesso as "sesso"
 	  FROM ecommerce.utenti
 	  WHERE codiceFiscale = #{codiceFiscale, jdbcType=VARCHAR} AND password = #{password, jdbcType=VARCHAR}
    </select>

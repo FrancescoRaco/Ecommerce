@@ -2,7 +2,6 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -10,19 +9,21 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import beans.DettaglioBean;
 import beans.MessagesBean;
 import beans.OrdineBean;
+import beans.RicercaProdottiBean;
 import beans.UtenteBean;
+import beans.VenditeBean;
 import dto.OrdineDTO;
 import ejbInterfaces.BuyerDataAccess;
 import ejbInterfaces.CommonDataAccess;
+import ejbInterfaces.SellerDataAccess;
 import geneticAi.KnapSackGA;
 import utils.CommonUtils;
+import utils.Constants;
 import utils.Paginator;
 
 @ManagedBean
@@ -33,6 +34,12 @@ public class DettaglioController {
 	
 	@ManagedProperty(value="#{dettaglioBean}")
 	private DettaglioBean dettaglioBean;
+	
+	@ManagedProperty(value="#{ricercaProdottiBean}")
+	private RicercaProdottiBean ricercaProdottiBean;
+	
+	@ManagedProperty(value="#{venditeBean}")
+	private VenditeBean venditeBean;
 	
 	@ManagedProperty(value="#{utenteBean}")
 	private UtenteBean utenteBean;
@@ -48,6 +55,9 @@ public class DettaglioController {
 	
 	@EJB
 	private static CommonDataAccess commonDataAccess;
+	
+	@EJB
+	private static SellerDataAccess sellerDataAccess;
 	
 	private boolean fromInit;
 	
@@ -220,6 +230,44 @@ public class DettaglioController {
 		return "ordine";
 	}
 	
+	public String goToModificaProdotto() {
+		return "modificaProdotto";
+	}
+	
+	public void apriAnnullaProdotto() {
+		dettaglioBean.setAnnullaProdotto(true);
+	}
+	
+	public void chiudiAnnullaProdotto() {
+		dettaglioBean.setAnnullaProdotto(false);
+	}
+	
+	public String backToDettaglio() {
+		return "dettaglioProdotto";
+	}
+	
+	public void confermaAnnullaProdotto() {
+		try {
+			if (dettaglioBean.getProdottoDTO() != null && dettaglioBean.getProdottoDTO().getId() != null) {
+				String titolo = dettaglioBean.getProdottoDTO().getTitolo();
+				sellerDataAccess.annullaProdotto(dettaglioBean.getProdottoDTO().getId());
+				chiudiAnnullaProdotto();
+				messagesBean.getSuccesses().add("Annullato con successo il prodotto: " + (titolo != null && !titolo.isEmpty() ? titolo : ""));
+				
+				//Aggiornamento pagine dopo modifica
+				dettaglioBean.setProdottoDTO(null);
+				if (Constants.PAGINA_RICERCA_PRODOTTI.equals(dettaglioBean.getProvenienza())) {
+					ricercaProdottiBean.setProdottiAttivi(null);
+				} else if (Constants.PAGINA_VENDITE.equals(dettaglioBean.getProvenienza())) {
+					venditeBean.setProdottiAttivi(null);
+				}
+			}
+		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
+			messagesBean.getMessaggiModale().getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
+		}
+	}
+	
 	public String backToRicercaProdotti() {
 		dettaglioBean.setIndietro(true);
 		return "ricercaProdotti";
@@ -236,6 +284,22 @@ public class DettaglioController {
 
 	public void setDettaglioBean(DettaglioBean dettaglioBean) {
 		this.dettaglioBean = dettaglioBean;
+	}
+
+	public RicercaProdottiBean getRicercaProdottiBean() {
+		return ricercaProdottiBean;
+	}
+
+	public void setRicercaProdottiBean(RicercaProdottiBean ricercaProdottiBean) {
+		this.ricercaProdottiBean = ricercaProdottiBean;
+	}
+
+	public VenditeBean getVenditeBean() {
+		return venditeBean;
+	}
+
+	public void setVenditeBean(VenditeBean venditeBean) {
+		this.venditeBean = venditeBean;
 	}
 
 	public UtenteBean getUtenteBean() {

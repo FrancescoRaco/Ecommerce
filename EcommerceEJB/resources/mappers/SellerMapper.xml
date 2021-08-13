@@ -40,6 +40,10 @@
       	#{cfVenditore, jdbcType=VARCHAR}, 1, #{disponibilita, jdbcType=INTEGER}, #{prezzoBase, jdbcType=INTEGER}, #{infoAcquirenti, jdbcType=VARCHAR}, SYSDATE(), NULL)
    </insert>
    
-   
+   <update id="annullaProdotto" parameterType="int">
+   	UPDATE ecommerce.prodotti
+   	SET flagAttivazione = 0
+   	WHERE id = #{id, jdbcType=INTEGER}
+   </update>
     	
 </mapper>

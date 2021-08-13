@@ -17,6 +17,7 @@ public class UtenteBean {
 	private String email;
 	private String telefono;
 	private Date dataNascita;
+	private String sesso;
 	
 	//Campi wrapper
 	private String dataNascitaWrap;
@@ -121,6 +122,12 @@ public class UtenteBean {
 	}
 	public void setUtenteInput(UtenteDTO utenteInput) {
 		this.utenteInput = utenteInput;
+	}
+	public String getSesso() {
+		return sesso;
+	}
+	public void setSesso(String sesso) {
+		this.sesso = sesso;
 	}
 
 }

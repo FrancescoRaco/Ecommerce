@@ -48,17 +48,17 @@ public class UtenteController extends BaseController {
 	public void confermaModificaPassword() {
 		try {
 			if (validaInputPassword()) {
-				//TODO query
 				UtenteDTO utenteDTO = new UtenteDTO();
 				utenteDTO.setCodiceFiscale(utenteBean.getCodiceFiscale());
 				utenteDTO.setPassword(utenteBean.getNuovaPassword());
 				commonDataAccess.modificaPassword(utenteDTO);
+				chiudiModificaPassword();
 				utenteBean.setPassword(utenteBean.getNuovaPassword());
 				messagesBean.getSuccesses().add("Password modificata con successo");
 			}
 		} catch(Exception e) {
 			logger.error(e.getMessage(), e);
-			messagesBean.getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
+			messagesBean.getMessaggiModale().getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
 		}
 	}
 	
@@ -69,20 +69,20 @@ public class UtenteController extends BaseController {
 	private boolean validaInputPassword() throws Exception {
 		
 		if (utenteBean == null || utenteBean.getVecchiaPassword() == null || utenteBean.getVecchiaPassword().isEmpty()) {
-			messagesBean.addError("Inserire la password attuale", "vecchiaPasswordId");
+			messagesBean.getMessaggiModale().addError("Inserire la password attuale", "vecchiaPasswordId");
 		} else if (utenteBean != null && utenteBean.getVecchiaPassword() != null && !CommonUtils.validaPassword(utenteBean.getVecchiaPassword())) {
-			messagesBean.addError("Errore durante la validazione della password attuale", "vecchiaPasswordId");
+			messagesBean.getMessaggiModale().addError("Errore durante la validazione della password attuale", "vecchiaPasswordId");
 		} else if (!utenteBean.getVecchiaPassword().equals(utenteBean.getPassword())) {
-			messagesBean.addError("La password immessa non corrisponde a quella attuale", "vecchiaPasswordId");
+			messagesBean.getMessaggiModale().addError("La password immessa non corrisponde a quella attuale", "vecchiaPasswordId");
 		}
 		
 		if (utenteBean == null || utenteBean.getNuovaPassword() == null || utenteBean.getNuovaPassword().isEmpty()) {
-			messagesBean.addError("Inserire la nuova password", "nuovaPasswordId");
+			messagesBean.getMessaggiModale().addError("Inserire la nuova password", "nuovaPasswordId");
 		} else if (utenteBean != null && utenteBean.getNuovaPassword() != null && !CommonUtils.validaPassword(utenteBean.getNuovaPassword())) {
-			messagesBean.addError("Errore durante la validazione della nuova password", "nuovaPasswordId");
+			messagesBean.getMessaggiModale().addError("Errore durante la validazione della nuova password", "nuovaPasswordId");
 		}
 		
-		if (messagesBean.getErrors() != null && messagesBean.getErrors().size() > 0) {
+		if (messagesBean.getMessaggiModale().getErrors() != null && messagesBean.getMessaggiModale().getErrors().size() > 0) {
 			return false;
 		}
 		
@@ -155,6 +155,7 @@ public class UtenteController extends BaseController {
 					utenteBean.setEmail(utenteAggiornato.getEmail());
 					utenteBean.setTelefono(utenteAggiornato.getTelefono());
 					utenteBean.setDataNascita(utenteAggiornato.getDataNascita());
+					utenteBean.setSesso(utenteAggiornato.getSesso());
 					utenteBean.setLoggedIn(true);
 				} 
 			}
@@ -176,6 +177,7 @@ public class UtenteController extends BaseController {
 			utenteInput.setEmail(utenteBean.getEmail());
 			utenteInput.setTelefono(utenteBean.getTelefono());
 			utenteInput.setDataNascitaWrap(CommonUtils.dateToString(utenteBean.getDataNascita()));
+			utenteInput.setSesso(utenteBean.getSesso());
 			utenteBean.setUtenteInput(utenteInput);
 		} catch(Exception e) {
 			logger.error(e.getMessage(), e);
