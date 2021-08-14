@@ -94,6 +94,7 @@ public class VenditeController extends BaseController {
 	public String visualizzaDettaglio() {
 		
 		dettaglioBean.setProvenienza(Constants.PAGINA_VENDITE);
+		dettaglioBean.setPulireInvioOrdine(true);
 		
 		return "dettaglio";
 	}

@@ -11,7 +11,7 @@ public class Paginator<T> implements Serializable {
 	
 	private List<T> resultset;
 	private int currentPageNumber = 1;
-	private int pageSize = 1;
+	private int pageSize = 5;
 	private int windowSize = 5;
 	private int result;
 

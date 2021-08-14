@@ -22,6 +22,10 @@ public class ProdottoDTO {
 	private Date dataDa;
 	private Date dataA;
 	
+	//Campi wrapper
+	private String disponibilitaWrap;
+	private String prezzoBaseWrap;
+	
 	
 	public Integer getId() {
 		return id;
@@ -112,6 +116,18 @@ public class ProdottoDTO {
 	}
 	public void setDataA(Date dataA) {
 		this.dataA = dataA;
+	}
+	public String getDisponibilitaWrap() {
+		return disponibilitaWrap;
+	}
+	public void setDisponibilitaWrap(String disponibilitaWrap) {
+		this.disponibilitaWrap = disponibilitaWrap;
+	}
+	public String getPrezzoBaseWrap() {
+		return prezzoBaseWrap;
+	}
+	public void setPrezzoBaseWrap(String prezzoBaseWrap) {
+		this.prezzoBaseWrap = prezzoBaseWrap;
 	}
 
 }

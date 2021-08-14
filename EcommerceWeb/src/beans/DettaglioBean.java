@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import dto.CategoriaDTO;
 import dto.OrdineDTO;
 import dto.ProdottoDTO;
 import utils.Paginator;
@@ -31,6 +32,13 @@ public class DettaglioBean {
 	private boolean indietro;
 	
 	private boolean annullaProdotto;
+	
+	//Wrapper campi input modifica
+	private ProdottoDTO prodottoInput;
+	
+	private List<CategoriaDTO> categorie;
+	
+	private boolean pulireInvioOrdine;
 	
 
 	public ProdottoDTO getProdottoDTO() {
@@ -127,6 +135,30 @@ public class DettaglioBean {
 
 	public void setAnnullaProdotto(boolean annullaProdotto) {
 		this.annullaProdotto = annullaProdotto;
+	}
+
+	public ProdottoDTO getProdottoInput() {
+		return prodottoInput;
+	}
+
+	public void setProdottoInput(ProdottoDTO prodottoInput) {
+		this.prodottoInput = prodottoInput;
+	}
+
+	public List<CategoriaDTO> getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(List<CategoriaDTO> categorie) {
+		this.categorie = categorie;
+	}
+
+	public boolean isPulireInvioOrdine() {
+		return pulireInvioOrdine;
+	}
+
+	public void setPulireInvioOrdine(boolean pulireInvioOrdine) {
+		this.pulireInvioOrdine = pulireInvioOrdine;
 	}
 
 }

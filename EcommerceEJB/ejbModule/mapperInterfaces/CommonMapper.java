@@ -10,6 +10,7 @@ public interface CommonMapper {
 	public String test(int num) throws Exception;
 	public List<CategoriaDTO> getCategorie() throws Exception;
 	public List<ProdottoDTO> getProdottiAttivi(ProdottoDTO prodottoDTO) throws Exception;
+	public ProdottoDTO getProdottoAttivo(Integer id) throws Exception;
 	public int modificaPassword(UtenteDTO utenteDTO) throws Exception;
 	public int modificaProfilo(UtenteDTO utenteDTO) throws Exception;
 }

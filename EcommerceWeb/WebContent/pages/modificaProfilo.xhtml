@@ -69,7 +69,8 @@
 				</div>
 				<div class="col-12 col-sm-6">
 					<h:outputLabel for="sessoId" value="Sesso:" styleClass="control-label"/>
-					<h:selectOneMenu id="sessoId" value="#{utenteBean.utenteInput.sesso}" styleClass="form-control">
+					<h:selectOneMenu id="sessoId" value="#{utenteBean.utenteInput.sesso}" styleClass="form-control" hideNoSelectionOption="true">
+						<f:selectItem noSelectionOption="true" itemLabel="--Seleziona--" itemvalue=""/>
 						<f:selectItem itemLabel="Maschile" itemValue="M"/>
 						<f:selectItem itemLabel="Femminile" itemValue="F"/>
 					</h:selectOneMenu>

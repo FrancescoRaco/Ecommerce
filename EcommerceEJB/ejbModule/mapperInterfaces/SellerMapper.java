@@ -11,5 +11,6 @@ public interface SellerMapper {
 	public int accettaOrdine(OrdineDTO ordineDTO) throws Exception;
 	public int rifiutaOrdine(OrdineDTO ordineDTO) throws Exception;
 	public int aggiornaDisponibilitaProdotto(ProdottoDTO prodottoDTO) throws Exception;
+	public int modificaProdotto(ProdottoDTO prodottoDTO) throws Exception;
 	public int annullaProdotto(Integer id) throws Exception;
 }

@@ -49,6 +49,18 @@
 	  </trim>
    </select>
    
+   <select id="getProdottoAttivo" parameterType="int" resultType="dto.ProdottoDTO">
+      SELECT
+	      id as "id", codiceCategoria as "codiceCategoria",
+	      (SELECT descrizione FROM ecommerce.categorie WHERE ecommerce.categorie.codice = ecommerce.prodotti.codiceCategoria) as "descCategoria",
+	      titolo as "titolo", descrizione as "descrizione", cfVenditore as "cfVenditore",
+	      (SELECT CONCAT(nome, ' ', cognome) FROM ecommerce.utenti WHERE ecommerce.utenti.codiceFiscale = ecommerce.prodotti.cfVenditore) as "venditoreDenom",
+	      disponibilita as "disponibilita",
+	      prezzoBase as "prezzoBase", infoAcquirenti as "infoAcquirenti", dataInserimento as "dataInserimento"
+	  FROM ecommerce.prodotti
+	  WHERE id = #{id, jdbcType=INTEGER} AND flagAttivazione = 1
+   </select>
+   
    <update id="modificaPassword" parameterType="dto.UtenteDTO">
    		UPDATE ecommerce.utenti
 		SET password = #{password, jdbcType=VARCHAR}

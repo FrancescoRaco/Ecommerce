@@ -94,6 +94,22 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 	}
 	
 	@Override
+	public int modificaProdotto(ProdottoDTO prodottoDTO) throws EcommerceException {
+		
+		int result = 0;
+		
+		try (SqlSession session = getSession()) {
+			SellerMapper sellerMapper = (SellerMapper) session.getMapper(SellerMapper.class);
+			result = sellerMapper.modificaProdotto(prodottoDTO);
+		} catch(Exception e) {
+			context.setRollbackOnly();
+			logger.error(e.getMessage(), e);
+			throw new EcommerceException(e.getMessage(), e);
+		}
+		return result;
+	}
+	
+	@Override
 	public int annullaProdotto(Integer id) throws EcommerceException {
 		
 		int result = 0;

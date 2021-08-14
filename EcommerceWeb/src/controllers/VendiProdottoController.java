@@ -132,7 +132,7 @@ public class VendiProdottoController extends BaseController {
 		}
 		
 		if (vendiProdottoBean != null && vendiProdottoBean.getInfoAcquirenti() != null && !vendiProdottoBean.getInfoAcquirenti().isEmpty() && !CommonUtils.validaStringa(vendiProdottoBean.getInfoAcquirenti())) {
-			messagesBean.addError("Errore durante la validazione dele informazioni per gli acquirenti", "infoAcquirentiId");
+			messagesBean.addError("Errore durante la validazione delle informazioni per gli acquirenti", "infoAcquirentiId");
 		}
 		
 		if (messagesBean.getErrors() != null && messagesBean.getErrors().size() > 0) {

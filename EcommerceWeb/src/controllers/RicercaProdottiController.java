@@ -174,6 +174,7 @@ public class RicercaProdottiController extends BaseController {
 	public String visualizzaDettaglio() {
 		
 		dettaglioBean.setProvenienza(Constants.PAGINA_RICERCA_PRODOTTI);
+		dettaglioBean.setPulireInvioOrdine(true);
 		
 		return "dettaglio";
 	}

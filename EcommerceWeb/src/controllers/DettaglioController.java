@@ -18,6 +18,7 @@ import beans.RicercaProdottiBean;
 import beans.UtenteBean;
 import beans.VenditeBean;
 import dto.OrdineDTO;
+import dto.ProdottoDTO;
 import ejbInterfaces.BuyerDataAccess;
 import ejbInterfaces.CommonDataAccess;
 import ejbInterfaces.SellerDataAccess;
@@ -59,14 +60,15 @@ public class DettaglioController {
 	@EJB
 	private static SellerDataAccess sellerDataAccess;
 	
-	private boolean fromInit;
-	
 	@PostConstruct
 	public void init() {
 		try {
 			if (dettaglioBean.getOrdini() == null && utenteBean.getCodiceFiscale().equals(dettaglioBean.getProdottoDTO().getCfVenditore())) {
 				caricaOrdiniRicevuti();
 				aiutaVenditore();
+			}
+			if (dettaglioBean.getCategorie() == null) {
+				dettaglioBean.setCategorie(commonDataAccess.getCategorie());
 			}
 		} catch(Exception e) {
 			logger.error(e.getMessage(), e);
@@ -81,7 +83,6 @@ public class DettaglioController {
 			}
 			dettaglioBean.getPaginatorOrdini().setResultset(dettaglioBean.getOrdini());
 			dettaglioBean.setTabellaOrdiniAbilitata(true);
-			fromInit = true;
 		} else {
 			dettaglioBean.setPaginatorOrdini(null);
 			dettaglioBean.setTabellaOrdiniAbilitata(false);
@@ -122,7 +123,7 @@ public class DettaglioController {
 		List<OrdineDTO> ordiniAttivi = new ArrayList<OrdineDTO>();
 		if (dettaglioBean.getOrdini() != null && !dettaglioBean.getOrdini().isEmpty()) {
 			for (OrdineDTO ordineDTO : dettaglioBean.getOrdini()) {
-				if (ordineDTO != null && ordineDTO.getFlagAccettazione() == 0) {
+				if (ordineDTO != null && ordineDTO.getFlagAccettazione() == 0 && ordineDTO.getOfferta() != null && dettaglioBean.getProdottoDTO() != null && ordineDTO.getOfferta() >= dettaglioBean.getProdottoDTO().getPrezzoBase()) {
 					ordiniAttivi.add(ordineDTO);
 				}
 			}
@@ -130,10 +131,21 @@ public class DettaglioController {
 		return ordiniAttivi;
 	}
 	
+	public void effettuaOperazioniIniziali(ComponentSystemEvent event) {
+		try {
+			dettaglioBean.setIndietro(false);
+			if (dettaglioBean.isPulireInvioOrdine()) {
+				ripulisciInvioOrdine();
+				dettaglioBean.setPulireInvioOrdine(false);
+			}
+		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
+	
 	public void inviaOrdine() {
 		try {
 			if (validaInput()) {
-				//TODO insert
 				OrdineDTO ordineDTO = new OrdineDTO();
 				ordineDTO.setIdProdotto(dettaglioBean.getProdottoDTO().getId());
 				ordineDTO.setOfferta(dettaglioBean.getOfferta());
@@ -149,29 +161,13 @@ public class DettaglioController {
 		}
 	}
 	
-	public void effettuaOperazioniIniziali(ComponentSystemEvent event) {
-		try {
-			dettaglioBean.setIndietro(false);
-			if (!FacesContext.getCurrentInstance().isPostback() && !fromInit) {
-				ripulisciOrdine();
-			} else if (FacesContext.getCurrentInstance().isPostback() && dettaglioBean.getProdottoDTO() != null) {
-				dettaglioBean.setProdottoDTO(commonDataAccess.getProdotto(dettaglioBean.getProdottoDTO()));
-				caricaOrdiniRicevuti();
-				aiutaVenditore();
-			}
-		} catch(Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-	}
-	
-	public void ripulisciOrdine() {
+	public void ripulisciInvioOrdine() {
 		try {
 			dettaglioBean.setOfferta(null);
-			dettaglioBean.setNoteAcquirente(null);
 			dettaglioBean.setOffertaWrap(null);
-			dettaglioBean.setOrdini(null);
-			dettaglioBean.setTabellaOrdiniAbilitata(false);
-			dettaglioBean.setPaginatorOrdini(null);
+			dettaglioBean.setQuantita(null);
+			dettaglioBean.setQuantitaWrap(null);
+			dettaglioBean.setNoteAcquirente(null);
 		} catch(Exception e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -231,6 +227,7 @@ public class DettaglioController {
 	}
 	
 	public String goToModificaProdotto() {
+		ripulisci();
 		return "modificaProdotto";
 	}
 	
@@ -249,22 +246,104 @@ public class DettaglioController {
 	public void confermaAnnullaProdotto() {
 		try {
 			if (dettaglioBean.getProdottoDTO() != null && dettaglioBean.getProdottoDTO().getId() != null) {
-				String titolo = dettaglioBean.getProdottoDTO().getTitolo();
-				sellerDataAccess.annullaProdotto(dettaglioBean.getProdottoDTO().getId());
+				Integer id = dettaglioBean.getProdottoDTO().getId();
+				sellerDataAccess.annullaProdotto(id);
 				chiudiAnnullaProdotto();
-				messagesBean.getSuccesses().add("Annullato con successo il prodotto: " + (titolo != null && !titolo.isEmpty() ? titolo : ""));
+				messagesBean.getSuccesses().add("Annullato con successo il prodotto: " + (id != null ? id : "/"));
 				
 				//Aggiornamento pagine dopo modifica
 				dettaglioBean.setProdottoDTO(null);
-				if (Constants.PAGINA_RICERCA_PRODOTTI.equals(dettaglioBean.getProvenienza())) {
+				if (Constants.PAGINA_RICERCA_PRODOTTI.equals(dettaglioBean.getProvenienza()) && ricercaProdottiBean != null) {
 					ricercaProdottiBean.setProdottiAttivi(null);
-				} else if (Constants.PAGINA_VENDITE.equals(dettaglioBean.getProvenienza())) {
+				} else if (Constants.PAGINA_VENDITE.equals(dettaglioBean.getProvenienza()) && venditeBean != null) {
 					venditeBean.setProdottiAttivi(null);
 				}
 			}
 		} catch(Exception e) {
 			logger.error(e.getMessage(), e);
 			messagesBean.getMessaggiModale().getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
+		}
+	}
+	
+	private boolean validaInputModifica() throws Exception {
+		
+		if (dettaglioBean.getProdottoInput() == null || dettaglioBean.getProdottoInput().getTitolo() == null || dettaglioBean.getProdottoInput().getTitolo().isEmpty()) {
+			messagesBean.addError("Inserire il titolo", "titoloId");
+		} else if (dettaglioBean.getProdottoInput() != null && dettaglioBean.getProdottoInput().getTitolo() != null && !dettaglioBean.getProdottoInput().getTitolo().isEmpty() && !CommonUtils.validaStringa(dettaglioBean.getProdottoInput().getTitolo())) {
+			messagesBean.addError("Errore durante la validazione del titolo", "titoloId");
+		}
+		
+		if (dettaglioBean.getProdottoInput() == null || dettaglioBean.getProdottoInput().getDescrizione() == null || dettaglioBean.getProdottoInput().getDescrizione().isEmpty()) {
+			messagesBean.addError("Inserire la descrizione", "descrizioneId");
+		} else if (dettaglioBean.getProdottoInput() != null && dettaglioBean.getProdottoInput().getDescrizione() != null && !dettaglioBean.getProdottoInput().getDescrizione().isEmpty() && !CommonUtils.validaStringa(dettaglioBean.getProdottoInput().getDescrizione())) {
+			messagesBean.addError("Errore durante la validazione della descrizione", "descrizioneId");
+		}
+		
+		if (dettaglioBean.getProdottoInput() == null || dettaglioBean.getProdottoInput().getDisponibilitaWrap() == null || dettaglioBean.getProdottoInput().getDisponibilitaWrap().isEmpty()) {
+			messagesBean.addError("Inserire la disponibilità", "disponibilitaId");
+		} else if (dettaglioBean.getProdottoInput() != null && dettaglioBean.getProdottoInput().getDisponibilitaWrap() != null && !dettaglioBean.getProdottoInput().getDisponibilitaWrap().isEmpty()) {
+			Integer converted = CommonUtils.stringToInteger(dettaglioBean.getProdottoInput().getDisponibilitaWrap());
+			if (converted == null) {
+				messagesBean.addError("Errore durante la validazione della disponibilità", "disponibilitaId");
+			} else {
+				dettaglioBean.getProdottoInput().setDisponibilita(converted);
+			}
+		}
+		
+		if (dettaglioBean.getProdottoInput() == null || dettaglioBean.getProdottoInput().getPrezzoBaseWrap() == null || dettaglioBean.getProdottoInput().getPrezzoBaseWrap().isEmpty()) {
+			messagesBean.addError("Inserire il prezzo base", "prezzoBaseId");
+		} else if (dettaglioBean.getProdottoInput() != null && dettaglioBean.getProdottoInput().getPrezzoBaseWrap() != null && !dettaglioBean.getProdottoInput().getPrezzoBaseWrap().isEmpty()) {
+			Integer converted = CommonUtils.stringToInteger(dettaglioBean.getProdottoInput().getPrezzoBaseWrap());
+			if (converted == null) {
+				messagesBean.addError("Errore durante la validazione del prezzo base", "prezzoBaseId");
+			} else {
+				dettaglioBean.getProdottoInput().setPrezzoBase(converted);
+			}
+		}
+		
+		if (dettaglioBean.getProdottoInput() != null && dettaglioBean.getProdottoInput().getInfoAcquirenti() != null && !dettaglioBean.getProdottoInput().getInfoAcquirenti().isEmpty() && !CommonUtils.validaStringa(dettaglioBean.getProdottoInput().getInfoAcquirenti())) {
+			messagesBean.addError("Errore durante la validazione delle informazioni per gli acquirenti", "infoAcquirentiId");
+		}
+		
+		if (messagesBean.getErrors() != null && messagesBean.getErrors().size() > 0) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public void modifica() {
+		try {
+			if (validaInputModifica()) {
+				Integer id = dettaglioBean.getProdottoDTO().getId();
+				sellerDataAccess.modificaProdotto(dettaglioBean.getProdottoInput());
+				messagesBean.getSuccesses().add("Modificato con successo il prodotto: " + (id != null ? id : "/"));
+				//Aggiornamento pagina web dopo la modifica
+				dettaglioBean.setProdottoDTO(commonDataAccess.getProdottoAttivo(id));
+				dettaglioBean.setOrdini(null);
+				ripulisci();
+			}
+		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
+			messagesBean.getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
+		}
+	}
+	
+	public void ripulisci() {
+		try {
+			ProdottoDTO prodottoInput = new ProdottoDTO();
+			//Travaso campi prodotto modificabili + id
+			prodottoInput.setId(dettaglioBean.getProdottoDTO().getId());
+			prodottoInput.setTitolo(dettaglioBean.getProdottoDTO().getTitolo());
+			prodottoInput.setCodiceCategoria(dettaglioBean.getProdottoDTO().getCodiceCategoria());
+			prodottoInput.setVenditoreDenom(dettaglioBean.getProdottoDTO().getVenditoreDenom());
+			prodottoInput.setDisponibilitaWrap(dettaglioBean.getProdottoDTO().getDisponibilita() != null ? ""+dettaglioBean.getProdottoDTO().getDisponibilita() : null);
+			prodottoInput.setPrezzoBaseWrap(dettaglioBean.getProdottoDTO().getPrezzoBase() != null ? ""+dettaglioBean.getProdottoDTO().getPrezzoBase() : null);
+			prodottoInput.setDescrizione(dettaglioBean.getProdottoDTO().getDescrizione());
+			prodottoInput.setInfoAcquirenti(dettaglioBean.getProdottoDTO().getInfoAcquirenti());
+			dettaglioBean.setProdottoInput(prodottoInput);
+		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
 		}
 	}
 	

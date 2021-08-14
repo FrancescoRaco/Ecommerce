@@ -52,6 +52,20 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 	}
 	
 	@Override
+	public ProdottoDTO getProdottoAttivo(Integer id) throws EcommerceException {
+		ProdottoDTO prodotto = null;
+		try (SqlSession session = getSession()) {
+			CommonMapper commonMapper = (CommonMapper) session.getMapper(CommonMapper.class);
+			prodotto = commonMapper.getProdottoAttivo(id);
+		} catch(Exception e) {
+			context.setRollbackOnly();
+			logger.error(e.getMessage(), e);
+			throw new EcommerceException(e.getMessage(), e);
+		}
+		return prodotto;
+	}
+	
+	@Override
 	public List<ProdottoDTO> getProdottiAttivi(ProdottoDTO prodottoDTO) throws EcommerceException {
 		List<ProdottoDTO> prodotti = null;
 		try (SqlSession session = getSession()) {
@@ -63,23 +77,6 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 			throw new EcommerceException(e.getMessage(), e);
 		}
 		return prodotti;
-	}
-	
-	@Override
-	public ProdottoDTO getProdotto(ProdottoDTO prodottoDTO) throws EcommerceException {
-		ProdottoDTO prodottoNuovo = null;
-		try (SqlSession session = getSession()) {
-			CommonMapper commonMapper = (CommonMapper) session.getMapper(CommonMapper.class);
-			List<ProdottoDTO> prodotti = commonMapper.getProdottiAttivi(prodottoDTO);
-			if (prodotti != null && !prodotti.isEmpty()) {
-				prodottoNuovo = prodotti.get(0);
-			}
-		} catch(Exception e) {
-			context.setRollbackOnly();
-			logger.error(e.getMessage(), e);
-			throw new EcommerceException(e.getMessage(), e);
-		}
-		return prodottoNuovo;
 	}
 	
 	@Override

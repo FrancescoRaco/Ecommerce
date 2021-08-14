@@ -41,7 +41,7 @@
 								<tr class="table-main">
 									<th>Visualizza</th>
 									<th>Prodotto</th>
-									<th>Progressivo ordine</th>
+									<th>Acquirente</th>
 									<th>Offerta</th>
 									<th>Quantita</th>
 									<th>Stato</th>																
@@ -57,7 +57,7 @@
 											</h:commandLink>
 										</td>
 										<td><h:outputText value="#{ordine.titoloProdotto}" /></td>																					
-										<td><h:outputText value="#{ordine.progressivo}" /></td>	
+										<td><h:outputText value="#{ordine.acquirenteDenom}" /></td>	
 										<td><h:outputText value="#{ordine.offerta}" /></td>																						
 										<td><h:outputText value="#{ordine.quantita}" /></td>
 										<td><h:outputText value="#{ordine.flagAccettazione eq 0 ? 'In lavorazione' : (ordine.flagAccettazione eq 1 ? 'Accettata' : 'Rifiutata')}" /></td>																					

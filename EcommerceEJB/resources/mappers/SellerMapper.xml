@@ -40,9 +40,18 @@
       	#{cfVenditore, jdbcType=VARCHAR}, 1, #{disponibilita, jdbcType=INTEGER}, #{prezzoBase, jdbcType=INTEGER}, #{infoAcquirenti, jdbcType=VARCHAR}, SYSDATE(), NULL)
    </insert>
    
+   <update id="modificaProdotto" parameterType="dto.ProdottoDTO">
+     UPDATE ecommerce.prodotti
+   	 SET
+   	 	codiceCategoria = #{codiceCategoria, jdbcType=INTEGER}, descrizione = #{descrizione, jdbcType=VARCHAR}, titolo = #{titolo, jdbcType=VARCHAR},
+   	 	disponibilita = #{disponibilita, jdbcType=INTEGER}, prezzoBase = #{prezzoBase, jdbcType=INTEGER}, infoAcquirenti = #{infoAcquirenti, jdbcType=VARCHAR},
+   	 	dataAggiornamento = SYSDATE()
+   	 WHERE id = #{id, jdbcType=INTEGER}
+   </update>
+   
    <update id="annullaProdotto" parameterType="int">
    	UPDATE ecommerce.prodotti
-   	SET flagAttivazione = 0
+   	SET flagAttivazione = 0, dataAggiornamento = SYSDATE()
    	WHERE id = #{id, jdbcType=INTEGER}
    </update>
     	
