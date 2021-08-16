@@ -58,7 +58,7 @@
 		<br/><br/>
 		<h:form>
 			<div class="row">
-				<div class="col-4 offset-4">
+				<div class="col-12 col-md-4 offset-md-4">
 					<div class="card border-secondary mb-3">
 					<div class="card-header text-center">Effettua login</div>
 						<div class="card-body">
@@ -103,13 +103,13 @@
 								<br/>
 								<div class="row">
 									<div class="col-12">
-										<p class="alert alert-warning">La password deve contenere almeno 8 caratteri di cui almeno 1 maiuscolo, 1 minuscolo, 1 numero e 1 speciale</p>
+										<p class="alert alert-warning" style="display:inline-block;">La password deve contenere almeno 8 caratteri di cui almeno 1 maiuscolo, 1 minuscolo, 1 numero e 1 speciale</p>
 									</div>
 								</div>
 								<div class="text-center">
 									<div class="row">
 										<div class="col-12">
-											<h:commandLink value="Non hai un account? Registrati qui" action="#{authenticationController.signup()}" styleClass="btn btn-link"/>
+											<h:commandLink value="Non hai un account? Registrati qui" action="#{authenticationController.signup()}" style="display:inline-block;"/>
 										</div>
 									</div>
 									<br/>
@@ -119,7 +119,6 @@
 										</div>
 									</div>
 								</div>
-								
 							</h:panelGroup>
 				  		</div>
 					</div>
