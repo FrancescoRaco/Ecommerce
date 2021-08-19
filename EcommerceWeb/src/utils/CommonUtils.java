@@ -39,8 +39,18 @@ public class CommonUtils {
 		return false;
 	}
 	
+	private static boolean areSpacesOnly(String text) throws Exception {
+		if (text != null && text.trim().isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+	
 	static public boolean validaStringa(String text) {
 		try {
+			if (areSpacesOnly(text)) {
+				return false;
+			}
 			String regex = "^[A-Za-z0-9אטילעש .,;:+_*\\-()='%&amp;\\\\/]+$";
 			Pattern pattern = Pattern.compile(regex);
 			Matcher matcher = pattern.matcher(text);
@@ -54,6 +64,9 @@ public class CommonUtils {
 	
 	static public boolean validaNome(String text) {
 		try {
+			if (areSpacesOnly(text)) {
+				return false;
+			}
 			String regex = "^[\\p{L}\\s.’\\-,]+$";
 			Pattern pattern = Pattern.compile(regex);
 			Matcher matcher = pattern.matcher(text);
