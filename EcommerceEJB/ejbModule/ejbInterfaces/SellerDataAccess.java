@@ -17,4 +17,5 @@ public interface SellerDataAccess {
 	public int rifiutaOrdine(OrdineDTO ordineDTO) throws EcommerceException;
 	public int modificaProdotto(ProdottoDTO prodottoDTO) throws EcommerceException;
 	public int annullaProdotto(Integer idProdotto) throws EcommerceException;
+	public OrdineDTO getOrdine(OrdineDTO ordineDTO) throws EcommerceException;
 }

@@ -143,5 +143,22 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 		}
 		return result;
 	}
+	
+	@Override
+	public OrdineDTO getOrdine(OrdineDTO ordineDTO) throws EcommerceException {
+		OrdineDTO ordineNuovo = null;
+		try (SqlSession session = getSession()) {
+			CommonMapper commonMapper = (CommonMapper) session.getMapper(CommonMapper.class);
+			List<OrdineDTO> ordini = commonMapper.getOrdiniBy(ordineDTO);
+			if (ordini != null && !ordini.isEmpty()) {
+				ordineNuovo = ordini.get(0);
+			}
+		} catch(Exception e) {
+			context.setRollbackOnly();
+			logger.error(e.getMessage(), e);
+			throw new EcommerceException(e.getMessage(), e);
+		}
+		return ordineNuovo;
+	}
 
 }

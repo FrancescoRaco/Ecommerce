@@ -49,7 +49,7 @@ public class OrdineController extends BaseController {
 		try {
 			if (ordineBean.getOrdineDTO().getQuantita() <= sellerDataAccess.getDisponibilitaProdotto(ordineBean.getOrdineDTO().getIdProdotto())) {
 				sellerDataAccess.accettaOrdine(ordineBean.getOrdineDTO());
-				ordineBean.setOrdineDTO(buyerDataAccess.getOrdine(ordineBean.getOrdineDTO()));
+				ordineBean.setOrdineDTO(sellerDataAccess.getOrdine(ordineBean.getOrdineDTO()));
 				messagesBean.getSuccesses().add("Ordine accettato con successo");
 			} else {
 				messagesBean.getErrors().add("Non richiedere più unità di quelle disponibili");
@@ -64,7 +64,7 @@ public class OrdineController extends BaseController {
 	public void rifiutaOrdine() {
 		try {
 			sellerDataAccess.rifiutaOrdine(ordineBean.getOrdineDTO());
-			ordineBean.setOrdineDTO(buyerDataAccess.getOrdine(ordineBean.getOrdineDTO()));
+			ordineBean.setOrdineDTO(sellerDataAccess.getOrdine(ordineBean.getOrdineDTO()));
 			messagesBean.getSuccesses().add("Ordine rifiutato con successo");
 		} catch(Exception e) {
 			logger.error(e.getMessage(), e);

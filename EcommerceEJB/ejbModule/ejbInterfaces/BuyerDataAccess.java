@@ -10,5 +10,4 @@ public interface BuyerDataAccess {
 	
 	public int insertOrdine(OrdineDTO ordineDTO) throws EcommerceException;
 	public List<OrdineDTO> getOrdiniEffettuati(String cfAcquirente) throws EcommerceException;
-	public OrdineDTO getOrdine(OrdineDTO ordineDTO) throws EcommerceException;
 }
