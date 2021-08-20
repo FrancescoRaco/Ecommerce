@@ -25,19 +25,6 @@ public class CommonDataAccessImpl extends BaseService implements CommonDataAcces
 	private SessionContext context;
 	
 	@Override
-	public String test(int num) throws Exception {
-		String result = null;
-		try (SqlSession session = getSession()) {
-			CommonMapper commonMapper = (CommonMapper) session.getMapper(CommonMapper.class);
-			result = commonMapper.test(num);
-		} catch(Exception e) {
-			context.setRollbackOnly();
-			logger.error(e.getMessage(), e);
-		}
-		return result;
-	}
-	
-	@Override
 	public List<CategoriaDTO> getCategorie() throws EcommerceException {
 		List<CategoriaDTO> categorie = null;
 		try (SqlSession session = getSession()) {
