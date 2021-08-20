@@ -76,7 +76,7 @@ public class DettaglioController {
 	}
 	
 	private void caricaOrdiniRicevuti() throws Exception {
-		dettaglioBean.setOrdini(buyerDataAccess.getOrdiniRicevuti(dettaglioBean.getProdottoDTO().getId()));
+		dettaglioBean.setOrdini(sellerDataAccess.getOrdiniRicevuti(dettaglioBean.getProdottoDTO().getId()));
 		if (dettaglioBean.getOrdini() != null && !dettaglioBean.getOrdini().isEmpty()) {
 			if (dettaglioBean.getPaginatorOrdini() == null) {
 				dettaglioBean.setPaginatorOrdini(new Paginator<OrdineDTO>());

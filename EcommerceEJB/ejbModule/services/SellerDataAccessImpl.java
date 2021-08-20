@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -11,6 +13,7 @@ import dto.OrdineDTO;
 import dto.ProdottoDTO;
 import ejbInterfaces.SellerDataAccess;
 import exceptions.EcommerceException;
+import mapperInterfaces.CommonMapper;
 import mapperInterfaces.SellerMapper;
 
 @Stateless
@@ -53,6 +56,22 @@ public class SellerDataAccessImpl extends BaseService implements SellerDataAcces
 			throw new EcommerceException(e.getMessage(), e);
 		}
 		return id;
+	}
+	
+	@Override
+	public List<OrdineDTO> getOrdiniRicevuti(Integer idProdotto) throws EcommerceException {
+		List<OrdineDTO> ordiniRicevuti = null;
+		try (SqlSession session = getSession()) {
+			CommonMapper commonMapper = (CommonMapper) session.getMapper(CommonMapper.class);
+			OrdineDTO ordineDTO = new OrdineDTO();
+			ordineDTO.setIdProdotto(idProdotto);
+			ordiniRicevuti = commonMapper.getOrdiniBy(ordineDTO);
+		} catch(Exception e) {
+			context.setRollbackOnly();
+			logger.error(e.getMessage(), e);
+			throw new EcommerceException(e.getMessage(), e);
+		}
+		return ordiniRicevuti;
 	}
 	
 	@Override
