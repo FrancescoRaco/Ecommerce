@@ -1,21 +1,17 @@
 package services;
 
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import dto.CategoriaDTO;
-import dto.OrdineDTO;
 import dto.ProdottoDTO;
 import dto.UtenteDTO;
 import ejbInterfaces.CommonDataAccess;
 import exceptions.EcommerceException;
-import mapperInterfaces.BuyerMapper;
 import mapperInterfaces.CommonMapper;
 
 @Stateless
