@@ -247,6 +247,7 @@ public class AuthenticationController extends BaseController {
 			utenteBean.setEmail(null);
 			utenteBean.setTelefono(null);
 			utenteBean.setDataNascita(null);
+			utenteBean.setDataNascitaWrap(null);
 			utenteBean.setLoggedIn(false);
 			utenteBean.setSignupAbilitato(false);
 		}
