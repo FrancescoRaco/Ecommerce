@@ -6,10 +6,10 @@
   
    <insert id="insertUtente" parameterType="dto.UtenteDTO">
       INSERT INTO ecommerce.utenti
-      	(codiceFiscale, password, nome, cognome, domicilio, email, telefono, dataNascita)
+      	(codiceFiscale, password, nome, cognome, domicilio, email, telefono, dataNascita, sesso)
       	VALUES (#{codiceFiscale, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{nome, jdbcType=VARCHAR},
       	#{cognome, jdbcType=VARCHAR}, #{domicilio, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
-      	#{telefono, jdbcType=VARCHAR}, #{dataNascita, jdbcType=DATE})
+      	#{telefono, jdbcType=VARCHAR}, #{dataNascita, jdbcType=DATE}, #{sesso, jdbcType=VARCHAR})
    </insert>
     	
 </mapper>

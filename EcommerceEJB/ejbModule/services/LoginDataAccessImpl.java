@@ -28,7 +28,9 @@ public class LoginDataAccessImpl extends BaseService implements LoginDataAccess 
 		try (SqlSession session = getSession()) {
 			LoginMapper loginMapper = (LoginMapper) session.getMapper(LoginMapper.class);
 			utenteLoggato = loginMapper.getUtente(utenteDTO);
-			logger.info("Loggato l'utente " + utenteLoggato.getNome() + " " + utenteLoggato.getCognome());
+			if (utenteLoggato != null) {
+				logger.info("Loggato l'utente " + utenteLoggato.getNome() + " " + utenteLoggato.getCognome());
+			}
 		} catch(Exception e) {
 			context.setRollbackOnly();
 			logger.error(e.getMessage(), e);

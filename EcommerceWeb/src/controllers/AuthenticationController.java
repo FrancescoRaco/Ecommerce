@@ -130,6 +130,7 @@ public class AuthenticationController extends BaseController {
 				utenteDTO.setEmail(utenteBean.getEmail());
 				utenteDTO.setTelefono(utenteBean.getTelefono());
 				utenteDTO.setDataNascita(utenteBean.getDataNascita());
+				utenteDTO.setSesso(utenteBean.getSesso());
 				signupDataAccess.signup(utenteDTO);
 				chiudiModalSignup();
 				messagesBean.getSuccesses().add("Utente " + utenteBean.getNome() + " " + utenteBean.getCognome() + " creato con successo");
@@ -199,6 +200,10 @@ public class AuthenticationController extends BaseController {
 			}
 		}
 		
+		if (utenteBean == null || utenteBean.getSesso() == null || utenteBean.getSesso().isEmpty()) {
+			messagesBean.getMessaggiModale().addError("Selezionare il sesso", "sessoId");
+		}
+		
 		if (messagesBean.getMessaggiModale().getErrors() != null && messagesBean.getMessaggiModale().getErrors().size() > 0) {
 			return false;
 		}
@@ -248,6 +253,7 @@ public class AuthenticationController extends BaseController {
 			utenteBean.setTelefono(null);
 			utenteBean.setDataNascita(null);
 			utenteBean.setDataNascitaWrap(null);
+			utenteBean.setSesso(null);
 			utenteBean.setLoggedIn(false);
 			utenteBean.setSignupAbilitato(false);
 		}
