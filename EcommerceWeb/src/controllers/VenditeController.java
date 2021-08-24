@@ -95,6 +95,8 @@ public class VenditeController extends BaseController {
 		
 		dettaglioBean.setProvenienza(Constants.PAGINA_VENDITE);
 		dettaglioBean.setPulireInvioOrdine(true);
+		dettaglioBean.setOrdini(null);
+		dettaglioBean.setPaginatorOrdini(null);
 		
 		return "dettaglio";
 	}

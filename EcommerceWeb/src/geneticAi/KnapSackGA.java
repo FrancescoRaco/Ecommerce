@@ -3,14 +3,18 @@ package geneticAi;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 public class KnapSackGA {
+	
+	private static final Logger logger = LogManager.getLogger(KnapSackGA.class);
     
     // Knapsack related variables
     private int noItems;
     private double[] values;
     private double[] weights;
     private double knapsackMaxSize;
-    private double knapsackSize;
     
     // Genetic algorithm related variables
     private int chromosomeLength;
@@ -18,7 +22,7 @@ public class KnapSackGA {
     private static int maxGen;
     private static double crossoverProb;
     private static double mutationProb;
-    private ArrayList<String> CandidateSolutions;
+    private ArrayList<String> candidateSolutions;
     private double bestFitness;
     
     
@@ -29,7 +33,6 @@ public class KnapSackGA {
         this.values = values;
         this.weights = weights;
         this.knapsackMaxSize = knapsackSize;
-        this.knapsackSize = knapsackSize;
         
         //GA related initializations
         chromosomeLength = noItems;
@@ -38,7 +41,7 @@ public class KnapSackGA {
         crossoverProb = crossProb;
         mutationProb = mutProb;
         
-        CandidateSolutions = new ArrayList<String>();
+        candidateSolutions = new ArrayList<String>();
     }
     
     public String execute() {
@@ -47,11 +50,24 @@ public class KnapSackGA {
         
         String bestSolution = null;
         
+        int noProgress = 0;
+        double bestFitness = -1;
+        
         // Run the GA until required fitness achieved or
-        for(int k = 0; k < KnapSackGA.maxGen && (bestFitness < (0.9*knapsackSize)); k++){
+        for(int k = 0; k < KnapSackGA.maxGen && (noProgress < noCandidates / 4); k++){
             bestSolution = getBestSolution();
-            newGen();
+            if (this.bestFitness > bestFitness) {
+				bestFitness = this.bestFitness;
+				noProgress = 0;
+			} else {
+				noProgress++;
+			}
+			newGen();
         }
+        
+        //Show the result in the log file
+        logger.info("Best solution is: " + bestSolution);
+        logger.info("Best fitness is: " + bestFitness);
         
         return bestSolution;
     }
@@ -77,7 +93,7 @@ public class KnapSackGA {
             }
             
             // Add the randomly formed candidate solution to the generation
-            CandidateSolutions.add(cand);
+            candidateSolutions.add(cand);
         }
     }
     
@@ -167,7 +183,7 @@ public class KnapSackGA {
         String bestSol = null;
         
         // Iterate over all the generation
-        for (String CandidateSolution : CandidateSolutions) {
+        for (String CandidateSolution : candidateSolutions) {
             double newFit = calcFitness(CandidateSolution);
             if(newFit != -1){
                 // If a better fit found
@@ -191,20 +207,20 @@ public class KnapSackGA {
         String can1 = getBestSolution();
         
         // Remove it from the list of solutions so we can select the 2nd best one
-        CandidateSolutions.remove(can1);
+        candidateSolutions.remove(can1);
         
         // Get first best candidate solution
         String can2 = getBestSolution();
         
         // Create new generation
-        CandidateSolutions = new ArrayList<String>();
+        candidateSolutions = new ArrayList<String>();
         
         // Add the best solution thus far
-        CandidateSolutions.add(can1);
+        candidateSolutions.add(can1);
         
         // Create all new offsprings from crossover and mutation
         for(int i = 1; i < noCandidates; i++){
-            CandidateSolutions.add(mutate(crossOver(can1, can2)));
+            candidateSolutions.add(mutate(crossOver(can1, can2)));
         }
     }
 }

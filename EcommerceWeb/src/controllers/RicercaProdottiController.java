@@ -175,6 +175,8 @@ public class RicercaProdottiController extends BaseController {
 		
 		dettaglioBean.setProvenienza(Constants.PAGINA_RICERCA_PRODOTTI);
 		dettaglioBean.setPulireInvioOrdine(true);
+		dettaglioBean.setOrdini(null);
+		dettaglioBean.setPaginatorOrdini(null);
 		
 		return "dettaglio";
 	}

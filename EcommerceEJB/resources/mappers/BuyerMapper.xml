@@ -4,9 +4,9 @@
 	
 <mapper namespace="mapperInterfaces.BuyerMapper">
 
-   <select id="getMaxProgrOrdine" resultType="int">
-   	  SELECT coalesce(max(progressivo), 0)
-	  FROM ecommerce.ordini
+   <select id="getMaxProgrOrdine" parameterType="int" resultType="int">
+   	  SELECT coalesce(max(progressivo), 0) 
+	  FROM ecommerce.ordini WHERE idProdotto = #{idProdotto, jdbcType=INTEGER}
    </select>	
   
    <insert id="insertOrdine" parameterType="dto.OrdineDTO">

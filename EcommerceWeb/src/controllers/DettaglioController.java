@@ -1,5 +1,6 @@
 package controllers;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -96,14 +97,14 @@ public class DettaglioController {
 			double[] values = new double[numeroOrdini];
 			double[] weights = new double[numeroOrdini];
 			for (int i = 0; i < ordiniAttivi.size(); i++) {
-				values[i] = ordiniAttivi.get(i).getOfferta();
+				values[i] = ordiniAttivi.get(i).getOfferta() * ordiniAttivi.get(i).getQuantita();
 				weights[i] = ordiniAttivi.get(i).getQuantita();
 			}
 			double knapsackSize = dettaglioBean.getProdottoDTO().getDisponibilita();
-			int populationSize = 1000;
-			int maxGenerations = 2000;
-			double crossProb = 0.6;
-			double mutatProb = 0.015;
+			int populationSize = 1200;
+			int maxGenerations = Integer.MAX_VALUE;
+			double crossProb = 0.85;
+			double mutatProb = 0.01;
 			KnapSackGA geneticAi = new KnapSackGA(numeroOrdini, values, weights, knapsackSize, populationSize, maxGenerations, crossProb, mutatProb);
 			String bestSolution = geneticAi.execute();
 			if (bestSolution != null && !bestSolution.isEmpty()) {

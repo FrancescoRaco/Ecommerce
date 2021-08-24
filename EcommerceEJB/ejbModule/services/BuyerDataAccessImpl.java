@@ -27,7 +27,7 @@ public class BuyerDataAccessImpl extends BaseService implements BuyerDataAccess 
 		int progressivo = 0;
 		try (SqlSession session = getSession()) {
 			BuyerMapper buyerMapper = (BuyerMapper) session.getMapper(BuyerMapper.class);
-			progressivo = buyerMapper.getMaxProgrOrdine() + 1;
+			progressivo = buyerMapper.getMaxProgrOrdine(ordineDTO.getIdProdotto()) + 1;
 			ordineDTO.setProgressivo(progressivo);
 			buyerMapper.insertOrdine(ordineDTO);
 		} catch(Exception e) {
