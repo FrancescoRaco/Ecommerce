@@ -67,7 +67,7 @@
 				</div>
 				<h:panelGroup layout="block" styleClass="col-12 col-sm-4" rendered="#{not empty ordineBean.ordineDTO and ordineBean.ordineDTO.cfVenditore eq utenteBean.codiceFiscale}">
 					<h:outputLabel for="suggeritoId" value="Ordine suggerito:" styleClass="control-label"/>
-					<h:inputText id="suggeritoId" value="#{ordine.suggerito ? 'SI' : 'NO'}" styleClass="form-control" disabled="true"/>
+					<h:inputText id="suggeritoId" value="#{ordine.suggerito ? 'SI' : dettaglioBean.assistenzaAttivata ? 'NO' : ''}" styleClass="form-control" disabled="true"/>
 				</h:panelGroup>
 			</div>
 			<br/>

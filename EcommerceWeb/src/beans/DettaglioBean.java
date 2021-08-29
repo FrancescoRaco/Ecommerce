@@ -40,6 +40,8 @@ public class DettaglioBean {
 	
 	private boolean pulireInvioOrdine;
 	
+	private boolean assistenzaAttivata;
+	
 
 	public ProdottoDTO getProdottoDTO() {
 		return prodottoDTO;
@@ -159,6 +161,14 @@ public class DettaglioBean {
 
 	public void setPulireInvioOrdine(boolean pulireInvioOrdine) {
 		this.pulireInvioOrdine = pulireInvioOrdine;
+	}
+
+	public boolean isAssistenzaAttivata() {
+		return assistenzaAttivata;
+	}
+
+	public void setAssistenzaAttivata(boolean assistenzaAttivata) {
+		this.assistenzaAttivata = assistenzaAttivata;
 	}
 
 }

@@ -1,6 +1,5 @@
 package controllers;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -8,7 +7,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ComponentSystemEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -66,7 +65,6 @@ public class DettaglioController {
 		try {
 			if (dettaglioBean.getOrdini() == null && utenteBean.getCodiceFiscale().equals(dettaglioBean.getProdottoDTO().getCfVenditore())) {
 				caricaOrdiniRicevuti();
-				aiutaVenditore();
 			}
 			if (dettaglioBean.getCategorie() == null) {
 				dettaglioBean.setCategorie(commonDataAccess.getCategorie());
@@ -77,6 +75,7 @@ public class DettaglioController {
 	}
 	
 	private void caricaOrdiniRicevuti() throws Exception {
+		dettaglioBean.setAssistenzaAttivata(false);
 		dettaglioBean.setOrdini(sellerDataAccess.getOrdiniRicevuti(dettaglioBean.getProdottoDTO().getId()));
 		if (dettaglioBean.getOrdini() != null && !dettaglioBean.getOrdini().isEmpty()) {
 			if (dettaglioBean.getPaginatorOrdini() == null) {
@@ -90,33 +89,51 @@ public class DettaglioController {
 		}
 	}
 	
-	private void aiutaVenditore() throws Exception {
-		List<OrdineDTO> ordiniAttivi = getOrdiniInLavorazione();
-		if (ordiniAttivi != null && !ordiniAttivi.isEmpty()) {
-			int numeroOrdini = ordiniAttivi.size();
-			double[] values = new double[numeroOrdini];
-			double[] weights = new double[numeroOrdini];
-			for (int i = 0; i < ordiniAttivi.size(); i++) {
-				values[i] = ordiniAttivi.get(i).getOfferta() * ordiniAttivi.get(i).getQuantita();
-				weights[i] = ordiniAttivi.get(i).getQuantita();
-			}
-			double knapsackSize = dettaglioBean.getProdottoDTO().getDisponibilita();
-			int populationSize = 1200;
-			int maxGenerations = Integer.MAX_VALUE;
-			double crossProb = 0.85;
-			double mutatProb = 0.01;
-			KnapSackGA geneticAi = new KnapSackGA(numeroOrdini, values, weights, knapsackSize, populationSize, maxGenerations, crossProb, mutatProb);
-			String bestSolution = geneticAi.execute();
-			if (bestSolution != null && !bestSolution.isEmpty()) {
-				for (int i = 0; i < bestSolution.length(); i++) {
-					char flagOrdine = bestSolution.charAt(i);
-					if (flagOrdine == '1') {
-						ordiniAttivi.get(i).setSuggerito(true);
-					} else {
-						ordiniAttivi.get(i).setSuggerito(false);
+	public void aiutaVenditore(AjaxBehaviorEvent event) {
+		try {
+			List<OrdineDTO> ordiniAttivi = getOrdiniInLavorazione();
+			if (ordiniAttivi != null && !ordiniAttivi.isEmpty()) {
+				int numeroOrdini = ordiniAttivi.size();
+				double[] values = new double[numeroOrdini];
+				double[] weights = new double[numeroOrdini];
+				for (int i = 0; i < ordiniAttivi.size(); i++) {
+					values[i] = ordiniAttivi.get(i).getOfferta() * ordiniAttivi.get(i).getQuantita();
+					weights[i] = ordiniAttivi.get(i).getQuantita();
+				}
+				double knapsackSize = dettaglioBean.getProdottoDTO().getDisponibilita();
+				int populationSize = 2000;
+				int maxGenerations = 2000;
+				double crossProb = 0.4;
+				double mutatProb = 0.01;
+				KnapSackGA geneticAi = new KnapSackGA(numeroOrdini, values, weights, knapsackSize, populationSize, maxGenerations, crossProb, mutatProb);
+				String bestSolution = geneticAi.execute();
+				if (bestSolution != null && !bestSolution.isEmpty()) {
+					StringBuilder successMessage = new StringBuilder("Operazione effettuata con successo. Ordini convenienti nel formato {progressivo, offerta X quantità}: ");
+					int peso = 0;
+					int valore = 0;
+					for (int i = 0; i < bestSolution.length(); i++) {
+						char flagOrdine = bestSolution.charAt(i);
+						if (flagOrdine == '1') {
+							OrdineDTO ordineAttuale = ordiniAttivi.get(i);
+							ordineAttuale.setSuggerito(true);
+							peso += ordineAttuale.getQuantita();
+							valore += ordineAttuale.getOfferta() * ordineAttuale.getQuantita();
+							successMessage.append("{").append(ordineAttuale.getProgressivo()).append(", ").append(ordineAttuale.getOfferta()).append(" X ").append(ordineAttuale.getQuantita()).append("}, ");
+						} else {
+							ordiniAttivi.get(i).setSuggerito(false);
+						}
 					}
+					String successMessageString = successMessage.toString().trim();
+					if (successMessageString != null && successMessageString.length() > 1) {
+						successMessageString = successMessageString.substring(0, successMessageString.length() - 1);
+					}
+					messagesBean.getSuccesses().add(successMessageString + "; " + "Peso: " + peso + ", Valore: " + valore + ".");
 				}
 			}
+			dettaglioBean.setAssistenzaAttivata(true);
+		} catch(Exception e) {
+			logger.error(e.getMessage(), e);
+			messagesBean.getErrors().add("Operazione fallita: contattare l'amministratore di sistema");
 		}
 	}
 	

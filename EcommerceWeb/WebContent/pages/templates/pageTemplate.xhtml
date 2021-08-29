@@ -51,6 +51,26 @@
 		            showWeek: true
 				});
 			});
+			
+			function executeSpinner(data, id) {
+				if (data.status === "begin") {
+ 					showSpinner(id);
+ 					window.scrollTo(0, 0);
+				} else if (data.status === "success") {
+ 					hideSpinner(id);
+				}
+			}
+			
+			function showSpinner(id) {
+				var spinner = document.getElementById(id);
+ 				spinner.style.display = 'block';
+ 				spinner.style.color = '#007bff';
+			}
+			
+			function hideSpinner(id) {
+				var spinner = document.getElementById(id);
+ 				spinner.style.display = 'none';
+			}
 		</script>
 		
 		<ui:insert name="effettuaOperazioniIniziali" />

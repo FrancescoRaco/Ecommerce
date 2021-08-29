@@ -36,7 +36,7 @@ public class KnapSackGA {
         
         //GA related initializations
         chromosomeLength = noItems;
-        KnapSackGA.noCandidates = population;
+        noCandidates = population;
         maxGen = generations;
         crossoverProb = crossProb;
         mutationProb = mutProb;
@@ -46,15 +46,15 @@ public class KnapSackGA {
     
     public String execute() {
     	// Initialize first generation
-        generateSolutions(KnapSackGA.noCandidates);
+        generateSolutions(noCandidates);
         
         String bestSolution = null;
         
         int noProgress = 0;
         double bestFitness = -1;
         
-        // Run the GA until required fitness achieved or
-        for(int k = 0; k < KnapSackGA.maxGen && (noProgress < noCandidates / 4); k++){
+        //Run the GA until the maximum number of iterations is reached and noProgress value is less than 25% of the maximum iterations
+        for (int k = 0; k < maxGen && (noProgress < maxGen / 4); k++) {
             bestSolution = getBestSolution();
             if (this.bestFitness > bestFitness) {
 				bestFitness = this.bestFitness;
@@ -66,8 +66,8 @@ public class KnapSackGA {
         }
         
         //Show the result in the log file
-        logger.info("Best solution is: " + bestSolution);
-        logger.info("Best fitness is: " + bestFitness);
+        //logger.info("Best solution is: " + bestSolution);
+        //logger.info("Best fitness is: " + bestFitness);
         
         return bestSolution;
     }
