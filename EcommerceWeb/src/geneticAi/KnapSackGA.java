@@ -2,7 +2,6 @@ package geneticAi;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -183,13 +182,13 @@ public class KnapSackGA {
         String bestSol = null;
         
         // Iterate over all the generation
-        for (String CandidateSolution : candidateSolutions) {
-            double newFit = calcFitness(CandidateSolution);
+        for (String candidateSolution : candidateSolutions) {
+            double newFit = calcFitness(candidateSolution);
             if(newFit != -1){
                 // If a better fit found
                 // update bestSol variable
                 if (newFit >= bestFit) {
-                    bestSol = CandidateSolution;
+                    bestSol = candidateSolution;
                     bestFit = newFit;
                 }
             }
