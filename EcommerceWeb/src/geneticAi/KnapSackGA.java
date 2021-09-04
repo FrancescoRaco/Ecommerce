@@ -148,31 +148,26 @@ public class KnapSackGA {
     // This method mutates the genes of the given candidate solution
     // based on the mutation probability
     private String mutate(String candidate){
+    	//Convert the candidate string to character array in order to edit elements
+    	char[] candidateArray = candidate != null && !candidate.isEmpty() ? candidate.toCharArray() : new char[0];
         // Iterate over the genes of the candidate
-        for(int i = 0; i < candidate.length(); i++){
-            // Checking randomly whether to mutate the current
-            // gene of the iteration
-            if(Math.random() <= mutationProb)
-                candidate = changeBit(i, candidate);
+        for(int i = 0; i < candidateArray.length; i++){
+            // Checking randomly whether to mutate the current gene of the iteration
+            if(Math.random() <= mutationProb) {
+            	changeBit(i, candidateArray);
+            }
         }
-        
         // Return the mutated candidate solution
-        return candidate;
+        return String.valueOf(candidateArray);
     }
     
-    private String changeBit(int idx, String candidate){
-        String returnStr = "";
-        for(int i = 0; i < candidate.length(); i++){
-            if(i == idx){
-                if(candidate.charAt(i) == 49)
-                    returnStr += 0;
-                else
-                    returnStr += 1;
-            }
-            else
-                returnStr += candidate.charAt(i);
+    private void changeBit(int idx, char[] candidateArray){
+        if(candidateArray[idx] == '1') {
+        	candidateArray[idx] = '0';
         }
-        return returnStr;
+        else {
+        	candidateArray[idx] = '1';
+        }
     }
     
     
