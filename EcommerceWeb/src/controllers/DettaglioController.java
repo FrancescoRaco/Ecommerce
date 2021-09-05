@@ -101,8 +101,8 @@ public class DettaglioController {
 					weights[i] = ordiniAttivi.get(i).getQuantita();
 				}
 				double knapsackSize = dettaglioBean.getProdottoDTO().getDisponibilita();
-				int populationSize = 2000;
-				int maxGenerations = 2000;
+				int populationSize = 3000;
+				int maxGenerations = 3000;
 				double crossProb = 0.4;
 				double mutatProb = 0.01;
 				KnapSackGA geneticAi = new KnapSackGA(numeroOrdini, values, weights, knapsackSize, populationSize, maxGenerations, crossProb, mutatProb);
