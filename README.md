@@ -1,6 +1,4 @@
 # Ecommerce
-Ecommerce
-
 Il progetto consiste nello sviluppo di un’applicazione web inerente a uno store ecommerce
 basato sul modello “consumer to consumer”: la piattaforma implementata gestisce
 l’interazione tra utenti privati al fine di consentire le operazioni di acquisti e vendite di
