@@ -39,4 +39,4 @@ KP da esponenziale a lineare, permettendo di trovare soluzioni approssimativamen
 ottimali per un problema NP.
 
 L'elaborato completo relativo alla documentazione del progetto svolto è consultabile al seguente link:
-https://drive.google.com/file/d/1tTeVW_VmHUNKRmlzwjHNKUvecQeVjgcf/view?usp=sharing
+https://drive.google.com/file/d/1aRx8l0lmRv_kgCHA8Priefezp-dEz7Tw/view?usp=sharing
